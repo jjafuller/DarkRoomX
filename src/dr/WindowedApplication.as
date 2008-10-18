@@ -35,10 +35,13 @@ package dr
 		public var menuBar:MenuBar;
 		public var rootMenu:NativeMenu = new NativeMenu();
 		
+		// dialogs
+		public var settingDialog:SettingDialog;
+		
 		// constructor
 		public function WindowedApplication()
 		{
-	
+			
 		}
 		
 		public function init():void 
@@ -138,6 +141,8 @@ package dr
  			var editCut:NativeMenuItem = new NativeMenuItem("Cut", false);
  			var editCopy:NativeMenuItem = new NativeMenuItem("Copy", false);
  			var editPaste:NativeMenuItem = new NativeMenuItem("Paste", false);
+ 			var editSep2:NativeMenuItem = new NativeMenuItem("2", true);
+ 			var editSettings:NativeMenuItem = new NativeMenuItem("Settings...", false);
  			
  			// build menu
  			NativeApplication.nativeApplication.menu = rootMenu;
@@ -158,6 +163,7 @@ package dr
 			editMenuItem.submenu.addItem(editCut);
 			editMenuItem.submenu.addItem(editCopy);
 			editMenuItem.submenu.addItem(editPaste);
+			editMenuItem.submenu.addItem(editSettings);
 			
 			// bind events
 			fileNew.addEventListener(Event.SELECT, handleFileNew);
@@ -172,6 +178,7 @@ package dr
  			editCut.addEventListener(Event.SELECT, handleEditCut);
  			editCopy.addEventListener(Event.SELECT, handleEditCopy);
  			editPaste.addEventListener(Event.SELECT, handleEditPaste);
+ 			editSettings.addEventListener(Event.SELECT, handleEditSettings);
  			
  			// keyboard equivalents
  			fileNew.keyEquivalent = "n";
@@ -197,6 +204,9 @@ package dr
  			editCopy.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
  			editPaste.keyEquivalent = "v";
  			editPaste.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
+ 			editSettings.keyEquivalent = ",";
+ 			editSettings.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
+ 			
 		}
 		
 		/* Handle Flipping Between View States */
@@ -220,6 +230,11 @@ package dr
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN, handleFullScreen);
 			
 			// menu
+			
+		}
+		
+		public function handleSettingUpdate(event:Event):void
+		{
 			
 		}
 		
@@ -280,6 +295,14 @@ package dr
 			NativeApplication.nativeApplication.paste();
 		}
 		
+		public function handleEditSettings(event:Event):void
+		{
+			settingDialog = PopUpManager.createPopUp(this, SettingDialog, true) as SettingDialog;
+			settingDialog["btnOk"].addEventListener("click", handleSettingDialogOk);
+			
+			PopUpManager.centerPopUp(settingDialog);
+		}
+		
 		public function handleKeyDown(event:KeyboardEvent):void
 		{
 			/* 	we use the isDirty toggle to prevent automatically flipping back to fullscreen
@@ -333,6 +356,12 @@ package dr
 					saveAs();
 					break;
 			}
+		}
+		
+		public function handleSettingDialogOk(event:Event):void
+		{
+			// close popup
+			PopUpManager.removePopUp(settingDialog);
 		}
 		
 		/**
