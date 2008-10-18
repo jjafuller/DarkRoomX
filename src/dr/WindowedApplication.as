@@ -25,9 +25,12 @@ package dr
 		private var currentFile:File; 							// The currentFile opened (and saved) by the application
 		private var stream:FileStream = new FileStream(); 		// The FileStream object used for reading and writing the currentFile
 		private var defaultDirectory:File; 						// The default directory
-		[Bindable] public var dataChanged:Boolean = false; 		// Whether the text data has changed (and should be saved)
+		
+		[Bindable]
+		public var dataChanged:Boolean = false; 		// Whether the text data has changed (and should be saved)
 		private var settingsFile:File;
-		[Bindable] public var settings:XML; 					// The XML data
+		public var config:Configuration;
+		public var settingsXml:XML; 					// The XML data
 		public var settingsStream:FileStream; 					// The FileStream object used to read and write settings file data.
 
 		// controls
@@ -36,7 +39,7 @@ package dr
 		public var rootMenu:NativeMenu = new NativeMenu();
 		
 		// dialogs
-		public var settingDialog:SettingDialog;
+		public var configDialog:ConfigurationDialog;
 		
 		// constructor
 		public function WindowedApplication()
@@ -64,21 +67,19 @@ package dr
 		
 		public function initSettings():void
 		{
-			loadSettings();
-		}
-		
-		public function loadSettings():void
-		{
 			settingsFile = File.applicationStorageDirectory;
 			settingsFile = settingsFile.resolvePath("settings.xml"); 
+			
+			config = new Configuration(settingsFile);
 		}
+		
 		
 		private function readSettings():void
 		{
 			settingsStream = new FileStream();
 			if (settingsFile.exists) {
     			settingsStream.open(settingsFile, FileMode.READ);
-    			settings = XML(settingsStream.readUTFBytes(stream.bytesAvailable));
+    			settingsXml = XML(settingsStream.readUTFBytes(stream.bytesAvailable));
 				settingsStream.close();
 			    applySettings();
 			}
@@ -102,16 +103,16 @@ package dr
 		
 		private function serializeSettings():void
 		{
-			settings = <settings/>;
+			settingsXml = <settings/>;
 			//prefsXML.windowState.@x = stage.nativeWindow.x;
 			//prefsXML.windowState.@y = stage.nativeWindow.y;
-			settings.saveDate = new Date().toString();
+			settingsXml.saveDate = new Date().toString();
 		}
 		
 		private function writeSettings():void
 		{
 			var outputString:String = '<?xml version="1.0" encoding="utf-8"?>\n';
-			outputString += settings.toXMLString();
+			outputString += settingsXml.toXMLString();
 			outputString = outputString.replace(/\n/g, File.lineEnding);
 			stream = new FileStream();
 			stream.open(settingsFile, FileMode.WRITE);
@@ -297,10 +298,10 @@ package dr
 		
 		public function handleEditSettings(event:Event):void
 		{
-			settingDialog = PopUpManager.createPopUp(this, SettingDialog, true) as SettingDialog;
-			settingDialog["btnOk"].addEventListener("click", handleSettingDialogOk);
+			configDialog = PopUpManager.createPopUp(this, ConfigurationDialog, true) as ConfigurationDialog;
+			configDialog["btnOk"].addEventListener("click", handleConfigDialogOk);
 			
-			PopUpManager.centerPopUp(settingDialog);
+			PopUpManager.centerPopUp(configDialog);
 		}
 		
 		public function handleKeyDown(event:KeyboardEvent):void
@@ -358,10 +359,11 @@ package dr
 			}
 		}
 		
-		public function handleSettingDialogOk(event:Event):void
+		public function handleConfigDialogOk(event:Event):void
 		{
-			// close popup
-			PopUpManager.removePopUp(settingDialog);
+			config = configDialog.processSettings();
+			
+			
 		}
 		
 		/**
