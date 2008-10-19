@@ -2,6 +2,7 @@ package dr
 {
 	import flash.events.Event;
 	import flash.filesystem.File;
+	import flash.text.Font;
 	
 	import mx.containers.Canvas;
 	import mx.containers.TitleWindow;
@@ -16,6 +17,7 @@ package dr
 		public var btnOk:Button;
 		
 		private var settingsFile:File;
+		private var fonts:Array; 
 		
 		[Bindable]
 		public var config:Configuration;
@@ -38,6 +40,9 @@ package dr
 		public var cnvBackgroundColor:Canvas;
 		public var sldBackgroundOpacity:Slider;
 		
+		public var cboFont:ComboBox;
+		public var txtFontSize:TextInput;
+		
 		
 		public function ConfigurationWindow()
 		{
@@ -47,6 +52,10 @@ package dr
 		
 		public function init():void
 		{
+			// assign fonts
+			fonts = Font.enumerateFonts(true);
+			fonts.sortOn("fontName", Array.CASEINSENSITIVE);
+			
 			// button events
 			btnCancel.addEventListener("click", handleCancel);
 			btnOk.addEventListener("click", handleOk);
@@ -71,6 +80,10 @@ package dr
 			config.settings.backgroundColor = clrBackgroundColor.value;
 			config.settings.backgroundOpacity = sldBackgroundOpacity.value;
 			
+			// formatting
+			
+			config.settings.fontSize = txtFontSize.text;
+			
 			return config;
 		}
 		
@@ -92,6 +105,11 @@ package dr
 			chkLiveScrolling.selected = config.settings.liveScrolling;
 			cnvBackgroundColor.setStyle('backgroundColor', config.settings.backgroundColor);
 			sldBackgroundOpacity.value = config.settings.backgroundOpacity
+			
+			// formatting
+			//cboFont.labelField = 'fontName';
+			//cboFont.dataProvider = fonts;
+			//txtFontSize.text = config.settings.fontSize;
 		}
 		
 		public function removePopup():void

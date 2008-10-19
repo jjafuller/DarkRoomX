@@ -118,6 +118,13 @@ package dr
 			{
 				this.setStyle('backgroundAlpha', config.settings.backgroundOpacity);
 			}
+			
+			// formatting
+			
+			if(config.settings.fontSize)
+			{
+				content.setStyle('fontSize', config.settings.fontSize);
+			}
 		}
 		
 		private function applyLayoutSettings():void
@@ -208,6 +215,10 @@ package dr
 			config.settings.liveScrolling = content.liveScrolling;
 			config.settings.backgroundColor = this.getStyle('backgroundColor');
 			config.settings.backgroundOpacity = this.getStyle('backgroundAlpha');
+			
+			// formatting
+			
+			config.settings.fontSize = content.getStyle('fontSize');
 		}
 		
 		private function saveSettings():void
