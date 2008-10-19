@@ -91,9 +91,123 @@ package dr
 		
 		private function applySettings():void
 		{
+			// page settings
 			
-			//stage.nativeWindow.x = prefsXML.windowState.@x;
-			//stage.nativeWindow.y = prefsXML.windowState.@y;
+			// handle layout first
+			applyLayoutSettings();
+			
+			if(config.settings.pageBackgroundOpacity)
+			{
+				content.setStyle('backgroundAlpha', config.settings.pageBackgroundOpacity);
+			}
+			
+			if(config.settings.pageBackgroundColor)
+			{
+				content.setStyle('backgroundColor', config.settings.pageBackgroundColor);
+			}
+		
+			// live scrolling
+			content.liveScrolling = config.settings.liveScrolling;
+			
+			if(config.settings.backgroundColor)
+			{
+				this.setStyle('backgroundColor', config.settings.backgroundColor);
+			}
+			
+			if(config.settings.backgroundOpacity)
+			{
+				this.setStyle('backgroundAlpha', config.settings.backgroundOpacity);
+			}
+		}
+		
+		private function applyLayoutSettings():void
+		{
+			// temp variables
+			var margin:int = 0;
+			var value:int = 0;
+			
+			// page margin vertical
+			if (config.settings.pageMarginVertical)
+			{
+				if (config.settings.pageMarginVertical > ((this.height/2)-100)) { config.settings.pageMarginVertical = ((this.height/2)-100) } // too much
+				if (config.settings.pageMarginVertical < 0) { config.settings.pageMarginVertical = 0 } // too little
+			}
+			
+			// page margin horizontal
+			if (config.settings.pageMarginHorizontal)
+			{
+				if (config.settings.pageMarginHorizontal > ((this.width/2)-100)) { config.settings.pageMarginHorizontal = ((this.width/2)-100) } // too much
+				if (config.settings.pageMarginHorizontal < 0) { config.settings.pageMarginHorizontal = 0 } // too little
+			}
+			
+			//page width
+			margin = (config.settings.pageMarginHorizontal) ? config.settings.pageMarginHorizontal : 0;
+			if (config.settings.pageWidthAuto)
+			{
+				content.width = this.width - (margin * 2);
+			}
+			else if (config.settings.pageWidth)
+			{
+				value = config.settings.pageWidth;
+				
+				// adjust
+				if (value > (this.width-(margin*2))) { value = (this.width-(margin*2)) } // too wide
+				if (value < 100) { value = 100 } // too narrow
+				
+				content.width = value; //assign
+			}
+			
+			// center horizontally
+			if (((this.width-content.width)/2) > margin)
+			{
+				margin = (this.width-content.width)/2;
+			}
+			content.x = margin;
+			
+			// page height
+			margin = (config.settings.pageMarginVertical) ? config.settings.pageMarginVertical : 0;
+			if (config.settings.pageHeightAuto)
+			{
+				content.height = this.height - (margin * 2);
+			}
+			else if (config.settings.pageHeight)
+			{
+				// set a minimum margin
+				value = config.settings.pageHeight;
+				
+				// adjust if necessary
+				if (value > (this.height-(margin*2))) { value = (this.height-(margin*2)) } // too tall
+				if (value < 100) { value = 100 } // too short
+				
+				content.height = value; // assign
+			}
+			
+			// center vertically
+			if (((this.height-content.height)/2) > margin)
+			{
+				margin = (this.height-content.height)/2;
+			}
+			content.y = margin;
+		}
+		
+		private function processCurrentSettings():void
+		{
+			// page
+			config.settings.pageWidth = content.width;
+			config.settings.pageWidthAuto = (config.settings.pageWidthAuto) ? config.settings.pageWidthAuto : false;
+			config.settings.pageHeight = content.height;
+			config.settings.pageHeightAuto = (config.settings.pageHeightAuto) ? config.settings.pageHeightAuto : false;
+			config.settings.pageMarginVertical = (config.settings.pageMarginVertical) ? config.settings.pageMarginVertical : this.getStyle('paddingTop');
+			config.settings.pageMarginHorizontal = (config.settings.pageMarginHorizontal) ? config.settings.pageMarginHorizontal : this.getStyle('paddingLeft');
+			config.settings.pagePaddingVertical = content.getStyle('paddingTop');
+			config.settings.pageBackgroundOpacity = content.getStyle('backgroundAlpha');
+			config.settings.pageBackgroundColor = content.getStyle('backgroundColor');
+			
+			// general
+			config.settings.launchFullScreen = (config.settings.launchFullScreen == '') ? config.settings.launchFullScreen : true;
+			config.settings.liveScrolling = content.liveScrolling;
+			config.settings.backgroundColor = this.getStyle('backgroundColor');
+			config.settings.backgroundOpacity = this.getStyle('backgroundAlpha');
 		}
 		
 		private function saveSettings():void
@@ -143,7 +257,7 @@ package dr
  			var editCopy:NativeMenuItem = new NativeMenuItem("Copy", false);
  			var editPaste:NativeMenuItem = new NativeMenuItem("Paste", false);
  			var editSep2:NativeMenuItem = new NativeMenuItem("2", true);
- 			var editSettings:NativeMenuItem = new NativeMenuItem("Settings...", false);
+ 			var editSettings:NativeMenuItem = new NativeMenuItem("Preferences...", false);
  			
  			// build menu
  			NativeApplication.nativeApplication.menu = rootMenu;
@@ -219,6 +333,9 @@ package dr
 				stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 				menuBar.visible = false;
 			}
+			
+			applyLayoutSettings();
+			
 			focusManager.setFocus(content);
 		}
 				
@@ -229,6 +346,7 @@ package dr
 			// stage
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN, handleFullScreen);
+			stage.addEventListener(ResizeEvent.RESIZE, handleResize);
 			
 			// menu
 			
@@ -298,8 +416,14 @@ package dr
 		
 		public function handleEditSettings(event:Event):void
 		{
+			processCurrentSettings();
+			
 			configDialog = PopUpManager.createPopUp(this, ConfigurationDialog, true) as ConfigurationDialog;
 			configDialog["btnOk"].addEventListener("click", handleConfigDialogOk);
+			
+			configDialog.config = config;
+			
+			configDialog.updateFields();
 			
 			PopUpManager.centerPopUp(configDialog);
 		}
@@ -335,6 +459,13 @@ package dr
 			{
 				menuBar.visible = true;
 			}
+			
+			applyLayoutSettings();
+		}
+		
+		public function handleResize(event:Event):void
+		{
+			applyLayoutSettings();
 		}
 		
 		private function handleMenuItemClick(event:MenuEvent):void
@@ -363,7 +494,7 @@ package dr
 		{
 			config = configDialog.processSettings();
 			
-			
+			applySettings();
 		}
 		
 		/**

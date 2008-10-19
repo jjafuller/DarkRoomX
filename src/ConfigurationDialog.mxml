@@ -3,13 +3,12 @@
 	<mx:TabNavigator x="10" y="11" width="462" height="471">
 		<mx:Canvas label="Environment" width="100%" height="100%">
 			<mx:Panel x="10" y="10" width="440" height="231" layout="absolute" title="Page">
-				<mx:TextInput x="133" y="34" id="txtPageWidth" text="300" width="50"/>
+				<mx:TextInput x="133" y="34" id="txtPageWidth" width="50"/>
 				<mx:TextInput x="133" y="62" id="txtPageMarginVertical" width="50"/>
 				<mx:TextInput x="133" y="90" id="txtPageMarginHorizontal" width="50"/>
 				<mx:Label x="19" y="92" text="Margin, Horizontal"/>
 				<mx:TextInput x="133" y="118" id="txtPagePaddingVertical" width="50"/>
 				<mx:TextInput x="133" y="146" id="txtPagePaddingHorizontal" width="50"/>
-				<mx:TextInput x="324" y="146" id="txtPageRotation" width="50"/>
 				<mx:Label x="11" y="148" text="Padding, Horizontal"/>
 				<mx:Label x="27" y="120" text="Padding, Vertical"/>
 				<mx:Label x="35" y="64" text="Margin, Vertical"/>
@@ -17,23 +16,23 @@
 				<mx:Label x="88" y="36" text="Width"/>
 				<mx:Label x="84" y="10" text="Height"/>
 				<mx:TextInput x="133" y="8" width="50" id="txtPageHeight"/>
-				<mx:HSlider x="324" y="88" width="86" id="sldPageBackgroundOpacity" minimum="50" maximum="100"/>
+				<mx:HSlider x="324" y="88" width="86" id="sldPageBackgroundOpacity" minimum="0.5" maximum="1.0"/>
 				<mx:CheckBox x="191" y="8" label="Auto" id="chkPageHeightAuto"/>
 				<mx:CheckBox x="191" y="34" label="Auto" id="chkPageWidthAuto"/>
 				<mx:Label x="213" y="120" text="Background Color"/>
-				<mx:ColorPicker x="324" y="116" id="clrPageBackground"/>
-				<mx:Label x="264" y="148" text="Rotation"/>
-				
+				<mx:ColorPicker x="324" y="116" id="clrPageBackgroundColor"/>
+				<mx:Canvas x="354" y="117" width="20" height="20" id="cnvPageBackgroundColor"></mx:Canvas>
 			</mx:Panel>
 			<mx:Panel x="10" y="249" width="440" height="179" layout="absolute" title="General">
 				<mx:Label x="201" y="14" text="Background Opacity"/>
-				<mx:HSlider x="324" y="10" width="86" id="sldPageBackgroundOpacity0" minimum="50" maximum="100"/>
+				<mx:HSlider x="324" y="10" width="86" id="sldBackgroundOpacity" minimum="0.5" maximum="1.0"/>
 				<mx:Label x="213" y="42" text="Background Color"/>
-				<mx:ColorPicker x="324" y="38" id="clrPageBackground0"/>
+				<mx:ColorPicker x="324" y="38" id="clrBackgroundColor"/>
 				<mx:Label x="10" y="14" text="Launch in Full Screen"/>
 				<mx:Label x="55" y="42" text="Live Scrolling"/>
 				<mx:CheckBox x="140" y="13" id="chkLaunchFullScreen"/>
 				<mx:CheckBox x="140" y="42" id="chkLiveScrolling"/>
+				<mx:Canvas x="354" y="40" width="20" height="20" id="cnvBackgroundColor"></mx:Canvas>
 			</mx:Panel>
 		</mx:Canvas>
 		<mx:Canvas label="Writing" width="100%" height="100%">
