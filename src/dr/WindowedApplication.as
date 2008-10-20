@@ -63,6 +63,8 @@ package dr
 			content.text = "Donec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n";
 			content.selectionBeginIndex = content.text.length;
 			content.selectionEndIndex = content.text.length;
+			
+			
 		}
 		
 		public function initSettings():void
@@ -126,10 +128,77 @@ package dr
 				content.setStyle('fontFamily', config.settings.fontFamily);
 			}
 			
+			if(config.settings.fontColor)
+			{
+				content.setStyle('color', config.settings.fontColor);
+			}
+			
 			if(config.settings.fontSize)
 			{
 				content.setStyle('fontSize', config.settings.fontSize);
 			}
+			
+			if(config.settings.fontLetterSpacing)
+			{
+				content.setStyle('letterSpacing', config.settings.fontLetterSpacing);
+			}
+			
+			if(config.settings.fontStyle)
+			{
+				content.setStyle('fontStyle', config.settings.fontStyle);
+			}
+			
+			if(config.settings.fontWeight)
+			{
+				content.setStyle('fontWeight', config.settings.fontWeight);
+			}
+			
+			if(config.settings.fontDecoration)
+			{
+				content.setStyle('textDecoration', config.settings.fontDecoration);
+			}
+			
+			if(config.settings.fontLeading)
+			{
+				content.setStyle('leading', config.settings.fontLeading);
+			}
+			
+			setContentStyle('textIndent', config.settings.fontIndent);
+			setContentStyle('textAlign', config.settings.fontAlign);
+		}
+		
+		private function processCurrentSettings():void
+		{
+			// page
+			config.settings.pageWidth = content.width;
+			config.settings.pageWidthAuto = (config.settings.pageWidthAuto) ? config.settings.pageWidthAuto : false;
+			config.settings.pageHeight = content.height;
+			config.settings.pageHeightAuto = (config.settings.pageHeightAuto) ? config.settings.pageHeightAuto : false;
+			config.settings.pageMarginVertical = (config.settings.pageMarginVertical) ? config.settings.pageMarginVertical : this.getStyle('paddingTop');
+			config.settings.pageMarginHorizontal = (config.settings.pageMarginHorizontal) ? config.settings.pageMarginHorizontal : this.getStyle('paddingLeft');
+			config.settings.pagePaddingVertical = content.getStyle('paddingTop');
+			config.settings.pageBackgroundOpacity = content.getStyle('backgroundAlpha');
+			config.settings.pageBackgroundColor = content.getStyle('backgroundColor');
+			
+			// general
+			config.settings.launchFullScreen = (config.settings.launchFullScreen == '') ? config.settings.launchFullScreen : true;
+			config.settings.liveScrolling = content.liveScrolling;
+			config.settings.backgroundColor = this.getStyle('backgroundColor');
+			config.settings.backgroundOpacity = this.getStyle('backgroundAlpha');
+			
+			// formatting
+			config.settings.fontFamily = content.getStyle('fontFamily');
+			config.settings.fontColor = content.getStyle('color');
+			config.settings.fontSize = content.getStyle('fontSize');
+			config.settings.fontLetterSpacing = content.getStyle('letterSpacing');
+			config.settings.fontStyle = content.getStyle('fontStyle');
+			config.settings.fontWeight = content.getStyle('fontWeight');
+			config.settings.fontDecoration = content.getStyle('textDecoration');
+			
+			// paragraph
+			config.settings.fontLeading = content.getStyle('leading');
+			config.settings.fontIndent = content.getStyle('textIndent');
+			config.settings.fontAlign = content.getStyle('textAlign');
 		}
 		
 		private function applyLayoutSettings():void
@@ -202,29 +271,7 @@ package dr
 			content.y = margin;
 		}
 		
-		private function processCurrentSettings():void
-		{
-			// page
-			config.settings.pageWidth = content.width;
-			config.settings.pageWidthAuto = (config.settings.pageWidthAuto) ? config.settings.pageWidthAuto : false;
-			config.settings.pageHeight = content.height;
-			config.settings.pageHeightAuto = (config.settings.pageHeightAuto) ? config.settings.pageHeightAuto : false;
-			config.settings.pageMarginVertical = (config.settings.pageMarginVertical) ? config.settings.pageMarginVertical : this.getStyle('paddingTop');
-			config.settings.pageMarginHorizontal = (config.settings.pageMarginHorizontal) ? config.settings.pageMarginHorizontal : this.getStyle('paddingLeft');
-			config.settings.pagePaddingVertical = content.getStyle('paddingTop');
-			config.settings.pageBackgroundOpacity = content.getStyle('backgroundAlpha');
-			config.settings.pageBackgroundColor = content.getStyle('backgroundColor');
-			
-			// general
-			config.settings.launchFullScreen = (config.settings.launchFullScreen == '') ? config.settings.launchFullScreen : true;
-			config.settings.liveScrolling = content.liveScrolling;
-			config.settings.backgroundColor = this.getStyle('backgroundColor');
-			config.settings.backgroundOpacity = this.getStyle('backgroundAlpha');
-			
-			// formatting
-			config.settings.fontFamily = content.getStyle('fontFamily');
-			config.settings.fontSize = content.getStyle('fontSize');
-		}
+		
 		
 		private function saveSettings():void
 		{
@@ -649,6 +696,22 @@ package dr
 		private function writeIOErrorHandler(event:Event):void 
 		{
 			Alert.show("The specified currentFile cannot be saved.", "Error", Alert.OK, this);
+		}
+		
+		private function setContentStyle(style:String,value:String):void
+		{
+			if(value)
+			{
+				content.setStyle(style, value);
+			}
+		}
+		
+		private function setThisStyle(style:String,value:String):void
+		{
+			if(value)
+			{
+				this.setStyle(style, value);
+			}
 		}
 	}
 }

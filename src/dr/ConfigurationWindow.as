@@ -19,6 +19,7 @@ package dr
 		
 		private var settingsFile:File;
 		private var fonts:Array; 
+		private var textAlignments:Array;
 		private var tabUpdated:Array;
 		
 		[Bindable]
@@ -46,7 +47,16 @@ package dr
 		
 		public var cboFontFamily:ComboBox;
 		public var txtFontSize:TextInput;
+		public var clrFontColor:ColorPicker;
+		public var cnvFontColor:Canvas;
+		public var txtFontLetterSpacing:TextInput;
+		public var chkFontStyle:CheckBox;
+		public var chkFontWeight:CheckBox;
+		public var chkFontDecoration:CheckBox;
 		
+		public var txtFontLeading:TextInput;
+		public var txtFontIndent:TextInput;
+		public var cboFontAlign:ComboBox;
 		
 		public function ConfigurationWindow()
 		{
@@ -61,6 +71,9 @@ package dr
 			// assign fonts
 			fonts = Font.enumerateFonts(true);
 			fonts.sortOn("fontName", Array.CASEINSENSITIVE);
+			
+			// text alignments
+			textAlignments = new Array({label:'Left', data:'left'},{label:'Right', data:'right'},{label:'Center', data: 'center'},{label:'Justify', data:'justify'});
 			
 			// button events
 			btnCancel.addEventListener("click", handleCancel);
@@ -98,7 +111,17 @@ package dr
 			{
 				// formatting
 				config.settings.fontFamily = cboFontFamily.selectedItem.fontName;
+				config.settings.fontColor = clrFontColor.value;
 				config.settings.fontSize = txtFontSize.text;
+				config.settings.fontLetterSpacing = txtFontLetterSpacing.text;
+				config.settings.fontStyle = (chkFontStyle.selected) ? 'italic' : 'normal';
+				config.settings.fontWeight = (chkFontWeight.selected) ? 'bold' : 'normal';
+				config.settings.fontDecoration = (chkFontDecoration.selected) ? 'underline' : 'normal';
+				
+				// paragraph
+				config.settings.fontLeading = txtFontLeading.text;
+				config.settings.fontIndent = txtFontIndent.text;
+				config.settings.fontAlign = cboFontAlign.selectedItem.data;
 			}
 			
 			return config;
@@ -131,7 +154,18 @@ package dr
 					// formatting
 					cboFontFamily.dataProvider = fonts;
 					cboFontFamily.selectedIndex = getFontIndex(config.settings.fontFamily);
+					cnvFontColor.setStyle('backgroundColor', config.settings.fontColor);
 					txtFontSize.text = config.settings.fontSize;
+					txtFontLetterSpacing.text = config.settings.fontLetterSpacing;
+					chkFontStyle.selected = (config.settings.fontStyle=='italic') ? true : false;
+					chkFontWeight.selected = (config.settings.fontWeight=='bold') ? true : false;
+					chkFontDecoration.selected = (config.settings.fontDecoration=='underline') ? true : false;
+					
+					// paragraph
+					txtFontLeading.text = config.settings.fontLeading;
+					txtFontIndent.text = config.settings.fontIndent;
+					cboFontAlign.dataProvider = textAlignments;
+					cboFontAlign.selectedIndex = getFontAlignIndex(config.settings.fontAlign);
 					break;
 					
 				case 2:
@@ -183,5 +217,21 @@ package dr
         	
         	return index;
 		}
+		
+		public function getFontAlignIndex(value:String):int
+		{
+			var index:int = 0;
+			
+			for (var i:uint = 0; i < textAlignments.length; i++)
+			{
+                if (textAlignments[i].label == value)
+                {
+                	index = i;
+                }
+        	}
+        	
+        	return index;
+		}
+		
 	}
 }	
