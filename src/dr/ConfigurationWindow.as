@@ -5,6 +5,7 @@ package dr
 	import flash.text.Font;
 	
 	import mx.containers.Canvas;
+	import mx.containers.TabNavigator;
 	import mx.containers.TitleWindow;
 	import mx.controls.*;
 	import mx.controls.sliderClasses.Slider;
@@ -18,9 +19,12 @@ package dr
 		
 		private var settingsFile:File;
 		private var fonts:Array; 
+		private var tabUpdated:Array;
 		
 		[Bindable]
 		public var config:Configuration;
+		
+		public var navigator:TabNavigator;
 		
 		public var txtPageWidth:TextInput;
 		public var txtPageHeight:TextInput;
@@ -40,12 +44,14 @@ package dr
 		public var cnvBackgroundColor:Canvas;
 		public var sldBackgroundOpacity:Slider;
 		
-		public var cboFont:ComboBox;
+		public var cboFontFamily:ComboBox;
 		public var txtFontSize:TextInput;
 		
 		
 		public function ConfigurationWindow()
 		{
+			tabUpdated = new Array();
+			
 			// global events
 			this.addEventListener(CloseEvent.CLOSE, handleClose);
 		}
@@ -59,57 +65,79 @@ package dr
 			// button events
 			btnCancel.addEventListener("click", handleCancel);
 			btnOk.addEventListener("click", handleOk);
+			
+			// navigator events
+			navigator.addEventListener(Event.CHANGE, handleTabChange);
 		}
 		
 		public function processSettings():Configuration
 		{
-			// page
-			config.settings.pageWidth = txtPageWidth.text;
-			config.settings.pageWidthAuto = chkPageWidthAuto.selected;
-			config.settings.pageHeight = txtPageHeight.text;
-			config.settings.pageHeightAuto = chkPageHeightAuto.selected;
-			config.settings.pageMarginVertical = txtPageMarginVertical.text;
-			config.settings.pageMarginHorizontal = txtPageMarginHorizontal.text;
-			config.settings.pagePaddingVertical = txtPagePaddingVertical.text;
-			config.settings.pageBackgroundOpacity = sldPageBackgroundOpacity.value;
-			config.settings.pageBackgroundColor = clrPageBackgroundColor.value;
+			// first tab
+			if(txtPageWidth)
+			{
+				// page
+				config.settings.pageWidth = txtPageWidth.text;
+				config.settings.pageWidthAuto = chkPageWidthAuto.selected;
+				config.settings.pageHeight = txtPageHeight.text;
+				config.settings.pageHeightAuto = chkPageHeightAuto.selected;
+				config.settings.pageMarginVertical = txtPageMarginVertical.text;
+				config.settings.pageMarginHorizontal = txtPageMarginHorizontal.text;
+				config.settings.pagePaddingVertical = txtPagePaddingVertical.text;
+				config.settings.pageBackgroundOpacity = sldPageBackgroundOpacity.value;
+				config.settings.pageBackgroundColor = clrPageBackgroundColor.value;
+				
+				// general
+				config.settings.launchFullScreen = chkLaunchFullScreen.selected;
+				config.settings.liveScrolling = chkLiveScrolling.selected;
+				config.settings.backgroundColor = clrBackgroundColor.value;
+				config.settings.backgroundOpacity = sldBackgroundOpacity.value;
+			}
 			
-			// general
-			config.settings.launchFullScreen = chkLaunchFullScreen.selected;
-			config.settings.liveScrolling = chkLiveScrolling.selected;
-			config.settings.backgroundColor = clrBackgroundColor.value;
-			config.settings.backgroundOpacity = sldBackgroundOpacity.value;
-			
-			// formatting
-			
-			config.settings.fontSize = txtFontSize.text;
+			// second tab
+			if(cboFontFamily)
+			{
+				// formatting
+				config.settings.fontFamily = cboFontFamily.selectedItem.fontName;
+				config.settings.fontSize = txtFontSize.text;
+			}
 			
 			return config;
 		}
 		
 		public function updateFields():void
 		{
-			// page
-			txtPageWidth.text = config.settings.pageWidth;
-			chkPageWidthAuto.selected = config.settings.pageWidthAuto;
-			txtPageHeight.text = config.settings.pageHeight;
-			chkPageHeightAuto.selected = config.settings.pageHeightAuto;
-			txtPageMarginVertical.text = config.settings.pageMarginVertical;
-			txtPageMarginHorizontal.text = config.settings.pageMarginHorizontal;
-			txtPagePaddingVertical.text = config.settings.pagePaddingVertical;
-			sldPageBackgroundOpacity.value = config.settings.pageBackgroundOpacity;
-			cnvPageBackgroundColor.setStyle('backgroundColor', config.settings.pageBackgroundColor);
-			
-			// general
-			chkLaunchFullScreen.selected = config.settings.launchFullScreen;
-			chkLiveScrolling.selected = config.settings.liveScrolling;
-			cnvBackgroundColor.setStyle('backgroundColor', config.settings.backgroundColor);
-			sldBackgroundOpacity.value = config.settings.backgroundOpacity
-			
-			// formatting
-			//cboFont.labelField = 'fontName';
-			//cboFont.dataProvider = fonts;
-			//txtFontSize.text = config.settings.fontSize;
+			switch(navigator.selectedIndex)
+			{
+				case 0:
+					// page
+					txtPageWidth.text = config.settings.pageWidth;
+					chkPageWidthAuto.selected = config.settings.pageWidthAuto;
+					txtPageHeight.text = config.settings.pageHeight;
+					chkPageHeightAuto.selected = config.settings.pageHeightAuto;
+					txtPageMarginVertical.text = config.settings.pageMarginVertical;
+					txtPageMarginHorizontal.text = config.settings.pageMarginHorizontal;
+					txtPagePaddingVertical.text = config.settings.pagePaddingVertical;
+					sldPageBackgroundOpacity.value = config.settings.pageBackgroundOpacity;
+					cnvPageBackgroundColor.setStyle('backgroundColor', config.settings.pageBackgroundColor);
+				
+					// general
+					chkLaunchFullScreen.selected = config.settings.launchFullScreen;
+					chkLiveScrolling.selected = config.settings.liveScrolling;
+					cnvBackgroundColor.setStyle('backgroundColor', config.settings.backgroundColor);
+					sldBackgroundOpacity.value = config.settings.backgroundOpacity
+					break;
+					
+				case 1:
+					// formatting
+					cboFontFamily.dataProvider = fonts;
+					cboFontFamily.selectedIndex = getFontIndex(config.settings.fontFamily);
+					txtFontSize.text = config.settings.fontSize;
+					break;
+					
+				case 2:
+				
+					break;
+			}
 		}
 		
 		public function removePopup():void
@@ -131,5 +159,29 @@ package dr
 		{
 			removePopup();
 		}
+		
+		public function handleTabChange(event:Event):void
+		{
+			if(!tabUpdated[navigator.selectedIndex])
+			{
+				tabUpdated[navigator.selectedIndex] = true;
+				updateFields();
+			}
+		}
+		
+		public function getFontIndex(font:String):int
+		{
+			var index:int = 0;
+			
+			for (var i:uint = 0; i < fonts.length; i++)
+			{
+                if (fonts[i].fontName == font)
+                {
+                	index = i;
+                }
+        	}
+        	
+        	return index;
+		}
 	}
-}
+}	

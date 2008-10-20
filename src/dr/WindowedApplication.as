@@ -121,6 +121,11 @@ package dr
 			
 			// formatting
 			
+			if(config.settings.fontFamily)
+			{
+				content.setStyle('fontFamily', config.settings.fontFamily);
+			}
+			
 			if(config.settings.fontSize)
 			{
 				content.setStyle('fontSize', config.settings.fontSize);
@@ -217,7 +222,7 @@ package dr
 			config.settings.backgroundOpacity = this.getStyle('backgroundAlpha');
 			
 			// formatting
-			
+			config.settings.fontFamily = content.getStyle('fontFamily');
 			config.settings.fontSize = content.getStyle('fontSize');
 		}
 		

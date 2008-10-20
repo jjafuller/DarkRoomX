@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dr:ConfigurationWindow creationComplete="init()" xmlns:dr="dr.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="500" height="560" title="Settings" showCloseButton="true" backgroundColor="#DDDDDD">
-	<mx:TabNavigator x="10" y="11" width="462" height="471">
+	<mx:TabNavigator x="10" y="11" width="462" height="471" id="navigator">
 		<mx:Canvas label="Environment" width="100%" height="100%">
 			<mx:Panel x="10" y="10" width="440" height="231" layout="absolute" title="Page">
 				<mx:TextInput x="133" y="34" id="txtPageWidth" width="50"/>
@@ -36,27 +36,33 @@
 			</mx:Panel>
 		</mx:Canvas>
 		<mx:Canvas label="Writing" width="100%" height="100%">
-			<mx:Panel x="10" y="10" width="440" height="238" layout="absolute" title="Formatting">
-				<mx:Label x="65" y="10" text="Font"/>
-				<mx:ComboBox x="102" y="8" width="308" id="cboFont"></mx:ComboBox>
-				<mx:ComboBox x="102" y="166" width="120" id="cboFontGridType"></mx:ComboBox>
-				<mx:Label x="60" y="36" text="Color"/>
-				<mx:ColorPicker x="102" y="32" id="clrFontColor"/>
-				<mx:Label x="66" y="62" text="Size"/>
-				<mx:TextInput x="102" y="60" width="50" id="txtFontSize"/>
-				<mx:TextInput x="102" y="86" width="50" id="txtFontThickness"/>
-				<mx:TextInput x="102" y="112" width="50" id="txtFontSharpness"/>
-				<mx:Label x="34" y="88" text="Thickness"/>
-				<mx:Label x="31" y="114" text="Sharpness"/>
-				<mx:TextInput x="102" y="140" width="50" id="txtFontLetterSpacing"/>
-				<mx:Label x="10" y="142" text="Letter Spacing"/>
-				<mx:Label x="36" y="168" text="Grid Type"/>
-				<mx:CheckBox x="259" y="60" label="Italic" fontStyle="italic" id="chkFontStyle"/>
-				<mx:CheckBox x="259" y="86" label="Bold" fontWeight="bold" id="chkFontWeight"/>
-				<mx:CheckBox x="259" y="112" label="Underline" textDecoration="underline" id="chkFontDecoration"/>
-				<mx:CheckBox x="259" y="140" label="Disable Anti-alias" id="chkDisableAntiAlias"/>
+			<mx:Panel x="10" y="10" width="440" height="255" layout="absolute" title="Formatting">
+				<mx:Label x="25" y="10" text="Font Family"/>
+				<mx:ComboBox x="102" y="8" width="308" id="cboFontFamily" labelField="fontName" fontSize="12">
+					<mx:itemRenderer>
+			            <mx:Component>
+			                <mx:Label fontFamily="{data.fontName}" toolTip="{data.fontName}" />
+			            </mx:Component>
+			        </mx:itemRenderer>
+				</mx:ComboBox>
+				<mx:ComboBox x="102" y="172" width="120" id="cboFontGridType"></mx:ComboBox>
+				<mx:Label x="60" y="42" text="Color"/>
+				<mx:ColorPicker x="102" y="38" id="clrFontColor"/>
+				<mx:Label x="66" y="68" text="Size"/>
+				<mx:TextInput x="102" y="66" width="50" id="txtFontSize"/>
+				<mx:TextInput x="102" y="92" width="50" id="txtFontThickness"/>
+				<mx:TextInput x="102" y="118" width="50" id="txtFontSharpness"/>
+				<mx:Label x="34" y="94" text="Thickness"/>
+				<mx:Label x="31" y="120" text="Sharpness"/>
+				<mx:TextInput x="102" y="146" width="50" id="txtFontLetterSpacing"/>
+				<mx:Label x="10" y="148" text="Letter Spacing"/>
+				<mx:Label x="36" y="174" text="Grid Type"/>
+				<mx:CheckBox x="259" y="66" label="Italic" fontStyle="italic" id="chkFontStyle"/>
+				<mx:CheckBox x="259" y="92" label="Bold" fontWeight="bold" id="chkFontWeight"/>
+				<mx:CheckBox x="259" y="118" label="Underline" textDecoration="underline" id="chkFontDecoration"/>
+				<mx:CheckBox x="259" y="146" label="Disable Anti-alias" id="chkDisableAntiAlias"/>
 			</mx:Panel>
-			<mx:Panel x="10" y="256" width="440" height="172" layout="absolute" title="Paragraph">
+			<mx:Panel x="10" y="273" width="440" height="155" layout="absolute" title="Paragraph">
 				<mx:ComboBox x="102" y="64" width="120" id="cboFontAlignment"></mx:ComboBox>
 				<mx:TextInput x="102" y="10" width="50" id="txtFontLeading"/>
 				<mx:Label x="45" y="12" text="Leading"/>
