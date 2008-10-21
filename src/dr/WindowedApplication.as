@@ -9,8 +9,8 @@ package dr
 	import flash.ui.Keyboard;
 	
 	import mx.controls.Alert;
-	import mx.controls.MenuBar;
 	import mx.controls.TextArea;
+	import mx.controls.textClasses.TextRange;
 	import mx.core.WindowedApplication;
 	import mx.events.*;
 	import mx.managers.*;
@@ -35,7 +35,7 @@ package dr
 
 		// controls
 		public var content:TextArea;
-		public var menuBar:MenuBar;
+		//public var menuBar:MenuBar;
 		public var rootMenu:NativeMenu = new NativeMenu();
 		
 		// dialogs
@@ -199,6 +199,8 @@ package dr
 			config.settings.fontLeading = content.getStyle('leading');
 			config.settings.fontIndent = content.getStyle('textIndent');
 			config.settings.fontAlign = content.getStyle('textAlign');
+			config.settings.tabsToSpaces = cardinalValue(config.settings.tabsToSpaces, false);
+			config.settings.tabsToSpacesCount = cardinalValue(config.settings.tabsToSpacesCount, 0);
 		}
 		
 		private function applyLayoutSettings():void
@@ -394,7 +396,7 @@ package dr
 			if(!isFullScreen)
 			{
 				stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
-				menuBar.visible = false;
+				//menuBar.visible = false;
 			}
 			
 			applyLayoutSettings();
@@ -413,6 +415,9 @@ package dr
 			
 			// menu
 			
+			// content area
+			content.addEventListener(KeyboardEvent.KEY_DOWN, handleContentKeyDown);
+
 		}
 		
 		public function handleSettingUpdate(event:Event):void
@@ -491,6 +496,33 @@ package dr
 			PopUpManager.centerPopUp(configDialog);
 		}
 		
+		public function handleContentKeyDown(event:KeyboardEvent):void
+		{
+			if(event.charCode == 9)
+			{
+				event.preventDefault(); // capture focus
+				
+				var range:TextRange = new TextRange(content,true,content.selectionBeginIndex,content.selectionEndIndex);
+				
+				if(config.settings.tabsToSpaces)
+				{
+					var count:int = int(cardinalValue(config.settings.tabsToSpacesCount, 3));
+					var buffer:String = '';
+					for (var i:int = 0; i < count; i++)
+					{
+					    buffer += ' ';
+					}
+					range.text = buffer;
+				}
+				else
+				{
+					range.text = '\t';
+				}
+				
+				content.setSelection(content.selectionEndIndex, content.selectionEndIndex);
+			}
+		}
+		
 		public function handleKeyDown(event:KeyboardEvent):void
 		{
 			/* 	we use the isDirty toggle to prevent automatically flipping back to fullscreen
@@ -516,11 +548,11 @@ package dr
 			
 			if (isFullScreen)
 			{
-				menuBar.visible = false;
+				//menuBar.visible = false;
 			}
 			else
 			{
-				menuBar.visible = true;
+				//menuBar.visible = true;
 			}
 			
 			applyLayoutSettings();
@@ -712,6 +744,11 @@ package dr
 			{
 				this.setStyle(style, value);
 			}
+		}
+		
+		private function cardinalValue(value:Object, alt:Object):Object
+		{
+			return (value) ? value : alt;
 		}
 	}
 }

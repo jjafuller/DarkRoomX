@@ -57,6 +57,8 @@ package dr
 		public var txtFontLeading:TextInput;
 		public var txtFontIndent:TextInput;
 		public var cboFontAlign:ComboBox;
+		public var chkTabsToSpaces:CheckBox;
+		public var txtTabsToSpacesCount:TextInput;
 		
 		public function ConfigurationWindow()
 		{
@@ -122,6 +124,9 @@ package dr
 				config.settings.fontLeading = txtFontLeading.text;
 				config.settings.fontIndent = txtFontIndent.text;
 				config.settings.fontAlign = cboFontAlign.selectedItem.data;
+				config.settings.tabsToSpaces = chkTabsToSpaces.selected;
+				config.settings.tabsToSpacesCount = txtTabsToSpacesCount.text;
+				
 			}
 			
 			return config;
@@ -166,6 +171,8 @@ package dr
 					txtFontIndent.text = config.settings.fontIndent;
 					cboFontAlign.dataProvider = textAlignments;
 					cboFontAlign.selectedIndex = getFontAlignIndex(config.settings.fontAlign);
+					chkTabsToSpaces.selected = config.settings.tabsToSpaces;
+					txtTabsToSpacesCount.text = config.settings.tabsToSpacesCount; 
 					break;
 					
 				case 2:
@@ -232,6 +239,8 @@ package dr
         	
         	return index;
 		}
+		
+		
 		
 	}
 }	
