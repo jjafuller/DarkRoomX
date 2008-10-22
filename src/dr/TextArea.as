@@ -20,8 +20,6 @@ package dr
 		{
 			super();
 			
-			
-			
 			this.addEventListener(FlexEvent.CREATION_COMPLETE, init);
 		}
 		
