@@ -10,11 +10,9 @@ package dr
 	
 	import mx.controls.Alert;
 	import mx.controls.TextArea;
-	import mx.controls.textClasses.TextRange;
 	import mx.core.WindowedApplication;
 	import mx.events.*;
 	import mx.managers.*;
-	
 	
 	
 	public class WindowedApplication extends mx.core.WindowedApplication
@@ -34,7 +32,8 @@ package dr
 		public var settingsStream:FileStream; 					// The FileStream object used to read and write settings file data.
 
 		// controls
-		public var content:TextArea;
+		public var content:dr.TextArea;
+		
 		//public var menuBar:MenuBar;
 		public var rootMenu:NativeMenu = new NativeMenu();
 		
@@ -63,8 +62,6 @@ package dr
 			content.text = "Donec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n";
 			content.selectionBeginIndex = content.text.length;
 			content.selectionEndIndex = content.text.length;
-			
-			
 		}
 		
 		public function initSettings():void
@@ -158,6 +155,8 @@ package dr
 				content.setStyle('textDecoration', config.settings.fontDecoration);
 			}
 			
+			// paragraph
+			
 			if(config.settings.fontLeading)
 			{
 				content.setStyle('leading', config.settings.fontLeading);
@@ -165,6 +164,9 @@ package dr
 			
 			setContentStyle('textIndent', config.settings.fontIndent);
 			setContentStyle('textAlign', config.settings.fontAlign);
+			
+			content.tabsToSpaces = Boolean(config.settings.tabsToSpaces);
+			content.tabsToSpacesCount = int(config.settings.tabsToSpacesCount);
 		}
 		
 		private function processCurrentSettings():void
@@ -416,7 +418,7 @@ package dr
 			// menu
 			
 			// content area
-			content.addEventListener(KeyboardEvent.KEY_DOWN, handleContentKeyDown);
+			
 
 		}
 		
@@ -494,33 +496,6 @@ package dr
 			configDialog.updateFields();
 			
 			PopUpManager.centerPopUp(configDialog);
-		}
-		
-		public function handleContentKeyDown(event:KeyboardEvent):void
-		{
-			if(event.charCode == 9)
-			{
-				event.preventDefault(); // capture focus
-				
-				var range:TextRange = new TextRange(content,true,content.selectionBeginIndex,content.selectionEndIndex);
-				
-				if(config.settings.tabsToSpaces)
-				{
-					var count:int = int(cardinalValue(config.settings.tabsToSpacesCount, 3));
-					var buffer:String = '';
-					for (var i:int = 0; i < count; i++)
-					{
-					    buffer += ' ';
-					}
-					range.text = buffer;
-				}
-				else
-				{
-					range.text = '\t';
-				}
-				
-				content.setSelection(content.selectionEndIndex, content.selectionEndIndex);
-			}
 		}
 		
 		public function handleKeyDown(event:KeyboardEvent):void

@@ -8,7 +8,7 @@
         ]]>
     </mx:Script>
     <mx:Style source="styles.css"/>
-    <mx:TextArea 
+    <dr:TextArea 
         id="content" 
         height="100%" width="600" 
         scroll="false"
