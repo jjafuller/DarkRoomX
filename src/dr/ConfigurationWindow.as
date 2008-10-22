@@ -59,6 +59,8 @@ package dr
 		public var cboFontAlign:ComboBox;
 		public var chkTabsToSpaces:CheckBox;
 		public var txtTabsToSpacesCount:TextInput;
+		public var chkAutoIndent:CheckBox;
+		public var chkWrapToPage:CheckBox;
 		
 		public function ConfigurationWindow()
 		{
@@ -126,7 +128,8 @@ package dr
 				config.settings.fontAlign = cboFontAlign.selectedItem.data;
 				config.settings.tabsToSpaces = chkTabsToSpaces.selected;
 				config.settings.tabsToSpacesCount = txtTabsToSpacesCount.text;
-				
+				config.settings.autoIndent = chkAutoIndent.selected;
+				config.settings.wordWrap = chkWrapToPage.selected;
 			}
 			
 			return config;
@@ -172,7 +175,9 @@ package dr
 					cboFontAlign.dataProvider = textAlignments;
 					cboFontAlign.selectedIndex = getFontAlignIndex(config.settings.fontAlign);
 					chkTabsToSpaces.selected = config.settings.tabsToSpaces;
-					txtTabsToSpacesCount.text = config.settings.tabsToSpacesCount; 
+					txtTabsToSpacesCount.text = config.settings.tabsToSpacesCount;
+					chkAutoIndent.selected = config.settings.autoIndent;
+					chkWrapToPage.selected = config.settings.wordWrap;
 					break;
 					
 				case 2:

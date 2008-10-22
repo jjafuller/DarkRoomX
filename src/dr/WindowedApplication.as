@@ -156,17 +156,13 @@ package dr
 			}
 			
 			// paragraph
-			
-			if(config.settings.fontLeading)
-			{
-				content.setStyle('leading', config.settings.fontLeading);
-			}
-			
+			setContentStyle('leading', config.settings.fontLeading);
 			setContentStyle('textIndent', config.settings.fontIndent);
 			setContentStyle('textAlign', config.settings.fontAlign);
-			
 			content.tabsToSpaces = Boolean(config.settings.tabsToSpaces);
 			content.tabsToSpacesCount = int(config.settings.tabsToSpacesCount);
+			content.autoIndent = Boolean(config.settings.autoIndent);
+			content.wordWrap = Boolean(config.settings.wordWrap);
 		}
 		
 		private function processCurrentSettings():void
@@ -203,6 +199,8 @@ package dr
 			config.settings.fontAlign = content.getStyle('textAlign');
 			config.settings.tabsToSpaces = cardinalValue(config.settings.tabsToSpaces, false);
 			config.settings.tabsToSpacesCount = cardinalValue(config.settings.tabsToSpacesCount, 0);
+			config.settings.autoIndent = cardinalValue(config.settings.autoIndent, false);
+			config.settings.wordWrap = cardinalValue(config.settings.wordWrap, true);
 		}
 		
 		private function applyLayoutSettings():void
