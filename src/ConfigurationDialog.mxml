@@ -130,8 +130,9 @@
 			</mx:Panel>
 			<mx:Panel x="10" y="109" width="440" height="79" layout="absolute" title="Statistics">
 				<mx:CheckBox x="10" y="10" label="Characters" id="chkStatisticsCharacters"/>
-				<mx:CheckBox x="145" y="10" label="Words" id="chkStatisticsWords"/>
-				<mx:CheckBox x="255" y="10" label="Sentences" id="chkStatisticsSentences"/>
+				<mx:CheckBox x="193" y="10" label="Words" id="chkStatisticsWords"/>
+				<mx:CheckBox x="114" y="10" label="Lines" id="chkStatisticsLines"/>
+				<mx:CheckBox x="277" y="10" label="Sentences" id="chkStatisticsSentences"/>
 			</mx:Panel>
 		</mx:Canvas>
 	</mx:TabNavigator>
