@@ -102,6 +102,23 @@
 				<mx:Label x="257" y="112" text="Top:hover" fontSize="7" fontWeight="normal"/>
 				<mx:Label x="316" y="112" text="Bottom:hover" fontSize="7" fontWeight="normal"/>
 				<mx:Label x="142" y="112" text="Top" fontSize="7" fontWeight="normal"/>
+				<mx:Label x="60" y="130" text="Track Colors"/>
+				<mx:ColorPicker x="142" y="130"/>
+				<mx:ColorPicker x="199" y="130"/>
+				<mx:Canvas x="223" y="130" width="22" height="22">
+				</mx:Canvas>
+				<mx:Canvas x="166" y="130" width="22" height="22">
+				</mx:Canvas>
+				<mx:Label x="57" y="172" text="Theme Color"/>
+				<mx:ColorPicker x="142" y="172"/>
+				<mx:Canvas x="166" y="172" width="22" height="22">
+				</mx:Canvas>
+				<mx:Label x="60" y="205" text="Border Color"/>
+				<mx:ColorPicker x="142" y="205"/>
+				<mx:Canvas x="166" y="205" width="22" height="22">
+				</mx:Canvas>
+				<mx:Label x="142" y="154" text="Left" fontSize="7" fontWeight="normal"/>
+				<mx:Label x="201" y="154" text="Right" fontSize="7" fontWeight="normal"/>
 				<mx:Label x="201" y="112" text="Bottom" fontSize="7" fontWeight="normal"/>
 			</mx:Panel>
 		</mx:Canvas>
