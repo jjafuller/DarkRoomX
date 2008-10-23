@@ -211,6 +211,8 @@ package dr
 			// disable scrolls
 			config.settings.scrollVerticalDisable = (content.verticalScrollPolicy=='off') ? true : false;
 			config.settings.scrollHorizontalDisable = (content.horizontalScrollPolicy=='off') ? true : false;
+			
+			
 		}
 		
 		private function applyLayoutSettings():void
