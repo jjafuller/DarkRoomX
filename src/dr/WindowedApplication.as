@@ -163,6 +163,12 @@ package dr
 			content.tabsToSpacesCount = int(config.settings.tabsToSpacesCount);
 			content.autoIndent = Boolean(config.settings.autoIndent);
 			content.wordWrap = Boolean(config.settings.wordWrap);
+			
+			// disable scrolls
+			content.verticalScrollPolicy = (config.settings.scrollVerticalDisable) ? 'off' : 'auto';
+			content.horizontalScrollPolicy = (config.settings.scrollHorizontalDisable) ? 'off' : 'auto';
+			
+			// styles
 		}
 		
 		private function processCurrentSettings():void
@@ -200,7 +206,11 @@ package dr
 			config.settings.tabsToSpaces = cardinalValue(config.settings.tabsToSpaces, false);
 			config.settings.tabsToSpacesCount = cardinalValue(config.settings.tabsToSpacesCount, 0);
 			config.settings.autoIndent = cardinalValue(config.settings.autoIndent, false);
-			config.settings.wordWrap = cardinalValue(config.settings.wordWrap, true);
+			config.settings.wordWrap = content.wordWrap; //cardinalValue(config.settings.wordWrap, true);
+			
+			// disable scrolls
+			config.settings.scrollVerticalDisable = (content.verticalScrollPolicy=='off') ? true : false;
+			config.settings.scrollHorizontalDisable = (content.horizontalScrollPolicy=='off') ? true : false;
 		}
 		
 		private function applyLayoutSettings():void

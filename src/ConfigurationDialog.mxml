@@ -80,13 +80,13 @@
 				<mx:Label x="10" y="36" text="Highlight Alpha (Top)"/>
 				<mx:Label x="73" y="62" text="Fill Alphas"/>
 				<mx:Label x="75" y="88" text="Fill Colors"/>
-				<mx:HSlider x="142" y="36" minimum="0" maximum="16" id="sldScrollHighlightAlpha1" width="100"/>
+				<mx:HSlider x="142" y="36" minimum="0" maximum="1" id="sldScrollHighlightAlpha1" width="100"/>
 				<mx:Label x="250" y="36" text="(Middle)"/>
-				<mx:HSlider x="309" y="36" minimum="0" maximum="16" id="sldScrollHighlight2" width="100"/>
-				<mx:HSlider x="142" y="62" minimum="0" maximum="16" id="sldScrollFillAlpha1" width="50"/>
-				<mx:HSlider x="200" y="62" minimum="0" maximum="16" id="sldScrollFillAlpha2" width="50"/>
-				<mx:HSlider x="258" y="62" minimum="0" maximum="16" id="sldScrollFillAlpha3" width="50"/>
-				<mx:HSlider x="316" y="62" minimum="0" maximum="16" id="sldScrollFillAlpha4" width="50"/>
+				<mx:HSlider x="309" y="36" minimum="0" maximum="1" id="sldScrollHighlightAlpha2" width="100"/>
+				<mx:HSlider x="142" y="62" minimum="0" maximum="1" id="sldScrollFillAlpha1" width="50"/>
+				<mx:HSlider x="200" y="62" minimum="0" maximum="1" id="sldScrollFillAlpha2" width="50"/>
+				<mx:HSlider x="258" y="62" minimum="0" maximum="1" id="sldScrollFillAlpha3" width="50"/>
+				<mx:HSlider x="316" y="62" minimum="0" maximum="1" id="sldScrollFillAlpha4" width="50"/>
 				<mx:ColorPicker x="142" y="88" id="clrScrollFillColor1"/>
 				<mx:ColorPicker x="199" y="88" id="clrScrollFillColor2"/>
 				<mx:Canvas x="223" y="88" width="22" height="22" id="cnvScrollFillColor2">

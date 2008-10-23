@@ -62,6 +62,34 @@ package dr
 		public var chkAutoIndent:CheckBox;
 		public var chkWrapToPage:CheckBox;
 		
+		public var chkDisableVerticalScroll:CheckBox;
+		public var chkDisableHorizontalScroll:CheckBox;
+		
+		public var sldScrollCornerRadius:Slider;
+		public var sldScrollHighlightAlpha1:Slider;
+		public var sldScrollHighlightAlpha2:Slider;
+		public var sldScrollFillAlpha1:Slider;
+		public var sldScrollFillAlpha2:Slider;
+		public var sldScrollFillAlpha3:Slider;
+		public var sldScrollFillAlpha4:Slider;
+		public var clrScrollFillColor1:ColorPicker;
+		public var cnvScrollFillColor1:Canvas;
+		public var clrScrollFillColor2:ColorPicker;
+		public var cnvScrollFillColor2:Canvas;
+		public var clrScrollFillColor3:ColorPicker;
+		public var cnvScrollFillColor3:Canvas;
+		public var clrScrollFillColor4:ColorPicker;
+		public var cnvScrollFillColor4:Canvas;
+		public var clrScrollTrackColor1:ColorPicker;
+		public var cnvScrollTrackColor1:Canvas;
+		public var clrScrollTrackColor2:ColorPicker;
+		public var cnvScrollTrackColor2:Canvas;
+		public var clrScrollThemeColor:ColorPicker;
+		public var cnvScrollThemeColor:Canvas;
+		public var clrScrollBorderColor:ColorPicker;
+		public var cnvScrollBorderColor:Canvas;
+		
+		
 		public function ConfigurationWindow()
 		{
 			tabUpdated = new Array();
@@ -132,6 +160,32 @@ package dr
 				config.settings.wordWrap = chkWrapToPage.selected;
 			}
 			
+			// third tab
+			if(chkDisableVerticalScroll!=null)
+			{
+				// disable scroll
+				config.settings.scrollVerticalDisable = chkDisableVerticalScroll.selected;
+				config.settings.scrollHorizontalDisable = chkDisableHorizontalScroll.selected;
+				
+				// style
+				config.settings.scrollCornerRadius = sldScrollCornerRadius.value;
+				config.settings.scrollHighlightAlpha1 = sldScrollHighlightAlpha1.value;
+				config.settings.scrollHighlightAlpha2 = sldScrollHighlightAlpha2.value;
+				config.settings.scrollFillAlpha1 = sldScrollFillAlpha1.value;
+				config.settings.scrollFillAlpha2 = sldScrollFillAlpha2.value;
+				config.settings.scrollFillAlpha3 = sldScrollFillAlpha3.value;
+				config.settings.scrollFillAlpha4 = sldScrollFillAlpha4.value;
+				config.settings.scrollFillColor1 = clrScrollFillColor1.value;
+				config.settings.scrollFillColor2 = clrScrollFillColor2.value;
+				config.settings.scrollFillColor3 = clrScrollFillColor3.value;
+				config.settings.scrollFillColor4 = clrScrollFillColor4.value;
+				config.settings.scrollTrackColor1 = clrScrollTrackColor1.value;
+				config.settings.scrollTrackColor2 = clrScrollTrackColor2.value;
+				config.settings.scrollThemeColor = clrScrollThemeColor.value;
+				config.settings.scrollBorderColor = clrScrollBorderColor.value;
+				
+			}
+			
 			return config;
 		}
 		
@@ -181,7 +235,26 @@ package dr
 					break;
 					
 				case 2:
-				
+					// disable scrolls
+					chkDisableVerticalScroll.selected = config.settings.scrollVerticalDisable;
+					chkDisableHorizontalScroll.selected = config.settings.scrollHorizontalDisable;
+					
+					// styles
+					sldScrollCornerRadius.value = config.settings.scrollCornerRadius;
+					sldScrollHighlightAlpha1.value = config.settings.scrollHighlightAlpha1;
+					sldScrollHighlightAlpha2.value = config.settings.scrollHighlightAlpha2;
+					sldScrollFillAlpha1.value = config.settings.scrollFileAlpha1;
+					sldScrollFillAlpha2.value = config.settings.scrollFileAlpha2;
+					sldScrollFillAlpha3.value = config.settings.scrollFileAlpha3;
+					sldScrollFillAlpha4.value = config.settings.scrollFileAlpha4;
+					cnvScrollFillColor1.setStyle('backgroundColor', config.settings.scrollFillColor1);
+					cnvScrollFillColor2.setStyle('backgroundColor', config.settings.scrollFillColor2);
+					cnvScrollFillColor3.setStyle('backgroundColor', config.settings.scrollFillColor3);
+					cnvScrollFillColor4.setStyle('backgroundColor', config.settings.scrollFillColor4);
+					cnvScrollTrackColor1.setStyle('backgroundColor', config.settings.scrollTrackColor1);
+					cnvScrollTrackColor2.setStyle('backgroundColor', config.settings.scrollTrackColor2);
+					cnvScrollThemeColor.setStyle('backgroundColor', config.settings.scrollThemeColor);
+					cnvScrollBorderColor.setStyle('backgroundColor', config.settings.scrollBorderColor);
 					break;
 			}
 		}
