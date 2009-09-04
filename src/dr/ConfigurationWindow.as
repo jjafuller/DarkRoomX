@@ -176,14 +176,14 @@ package dr
 				config.settings.scrollFillAlpha2 = sldScrollFillAlpha2.value;
 				config.settings.scrollFillAlpha3 = sldScrollFillAlpha3.value;
 				config.settings.scrollFillAlpha4 = sldScrollFillAlpha4.value;
-				config.settings.scrollFillColor1 = clrScrollFillColor1.value;
-				config.settings.scrollFillColor2 = clrScrollFillColor2.value;
-				config.settings.scrollFillColor3 = clrScrollFillColor3.value;
-				config.settings.scrollFillColor4 = clrScrollFillColor4.value;
-				config.settings.scrollTrackColor1 = clrScrollTrackColor1.value;
-				config.settings.scrollTrackColor2 = clrScrollTrackColor2.value;
-				config.settings.scrollThemeColor = clrScrollThemeColor.value;
-				config.settings.scrollBorderColor = clrScrollBorderColor.value;
+				config.settings.scrollFillColor1 = (clrScrollFillColor1.value) ? clrScrollFillColor1.value : config.settings.scrollFillColor1;
+				config.settings.scrollFillColor2 = (clrScrollFillColor2.value) ? clrScrollFillColor2.value : config.settings.scrollFillColor2;
+				config.settings.scrollFillColor3 = (clrScrollFillColor3.value) ? clrScrollFillColor3.value : config.settings.scrollFillColor3;
+				config.settings.scrollFillColor4 = (clrScrollFillColor4.value) ? clrScrollFillColor4.value : config.settings.scrollFillColor4;
+				config.settings.scrollTrackColor1 = (clrScrollTrackColor1.value) ? clrScrollTrackColor1.value : config.settings.scrollTrackColor1;
+				config.settings.scrollTrackColor2 = (clrScrollTrackColor2.value) ? clrScrollTrackColor2.value : config.settings.scrollTrackColor2;
+				config.settings.scrollThemeColor = (clrScrollThemeColor.value) ? clrScrollThemeColor.value : config.settings.scrollThemeColor;
+				config.settings.scrollBorderColor = (clrScrollBorderColor.value) ? clrScrollBorderColor.value : config.settings.scrollBorderColor;
 				
 			}
 			
@@ -245,10 +245,10 @@ package dr
 					sldScrollCornerRadius.value = config.settings.scrollCornerRadius;
 					sldScrollHighlightAlpha1.value = config.settings.scrollHighlightAlpha1;
 					sldScrollHighlightAlpha2.value = config.settings.scrollHighlightAlpha2;
-					sldScrollFillAlpha1.value = config.settings.scrollFileAlpha1;
-					sldScrollFillAlpha2.value = config.settings.scrollFileAlpha2;
-					sldScrollFillAlpha3.value = config.settings.scrollFileAlpha3;
-					sldScrollFillAlpha4.value = config.settings.scrollFileAlpha4;
+					sldScrollFillAlpha1.value = config.settings.scrollFillAlpha1;
+					sldScrollFillAlpha2.value = config.settings.scrollFillAlpha2;
+					sldScrollFillAlpha3.value = config.settings.scrollFillAlpha3;
+					sldScrollFillAlpha4.value = config.settings.scrollFillAlpha4;
 					cnvScrollFillColor1.setStyle('backgroundColor', config.settings.scrollFillColor1);
 					cnvScrollFillColor2.setStyle('backgroundColor', config.settings.scrollFillColor2);
 					cnvScrollFillColor3.setStyle('backgroundColor', config.settings.scrollFillColor3);

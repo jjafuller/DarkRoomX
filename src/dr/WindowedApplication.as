@@ -9,10 +9,11 @@ package dr
 	import flash.ui.Keyboard;
 	
 	import mx.controls.Alert;
-	import mx.controls.TextArea;
 	import mx.core.WindowedApplication;
 	import mx.events.*;
 	import mx.managers.*;
+	import mx.styles.CSSStyleDeclaration;
+	import mx.styles.StyleManager;
 	
 	
 	public class WindowedApplication extends mx.core.WindowedApplication
@@ -169,7 +170,19 @@ package dr
 			content.verticalScrollPolicy = (config.settings.scrollVerticalDisable) ? 'off' : 'auto';
 			content.horizontalScrollPolicy = (config.settings.scrollHorizontalDisable) ? 'off' : 'auto';
 			
-			// styles
+			// scroll styles
+			var scrollbarStyles:CSSStyleDeclaration = StyleManager.getStyleDeclaration('.scrollbar');
+			scrollbarStyles.setStyle('cornerRadius', config.settings.scrollCornerRadius);
+			scrollbarStyles.setStyle('highlightAlphas', [config.settings.scrollHighlightAlpha1, config.settings.scrollHighlightAlpha2]);
+			scrollbarStyles.setStyle('fillAlphas', [config.settings.scrollFillAlpha1, config.settings.scrollFillAlpha2, 
+													config.settings.scrollFillAlpha3, config.settings.scrollFillAlpha4]);
+			scrollbarStyles.setStyle('fillColors', [config.settings.scrollFillColor1, config.settings.scrollFillColor2, 
+													config.settings.scrollFillColor3, config.settings.scrollFillColor4]);
+			scrollbarStyles.setStyle('trackColors', [config.settings.scrollTrackColor1, config.settings.scrollTrackColor2]);
+			scrollbarStyles.setStyle('themeColor', config.settings.scrollThemeColor);
+			scrollbarStyles.setStyle('borderColor', config.settings.scrollBorderColor);
+			
+			StyleManager.setStyleDeclaration(".scrollbar", scrollbarStyles, true);
 		}
 		
 		private function processCurrentSettings():void
@@ -214,7 +227,27 @@ package dr
 			config.settings.scrollVerticalDisable = (content.verticalScrollPolicy=='off') ? true : false;
 			config.settings.scrollHorizontalDisable = (content.horizontalScrollPolicy=='off') ? true : false;
 			
-			
+			// scroll styles
+			var scrollbarStyles:CSSStyleDeclaration = StyleManager.getStyleDeclaration('.scrollbar');
+			config.settings.scrollCornerRadius = scrollbarStyles.getStyle('cornerRadius');
+			var highlightAlphas:Array = scrollbarStyles.getStyle('highlightAlphas');
+			config.settings.scrollHighlightAlpha1 = highlightAlphas[0];
+			config.settings.scrollHighlightAlpha2 = highlightAlphas[1];
+			var fillAlphas:Array = scrollbarStyles.getStyle('fillAlphas');
+			config.settings.scrollFillAlpha1 = fillAlphas[0];
+			config.settings.scrollFillAlpha2 = fillAlphas[1];
+			config.settings.scrollFillAlpha3 = fillAlphas[2];
+			config.settings.scrollFillAlpha4 = fillAlphas[3];
+			var fillColors:Array = scrollbarStyles.getStyle('fillColors');
+			config.settings.scrollFillColor1 = fillColors[0];
+			config.settings.scrollFillColor2 = fillColors[1];
+			config.settings.scrollFillColor3 = fillColors[2];
+			config.settings.scrollFillColor4 = fillColors[3];
+			var trackColors:Array = scrollbarStyles.getStyle('trackColors');
+			config.settings.scrollTrackColor1 = trackColors[0];
+			config.settings.scrollTrackColor2 = trackColors[1];
+			config.settings.scrollThemeColor = scrollbarStyles.getStyle('themeColor');
+			config.settings.scrollBorderColor = scrollbarStyles.getStyle('borderColor');			
 		}
 		
 		private function applyLayoutSettings():void
