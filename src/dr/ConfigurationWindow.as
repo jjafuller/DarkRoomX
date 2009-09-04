@@ -128,6 +128,7 @@ package dr
 				config.settings.pageMarginVertical = txtPageMarginVertical.text;
 				config.settings.pageMarginHorizontal = txtPageMarginHorizontal.text;
 				config.settings.pagePaddingVertical = txtPagePaddingVertical.text;
+				config.settings.pagePaddingHorizontal = txtPagePaddingHorizontal.text;
 				config.settings.pageBackgroundOpacity = sldPageBackgroundOpacity.value;
 				config.settings.pageBackgroundColor = clrPageBackgroundColor.value;
 				
@@ -202,6 +203,7 @@ package dr
 					txtPageMarginVertical.text = config.settings.pageMarginVertical;
 					txtPageMarginHorizontal.text = config.settings.pageMarginHorizontal;
 					txtPagePaddingVertical.text = config.settings.pagePaddingVertical;
+					txtPagePaddingHorizontal.text = config.settings.pagePaddingHorizontal;
 					sldPageBackgroundOpacity.value = config.settings.pageBackgroundOpacity;
 					cnvPageBackgroundColor.setStyle('backgroundColor', config.settings.pageBackgroundColor);
 				

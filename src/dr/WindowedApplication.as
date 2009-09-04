@@ -92,6 +92,7 @@ package dr
 		{
 			// page settings
 			
+			
 			// handle layout first
 			applyLayoutSettings();
 			
@@ -181,6 +182,7 @@ package dr
 			config.settings.pageMarginVertical = (config.settings.pageMarginVertical) ? config.settings.pageMarginVertical : this.getStyle('paddingTop');
 			config.settings.pageMarginHorizontal = (config.settings.pageMarginHorizontal) ? config.settings.pageMarginHorizontal : this.getStyle('paddingLeft');
 			config.settings.pagePaddingVertical = content.getStyle('paddingTop');
+			config.settings.pagePaddingHorizontal = content.getStyle('paddingLeft');
 			config.settings.pageBackgroundOpacity = content.getStyle('backgroundAlpha');
 			config.settings.pageBackgroundColor = content.getStyle('backgroundColor');
 			
@@ -283,6 +285,20 @@ package dr
 				margin = (this.height-content.height)/2;
 			}
 			content.y = margin;
+			
+			// page padding veritical
+			if(config.settings.pagePaddingVertical)
+			{
+				content.setStyle('paddingTop', int(config.settings.pagePaddingVertical));
+				content.setStyle('paddingBottom', int(config.settings.pagePaddingVertical));
+			}
+			
+			// page padding horizontal
+			if(config.settings.pagePaddingHorizontal)
+			{
+				content.setStyle('paddingLeft', int(config.settings.pagePaddingHorizontal));
+				content.setStyle('paddingRight', int(config.settings.pagePaddingHorizontal));
+			}
 		}
 		
 		
