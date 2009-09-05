@@ -14,6 +14,9 @@ package dr
 	import mx.managers.*;
 	import mx.styles.CSSStyleDeclaration;
 	import mx.styles.StyleManager;
+	import mx.core.mx_internal;
+
+	//use namespace mx_internal;
 	
 	
 	public class WindowedApplication extends mx.core.WindowedApplication
@@ -565,10 +568,12 @@ package dr
 			{
 				toggleDisplayState();
 			}
+			// track escapes for a workaround to allow escape to maximize
 			else if (event.charCode == 27 && !isFullScreen && isDirty)
 			{
 				isDirty = false;
 			}
+			// handle save
 			else if ((event.commandKey || event.ctrlKey) && event.keyCode == 83)
 			{
 				Alert.show('save');
