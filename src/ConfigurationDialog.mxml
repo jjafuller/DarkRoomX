@@ -2,15 +2,17 @@
 <dr:ConfigurationWindow creationComplete="init()" xmlns:dr="dr.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="500" height="560" title="Settings" showCloseButton="true" backgroundColor="#DDDDDD">
 	<mx:TabNavigator x="10" y="11" width="462" height="471" id="navigator">
 		<mx:Canvas label="Environment" width="100%" height="100%">
-			<mx:Panel x="10" y="10" width="440" height="231" layout="absolute" title="Page">
+			<mx:Panel x="10" y="10" width="440" height="249" layout="absolute" title="Page">
 				<mx:TextInput x="133" y="34" id="txtPageWidth" width="50"/>
 				<mx:TextInput x="133" y="62" id="txtPageMarginVertical" width="50"/>
 				<mx:TextInput x="133" y="90" id="txtPageMarginHorizontal" width="50"/>
 				<mx:Label x="19" y="92" text="Margin, Horizontal"/>
-				<mx:TextInput x="133" y="118" id="txtPagePaddingVertical" width="50"/>
-				<mx:TextInput x="133" y="146" id="txtPagePaddingHorizontal" width="50"/>
-				<mx:Label x="11" y="148" text="Padding, Horizontal"/>
-				<mx:Label x="27" y="120" text="Padding, Vertical"/>
+				<mx:TextInput x="133" y="146" id="txtPagePaddingVerticalTop" width="50"/>
+				<mx:TextInput x="133" y="118" id="txtPagePaddingHorizontal" width="50"/>
+				<mx:Label x="11" y="120" text="Padding, Horizontal"/>
+				<mx:Label x="46" y="148" text="Padding, Top"/>
+				<mx:TextInput x="133" y="174" id="txtPagePaddingVerticalBottom" width="50"/>
+				<mx:Label x="27" y="176" text="Padding, Bottom"/>
 				<mx:Label x="35" y="64" text="Margin, Vertical"/>
 				<mx:Label x="201" y="92" text="Background Opacity"/>
 				<mx:Label x="88" y="36" text="Width"/>
@@ -23,7 +25,7 @@
 				<mx:ColorPicker x="324" y="116" id="clrPageBackgroundColor"/>
 				<mx:Canvas x="354" y="117" width="20" height="20" id="cnvPageBackgroundColor"></mx:Canvas>
 			</mx:Panel>
-			<mx:Panel x="10" y="249" width="440" height="179" layout="absolute" title="General">
+			<mx:Panel x="10" y="267" width="440" height="161" layout="absolute" title="General">
 				<mx:Label x="201" y="14" text="Background Opacity"/>
 				<mx:HSlider x="324" y="10" width="86" id="sldBackgroundOpacity" minimum="0.5" maximum="1.0"/>
 				<mx:Label x="213" y="42" text="Background Color"/>

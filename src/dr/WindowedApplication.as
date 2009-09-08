@@ -211,7 +211,8 @@ package dr
 			config.settings.pageHeightAuto = (config.settings.pageHeightAuto) ? config.settings.pageHeightAuto : false;
 			config.settings.pageMarginVertical = (config.settings.pageMarginVertical) ? config.settings.pageMarginVertical : this.getStyle('paddingTop');
 			config.settings.pageMarginHorizontal = (config.settings.pageMarginHorizontal) ? config.settings.pageMarginHorizontal : this.getStyle('paddingLeft');
-			config.settings.pagePaddingVertical = content.getStyle('paddingTop');
+			config.settings.pagePaddingVerticalTop = content.getStyle('paddingTop');
+			config.settings.pagePaddingVerticalBottom = content.getStyle('paddingBottom');
 			config.settings.pagePaddingHorizontal = content.getStyle('paddingLeft');
 			config.settings.pageBackgroundOpacity = content.getStyle('backgroundAlpha');
 			config.settings.pageBackgroundColor = content.getStyle('backgroundColor');
@@ -337,17 +338,36 @@ package dr
 			content.y = margin;
 			
 			// page padding veritical
-			if(config.settings.pagePaddingVertical)
+			if(config.settings.pagePaddingVerticalTop)
 			{
-				content.setStyle('paddingTop', int(config.settings.pagePaddingVertical));
-				content.setStyle('paddingBottom', int(config.settings.pagePaddingVertical));
+				if (config.settings.pagePaddingVerticalTop > ((this.height/2)-100-config.settings.pageMarginVertical)) { config.settings.pagePaddingVerticalTop = ((this.height/2)-100-config.settings.pageMarginVertical) } // too much
+				if (config.settings.pagePaddingVerticalTop < 0) { config.settings.pagePaddingVerticalTop = 0 } // too little
+				
+				value = int(config.settings.pagePaddingVerticalTop);
+				
+				content.setStyle('paddingTop', value);
+			}
+			
+			if(config.settings.pagePaddingVerticalBottom)
+			{
+				if (config.settings.pagePaddingVerticalBottom > ((this.height/2)-100-config.settings.pageMarginVertical)) { config.settings.pagePaddingVerticalBottom = ((this.height/2)-100-config.settings.pageMarginVertical) } // too much
+				if (config.settings.pagePaddingVerticalBottom < 0) { config.settings.pagePaddingVerticalBottom = 0 } // too little
+				
+				value = int(config.settings.pagePaddingVerticalBottom);
+				
+				content.setStyle('paddingBottom', value);
 			}
 			
 			// page padding horizontal
 			if(config.settings.pagePaddingHorizontal)
 			{
-				content.setStyle('paddingLeft', int(config.settings.pagePaddingHorizontal));
-				content.setStyle('paddingRight', int(config.settings.pagePaddingHorizontal));
+				if (config.settings.pageMarginHorizontal > ((this.width/2)-100)) { config.settings.pageMarginHorizontal = ((this.width/2)-100) } // too much
+				if (config.settings.pageMarginHorizontal < 0) { config.settings.pageMarginHorizontal = 0 } // too little
+				
+				value = int(config.settings.pagePaddingHorizontal);
+				
+				content.setStyle('paddingLeft', value);
+				content.setStyle('paddingRight', value);
 			}
 		}
 		

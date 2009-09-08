@@ -33,7 +33,8 @@ package dr
 		public var txtPageMarginVertical:TextInput;
 		public var txtPageMarginHorizontal:TextInput;
 		public var txtPagePaddingHorizontal:TextInput;
-		public var txtPagePaddingVertical:TextInput;
+		public var txtPagePaddingVerticalTop:TextInput;
+		public var txtPagePaddingVerticalBottom:TextInput;
 		public var chkPageHeightAuto:CheckBox;
 		public var chkPageWidthAuto:CheckBox;
 		public var sldPageBackgroundOpacity:Slider;
@@ -138,7 +139,8 @@ package dr
 				config.settings.pageHeightAuto = chkPageHeightAuto.selected;
 				config.settings.pageMarginVertical = txtPageMarginVertical.text;
 				config.settings.pageMarginHorizontal = txtPageMarginHorizontal.text;
-				config.settings.pagePaddingVertical = txtPagePaddingVertical.text;
+				config.settings.pagePaddingVerticalTop = txtPagePaddingVerticalTop.text;
+				config.settings.pagePaddingVerticalBottom = txtPagePaddingVerticalBottom.text;
 				config.settings.pagePaddingHorizontal = txtPagePaddingHorizontal.text;
 				config.settings.pageBackgroundOpacity = sldPageBackgroundOpacity.value;
 				config.settings.pageBackgroundColor = clrPageBackgroundColor.value;
@@ -224,7 +226,8 @@ package dr
 					chkPageHeightAuto.selected = config.settings.pageHeightAuto;
 					txtPageMarginVertical.text = config.settings.pageMarginVertical;
 					txtPageMarginHorizontal.text = config.settings.pageMarginHorizontal;
-					txtPagePaddingVertical.text = config.settings.pagePaddingVertical;
+					txtPagePaddingVerticalTop.text = config.settings.pagePaddingVerticalTop;
+					txtPagePaddingVerticalBottom.text = config.settings.pagePaddingVerticalBottom;
 					txtPagePaddingHorizontal.text = config.settings.pagePaddingHorizontal;
 					sldPageBackgroundOpacity.value = config.settings.pageBackgroundOpacity;
 					cnvPageBackgroundColor.setStyle('backgroundColor', config.settings.pageBackgroundColor);
