@@ -20,6 +20,7 @@ package dr
 		private var settingsFile:File;
 		private var fonts:Array; 
 		private var textAlignments:Array;
+		private var autosaveInterval:Array;
 		private var tabUpdated:Array;
 		
 		[Bindable]
@@ -89,6 +90,13 @@ package dr
 		public var clrScrollBorderColor:ColorPicker;
 		public var cnvScrollBorderColor:Canvas;
 		
+		public var cboAutosave:ComboBox;
+		public var chkReopenLastDocument:CheckBox;
+		public var chkStatisticsCharacters:CheckBox;
+		public var chkStatisticsLines:CheckBox;
+		public var chkStatisticsWords:CheckBox;
+		public var chkStatisticsSentences:CheckBox;
+		
 		
 		public function ConfigurationWindow()
 		{
@@ -106,6 +114,9 @@ package dr
 			
 			// text alignments
 			textAlignments = new Array({label:'Left', data:'left'},{label:'Right', data:'right'},{label:'Center', data: 'center'},{label:'Justify', data:'justify'});
+			
+			// auto save time intervals
+			autosaveInterval = new Array({label:'Never', data:-1},{label:'30 seconds', data:30},{label:'1 minute', data:60},{label:'5 minutes', data:300},{label:'10 minutes', data:600});
 			
 			// button events
 			btnCancel.addEventListener("click", handleCancel);
@@ -187,6 +198,17 @@ package dr
 				
 			}
 			
+			// fourth tab
+			if(cboAutosave!=null)
+			{
+				config.settings.autosaveInterval = cboAutosave.selectedItem.data;
+				config.settings.reopenLastDocument = chkReopenLastDocument.selected;
+				config.settings.statisticsCharacters = chkStatisticsCharacters.selected;
+				config.settings.statisticsLines = chkStatisticsLines.selected;
+				config.settings.statisticsWords = chkStatisticsWords.selected;
+				config.settings.statisticsSentences = chkStatisticsSentences.selected;
+			}
+			
 			return config;
 		}
 		
@@ -258,6 +280,18 @@ package dr
 					cnvScrollThemeColor.setStyle('backgroundColor', config.settings.scrollThemeColor);
 					cnvScrollBorderColor.setStyle('backgroundColor', config.settings.scrollBorderColor);
 					break;
+					
+				case 3:
+					// setup
+					cboAutosave.dataProvider = autosaveInterval;
+					
+					cboAutosave.selectedIndex = getAutosaveIndex(config.settings.autosaveInterval);
+					chkReopenLastDocument.selected = config.settings.reopenLastDocument;
+					chkStatisticsCharacters.selected = config.settings.statisticsCharacters;
+					chkStatisticsLines.selected = config.settings.statisticsLines;
+					chkStatisticsWords.selected = config.settings.statisticsWords;
+					chkStatisticsSentences.selected = config.settings.statisticsSentences;
+					
 			}
 		}
 		
@@ -288,6 +322,21 @@ package dr
 				tabUpdated[navigator.selectedIndex] = true;
 				updateFields();
 			}
+		}
+		
+		public function getAutosaveIndex(value:int):int
+		{
+			var index:int = 0;
+			
+			for (var i:uint = 0; i < autosaveInterval.length; i++)
+			{
+                if (autosaveInterval[i].data == value)
+                {
+                	index = i;
+                }
+        	}
+        	
+        	return index;
 		}
 		
 		public function getFontIndex(font:String):int
