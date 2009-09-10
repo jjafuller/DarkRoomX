@@ -24,6 +24,7 @@ package dr
 	import flash.system.Capabilities;
 	import flash.system.fscommand;
 	import flash.ui.Keyboard;
+	import flash.utils.Timer;
 	
 	import mx.controls.Alert;
 	import mx.core.WindowedApplication;
@@ -31,7 +32,6 @@ package dr
 	import mx.managers.*;
 	import mx.styles.CSSStyleDeclaration;
 	import mx.styles.StyleManager;
-	import mx.core.mx_internal;
 
 	public class WindowedApplication extends mx.core.WindowedApplication
 	{
@@ -41,6 +41,7 @@ package dr
 		private var currentFile:File; 							// The currentFile opened (and saved) by the application
 		private var stream:FileStream = new FileStream(); 		// The FileStream object used for reading and writing the currentFile
 		private var defaultDirectory:File; 						// The default directory
+		private var autosaveTimer:Timer;
 		
 		[Bindable]
 		public var dataChanged:Boolean = false; 				// Whether the text data has changed (and should be saved)
@@ -88,6 +89,32 @@ package dr
 			settingsFile = settingsFile.resolvePath("settings.xml"); 
 			
 			config = new Configuration(settingsFile);
+		}
+		
+		public function initAutosaveTimer():void
+		{
+			var autosaveInterval:int = int(config.settings.autosaveInterval);
+			
+			// stop the timer if we have one going
+			if(autosaveTimer)
+			{
+				autosaveTimer.stop();
+			}
+			
+			// init timer if auto save is enabled
+			if(autosaveInterval > 0)
+			{
+				autosaveTimer = new Timer(autosaveInterval*1000, 0);
+				
+				// add event handler
+				autosaveTimer.addEventListener(TimerEvent.TIMER, handleAutosaveTimerInterval);
+				
+				autosaveTimer.start();
+			}
+			else
+			{
+				autosaveTimer = null;
+			}
 		}
 		
 		
@@ -200,6 +227,9 @@ package dr
 			scrollbarStyles.setStyle('borderColor', config.settings.scrollBorderColor);
 			
 			StyleManager.setStyleDeclaration(".scrollbar", scrollbarStyles, true);
+			
+			// auto save settings
+			initAutosaveTimer();
 		}
 		
 		private function processCurrentSettings():void
@@ -511,6 +541,9 @@ package dr
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN, handleFullScreen);
 			stage.addEventListener(ResizeEvent.RESIZE, handleResize);
 			
+			// timer
+			
+			
 			// menu
 			
 			// content area
@@ -578,6 +611,11 @@ package dr
 		public function handleEditPaste(event:Event):void
 		{
 			NativeApplication.nativeApplication.paste();
+		}
+		
+		public function handleAutosaveTimerInterval(event:TimerEvent):void
+		{
+			saveFile();
 		}
 		
 		public function handleEditSettings(event:Event):void
@@ -697,7 +735,7 @@ package dr
 			stream.addEventListener(Event.COMPLETE, fileReadHandler);
 			stream.addEventListener(IOErrorEvent.IO_ERROR, readIOErrorHandler);
 			dataChanged = false;
-			title = "Text Editor - " + currentFile.name;
+			title = "Dark Room X - " + currentFile.name;
 			currentFile.removeEventListener(Event.SELECT, fileOpenSelected);
 		}
 		
@@ -770,7 +808,7 @@ package dr
 		private function saveAsFileSelected(event:Event):void 
 		{
 			currentFile = event.target as File;
-			title = "Text Editor - " + currentFile.name;
+			title = "Dark Room X - " + currentFile.name;
 			saveFile();
 			dataChanged = false;
 			currentFile.removeEventListener(Event.SELECT, saveAsFileSelected);
