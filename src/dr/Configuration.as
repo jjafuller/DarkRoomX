@@ -13,6 +13,8 @@ package dr
 			settingsFile = pSettingsFile;
 			
 			settings = new Object();
+			 
+			//readXML();
 		}
 
 		
