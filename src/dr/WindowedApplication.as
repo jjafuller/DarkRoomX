@@ -35,6 +35,10 @@ package dr
 
 	public class WindowedApplication extends mx.core.WindowedApplication
 	{
+		// constances
+		public static const UNSAVED_TITLE:String = "Unsaved Changes";
+		public static const UNSAVED_MESSAGE:String = "You have unsaved changes in your document. If you proceed your changes will be lost.";
+		
 		// variables
 		private var isFullScreen:Boolean = false;
 		private var isDirty:Boolean = false;
@@ -70,6 +74,7 @@ package dr
  			fscommand("trapallkeys", "true");
  			
  			initSettings();
+ 			//applySettings();
  			
  			toggleDisplayState();
  			
@@ -79,8 +84,8 @@ package dr
  			defaultDirectory = File.documentsDirectory;
  			
 			content.text = "Donec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n";
-			content.selectionBeginIndex = content.text.length;
-			content.selectionEndIndex = content.text.length;
+			//content.selectionBeginIndex = content.text.length;
+			//content.selectionEndIndex = content.text.length;
 		}
 		
 		public function initSettings():void
@@ -541,14 +546,11 @@ package dr
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN, handleFullScreen);
 			stage.addEventListener(ResizeEvent.RESIZE, handleResize);
 			
-			// timer
-			
-			
 			// menu
 			
 			// content area
 			
-
+			this.addEventListener(Event.CLOSING, handleClosing);
 		}
 		
 		public function handleSettingUpdate(event:Event):void
@@ -558,17 +560,17 @@ package dr
 		
 		public function handleFileNew(event:Event):void
 		{
-			newFile();
+			preprocessNewFile();
 		}
 		
 		public function handleFileOpen(event:Event):void
 		{
-			openFile();
+			preprocessOpenFile();
 		}
 		
 		public function handleFileClose(event:Event):void
 		{
-			
+			preprocessNewFile();
 		}
 		
 		public function handleFileSave(event:Event):void
@@ -583,7 +585,7 @@ package dr
 		
 		public function handleFileExit(event:Event):void
 		{
-			NativeApplication.nativeApplication.exit();
+			preprocessClose();
 		}
 		
 		public function handleEditUndo(event:Event):void
@@ -679,11 +681,11 @@ package dr
 			switch(event.label)
 			{
 				case 'New':
-					newFile();
+					preprocessNewFile();
 					break;
 					
 				case 'Open':
-					openFile();
+					preprocessOpenFile();
 					break;
 					
 				case 'Save':
@@ -703,12 +705,34 @@ package dr
 			applySettings();
 		}
 		
+		private function preprocessOpenFile():void
+		{
+			if(content.isDirty)
+			{
+				Alert.show(UNSAVED_MESSAGE, UNSAVED_TITLE, Alert.OK | Alert.CANCEL, this, handlePreprocessOpenFile, null, Alert.OK);
+			}
+			else
+			{
+				openFile();
+			}
+		}
+		
+		private function handlePreprocessOpenFile(event:CloseEvent):void
+		{
+			if (event.detail==Alert.OK)
+			{
+				openFile();
+			}
+		}
+		
 		/**
 		 * Called when the user clicks the Open button. Opens a file chooser dialog box, in which the 
 		 * user selects a currentFile. 
 		 */
 		private function openFile():void 
 		{	
+			
+			
 			var fileChooser:File;
 			if (currentFile) 
 			{
@@ -734,7 +758,7 @@ package dr
 			stream.openAsync(currentFile, FileMode.READ);
 			stream.addEventListener(Event.COMPLETE, fileReadHandler);
 			stream.addEventListener(IOErrorEvent.IO_ERROR, readIOErrorHandler);
-			dataChanged = false;
+			content.isDirty = false;
 			title = "Dark Room X - " + currentFile.name;
 			currentFile.removeEventListener(Event.SELECT, fileOpenSelected);
 		}
@@ -774,7 +798,7 @@ package dr
 				str = str.replace(/\n/g, File.lineEnding);
 				stream.writeUTFBytes(str);
 				stream.close();
-				dataChanged = false;
+				content.isDirty = false;
 			} 
 			else
 			{
@@ -810,8 +834,28 @@ package dr
 			currentFile = event.target as File;
 			title = "Dark Room X - " + currentFile.name;
 			saveFile();
-			dataChanged = false;
+			content.isDirty = false;
 			currentFile.removeEventListener(Event.SELECT, saveAsFileSelected);
+		}
+		
+		private function preprocessNewFile():void
+		{
+			if(content.isDirty)
+			{
+				Alert.show(UNSAVED_MESSAGE, UNSAVED_TITLE, Alert.OK | Alert.CANCEL, this, handlePreprocessNewFile, null, Alert.OK);
+			}
+			else
+			{
+				newFile();
+			}
+		}
+		
+		private function handlePreprocessNewFile(event:CloseEvent):void
+		{
+			if (event.detail==Alert.OK)
+			{
+				newFile();
+			}
 		}
 		
 		/**
@@ -821,7 +865,7 @@ package dr
 		private function newFile():void
 		{
 			currentFile = undefined;
-			dataChanged = false;
+			content.isDirty = false;
 			content.text = "";
 		}
 		
@@ -840,6 +884,35 @@ package dr
 		{
 			Alert.show("The specified currentFile cannot be saved.", "Error", Alert.OK, this);
 		}
+		
+		private function preprocessClose():void
+		{
+			if(content.isDirty)
+			{
+				Alert.show(UNSAVED_MESSAGE, UNSAVED_TITLE, Alert.OK | Alert.CANCEL, this, handlePreprocessClose, null, Alert.OK);
+			}
+			else
+			{
+				NativeApplication.nativeApplication.exit();
+			}
+		}
+		
+		private function handlePreprocessClose(event:CloseEvent):void
+		{
+			if (event.detail==Alert.OK)
+			{
+				NativeApplication.nativeApplication.exit();
+			}
+		}
+		
+		
+		private function handleClosing(event:Event):void
+		{
+			event.preventDefault();
+			
+			preprocessClose();
+		}
+		
 		
 		private function setContentStyle(style:String,value:String):void
 		{

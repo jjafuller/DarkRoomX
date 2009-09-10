@@ -2,10 +2,8 @@ package dr
 {
 	import flash.events.*;
 	
-	import mx.controls.Alert;
 	import mx.controls.TextArea;
 	import mx.controls.textClasses.TextRange;
-	import mx.core.UITextField;
 	import mx.events.FlexEvent;
 
 	
@@ -14,6 +12,7 @@ package dr
 		public var tabsToSpaces:Boolean;
 		public var tabsToSpacesCount:int;
 		public var autoIndent:Boolean;
+		public var isDirty:Boolean;
 		
 		
 		public function TextArea()
@@ -25,12 +24,20 @@ package dr
 		
 		private function init(event:Event):void
 		{
+			isDirty = false;
+			
 			initListeners();
 		}
 
 		private function initListeners():void
 		{
 			this.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
+			this.addEventListener(Event.CHANGE, handleChange);
+		}
+		
+		private function handleChange(event:Event):void
+		{
+			isDirty = true;
 		}
 		
 		private function handleKeyDown(event:KeyboardEvent):void
