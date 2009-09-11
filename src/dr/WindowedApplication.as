@@ -90,7 +90,7 @@ package dr
  			
  			defaultDirectory = File.documentsDirectory;
  			
- 			if(config.settings.reopenLastDocument)
+ 			if(config.settings.reopenLastDocument && config.settings.lastFileNativePath)
  			{
  				currentFile = new File(config.settings.lastFileNativePath);
  				if(currentFile.exists)
@@ -115,6 +115,8 @@ package dr
 			settingsFile = settingsFile.resolvePath("settings.xml"); 
 			
 			config = new Configuration(settingsFile);
+			
+			config.read();
 		}
 		
 		public function initAutosaveTimer():void
@@ -143,24 +145,10 @@ package dr
 			}
 		}
 		
-		
-		private function readSettings():void
-		{
-			settingsStream = new FileStream();
-			if (settingsFile.exists) {
-    			settingsStream.open(settingsFile, FileMode.READ);
-    			settingsXml = XML(settingsStream.readUTFBytes(stream.bytesAvailable));
-				settingsStream.close();
-			    applySettings();
-			}
-			else
-			{
-			    saveSettings();
-			}
-		}
-		
 		private function applySettings():void
 		{
+			config.save();
+			
 			// page settings
 			
 			
@@ -930,6 +918,8 @@ package dr
 		{
 			if (event.detail==Alert.OK)
 			{
+				config.save();
+				
 				NativeApplication.nativeApplication.exit();
 			}
 		}
