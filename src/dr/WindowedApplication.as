@@ -26,12 +26,15 @@ package dr
 	import flash.ui.Keyboard;
 	import flash.utils.Timer;
 	
+	import gearsandcogs.text.UndoTextFields;
+	
 	import mx.controls.Alert;
 	import mx.core.WindowedApplication;
 	import mx.events.*;
 	import mx.managers.*;
 	import mx.styles.CSSStyleDeclaration;
 	import mx.styles.StyleManager;
+	
 
 	public class WindowedApplication extends mx.core.WindowedApplication
 	{
@@ -46,6 +49,7 @@ package dr
 		private var stream:FileStream = new FileStream(); 		// The FileStream object used for reading and writing the currentFile
 		private var defaultDirectory:File; 						// The default directory
 		private var autosaveTimer:Timer;
+		private var undoTextFields:UndoTextFields;
 		
 		[Bindable]
 		public var dataChanged:Boolean = false; 				// Whether the text data has changed (and should be saved)
@@ -72,6 +76,9 @@ package dr
 		public function init():void 
  		{	
  			fscommand("trapallkeys", "true");
+ 			
+ 			undoTextFields = new UndoTextFields();
+			undoTextFields.target = this;
  			
  			initSettings();
  			//applySettings();
@@ -484,9 +491,9 @@ package dr
 			fileMenuItem.submenu.addItem(fileSep3);
 			fileMenuItem.submenu.addItem(fileExit);
 			var editMenuItem:NativeMenuItem = rootMenu.addSubmenu(new NativeMenu(), "Edit");
-			editMenuItem.submenu.addItem(editUndo);
-			editMenuItem.submenu.addItem(editRedo);
-			editMenuItem.submenu.addItem(editSep1);
+			//editMenuItem.submenu.addItem(editUndo);
+			//editMenuItem.submenu.addItem(editRedo);
+			//editMenuItem.submenu.addItem(editSep1);
 			editMenuItem.submenu.addItem(editCut);
 			editMenuItem.submenu.addItem(editCopy);
 			editMenuItem.submenu.addItem(editPaste);
@@ -500,8 +507,8 @@ package dr
  			fileSaveAs.addEventListener(Event.SELECT, handleFileSaveAs);
  			fileExit.addEventListener(Event.SELECT, handleFileExit);
 
-			editUndo.addEventListener(Event.SELECT, handleEditUndo);
- 			editRedo.addEventListener(Event.SELECT, handleEditRedo);
+			//editUndo.addEventListener(Event.SELECT, handleEditUndo);
+ 			//editRedo.addEventListener(Event.SELECT, handleEditRedo);
  			editCut.addEventListener(Event.SELECT, handleEditCut);
  			editCopy.addEventListener(Event.SELECT, handleEditCopy);
  			editPaste.addEventListener(Event.SELECT, handleEditPaste);
@@ -521,10 +528,10 @@ package dr
  			fileExit.keyEquivalent = (isMac) ? "q" : "x";
  			fileExit.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
  			
- 			editUndo.keyEquivalent = "z";
- 			editUndo.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
- 			editRedo.keyEquivalent = "y";
- 			editRedo.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
+ 			//editUndo.keyEquivalent = "z";
+ 			//editUndo.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
+ 			//editRedo.keyEquivalent = "y";
+ 			//editRedo.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
  			editCut.keyEquivalent = "x";
  			editCut.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
  			editCopy.keyEquivalent = "c";
@@ -604,14 +611,14 @@ package dr
 		
 		public function handleEditUndo(event:Event):void
 		{
-			Alert.show("For some reason, undo and redo aren't working");
-			NativeApplication.nativeApplication.undo();
+			//Alert.show("For some reason, undo and redo aren't working");
+			//NativeApplication.nativeApplication.undo();
 		}
 		
 		public function handleEditRedo(event:Event):void
 		{
-			Alert.show("For some reason, undo and redo aren't working");
-			NativeApplication.nativeApplication.redo();
+			//Alert.show("For some reason, undo and redo aren't working");
+			//NativeApplication.nativeApplication.redo();
 		}
 		
 		public function handleEditCut(event:Event):void

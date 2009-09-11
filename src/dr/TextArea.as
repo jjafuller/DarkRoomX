@@ -13,6 +13,7 @@ package dr
 		public var tabsToSpacesCount:int;
 		public var autoIndent:Boolean;
 		public var isDirty:Boolean;
+		private var history:History;
 		
 		
 		public function TextArea()
@@ -26,6 +27,8 @@ package dr
 		{
 			isDirty = false;
 			
+			history = new History();
+			
 			initListeners();
 		}
 
@@ -33,6 +36,12 @@ package dr
 		{
 			this.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 			this.addEventListener(Event.CHANGE, handleChange);
+		}
+
+		private function undo():void
+		{
+			
+			
 		}
 		
 		private function handleChange(event:Event):void
@@ -42,6 +51,11 @@ package dr
 		
 		private function handleKeyDown(event:KeyboardEvent):void
 		{
+			if(event.charCode > 0 && event.charCode != 27)
+			{
+				history.log(event.charCode);
+			}
+			
 			if(event.charCode == 9)
 			{
 				event.preventDefault(); // capture focus
