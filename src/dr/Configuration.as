@@ -76,8 +76,8 @@ package dr
 			settings.wordWrap = (settingsXml.wordWrap=='true') ? true : false;
 			
 			// disable scrolls
-			settings.scrollVerticalDisable = settingsXml.scrollVerticalDisable;
-			settings.scrollHorizontalDisable = settingsXml.scrollHorizontalDisable;
+			settings.scrollVerticalDisable = (settingsXml.scrollVerticalDisable=='true') ? true : false;
+			settings.scrollHorizontalDisable = (settingsXml.scrollHorizontalDisable=='true') ? true : false;
 			
 			// scroll styles
 			settings.scrollCornerRadius = settingsXml.scrollCornerRadius;
