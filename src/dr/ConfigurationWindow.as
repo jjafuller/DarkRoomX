@@ -143,12 +143,12 @@ package dr
 				config.settings.pagePaddingVerticalBottom = txtPagePaddingVerticalBottom.text;
 				config.settings.pagePaddingHorizontal = txtPagePaddingHorizontal.text;
 				config.settings.pageBackgroundOpacity = sldPageBackgroundOpacity.value;
-				config.settings.pageBackgroundColor = clrPageBackgroundColor.value;
+				config.settings.pageBackgroundColor = (clrPageBackgroundColor.value) ? clrPageBackgroundColor.value : config.settings.pageBackgroundColor;
 				
 				// general
 				config.settings.launchFullScreen = chkLaunchFullScreen.selected;
 				config.settings.liveScrolling = chkLiveScrolling.selected;
-				config.settings.backgroundColor = clrBackgroundColor.value;
+				config.settings.backgroundColor = (clrBackgroundColor.value) ? clrBackgroundColor.value : config.settings.backgroundColor;
 				config.settings.backgroundOpacity = sldBackgroundOpacity.value;
 			}
 			
@@ -157,7 +157,7 @@ package dr
 			{
 				// formatting
 				config.settings.fontFamily = cboFontFamily.selectedItem.fontName;
-				config.settings.fontColor = clrFontColor.value;
+				config.settings.fontColor = (clrFontColor.value) ? clrFontColor.value : config.settings.fontColor;
 				config.settings.fontSize = txtFontSize.text;
 				config.settings.fontLetterSpacing = txtFontLetterSpacing.text;
 				config.settings.fontStyle = (chkFontStyle.selected) ? 'italic' : 'normal';

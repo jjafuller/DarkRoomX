@@ -39,21 +39,21 @@ package dr
 			stream.close();
 			
 			// page
-			settings.pageWidth = settingsXml.pageWidth;
-			settings.pageWidthAuto = settingsXml.pageWidthAuto;
-			settings.pageHeight = settingsXml.pageHeight;
-			settings.pageHeightAuto = settingsXml.pageHeightAuto;
-			settings.pageMarginVertical = settingsXml.pageMarginVertical;
-			settings.pageMarginHorizontal = settingsXml.pageMarginHorizontal;
-			settings.pagePaddingVerticalTop = settingsXml.pagePaddingVerticalTop;
-			settings.pagePaddingVerticalBottom = settingsXml.pagePaddingVerticalBottom;
-			settings.pagePaddingHorizontal = settingsXml.pagePaddingHorizontal;
+			settings.pageWidth = int(settingsXml.pageWidth);
+			settings.pageWidthAuto = (settingsXml.pageWidthAuto=='true') ? true : false;
+			settings.pageHeight = int(settingsXml.pageHeight);
+			settings.pageHeightAuto = (settingsXml.pageHeightAuto=='true') ? true : false;
+			settings.pageMarginVertical = int(settingsXml.pageMarginVertical);
+			settings.pageMarginHorizontal = int(settingsXml.pageMarginHorizontal);
+			settings.pagePaddingVerticalTop = int(settingsXml.pagePaddingVerticalTop);
+			settings.pagePaddingVerticalBottom = int(settingsXml.pagePaddingVerticalBottom);
+			settings.pagePaddingHorizontal = int(settingsXml.pagePaddingHorizontal);
 			settings.pageBackgroundOpacity = settingsXml.pageBackgroundOpacity;
-			settings.pageBackgroundColor = settingsXml.pageBackgroundColor;
+			settings.pageBackgroundColor = uint(settingsXml.pageBackgroundColor);
 			
 			// general
-			settings.launchFullScreen = settingsXml.launchFullScreen;
-			settings.liveScrolling = settingsXml.liveScrolling;
+			settings.launchFullScreen = (settingsXml.launchFullScreen=='true') ? true : false;
+			settings.liveScrolling = (settingsXml.liveScrolling=='true') ? true : false;
 			settings.backgroundColor = settingsXml.backgroundColor;
 			settings.backgroundOpacity = settingsXml.backgroundOpacity;
 			
@@ -70,10 +70,10 @@ package dr
 			settings.fontLeading = settingsXml.fontLeading;
 			settings.fontIndent = settingsXml.fontIndent;
 			settings.fontAlign = settingsXml.fontAlign;
-			settings.tabsToSpaces = settingsXml.tabsToSpaces;
-			settings.tabsToSpacesCount = settingsXml.tabsToSpacesCount;
-			settings.autoIndent = settingsXml.autoIndent;
-			settings.wordWrap = settingsXml.wordWrap;
+			settings.tabsToSpaces = (settingsXml.tabsToSpaces=='true') ? true : false;
+			settings.tabsToSpacesCount = int(settingsXml.tabsToSpacesCount);
+			settings.autoIndent = (settingsXml.autoIndent=='true') ? true : false;
+			settings.wordWrap = (settingsXml.wordWrap=='true') ? true : false;
 			
 			// disable scrolls
 			settings.scrollVerticalDisable = settingsXml.scrollVerticalDisable;
@@ -95,6 +95,18 @@ package dr
 			settings.scrollTrackColor2 = settingsXml.scrollTrackColor2;
 			settings.scrollThemeColor = settingsXml.scrollThemeColor;
 			settings.scrollBorderColor = settingsXml.scrollBorderColor;
+			
+			// auto save
+			settings.autosaveInterval = settingsXml.autosaveInterval;
+			
+			// reopen
+			settings.reopenLastDocument = (settingsXml.reopenLastDocument=='true') ? true : false;
+			
+			// statistics
+			settings.statisticsCharacters = (settingsXml.statisticsCharacters=='true') ? true : false;
+			settings.statisticsLines = (settingsXml.statisticsLines=='true') ? true : false;
+			settings.statisticsWords = (settingsXml.statisticsWords=='true') ? true : false;
+			settings.statisticsSentences = (settingsXml.statisticsSentences=='true') ? true : false;
 			
 		}
 		
@@ -165,6 +177,18 @@ package dr
 			settingsXml.scrollTrackColor2 = settings.scrollTrackColor2;
 			settingsXml.scrollThemeColor = settings.scrollThemeColor;
 			settingsXml.scrollBorderColor = settings.scrollBorderColor;
+			
+			// auto save
+			settingsXml.autosaveInterval = settings.autosaveInterval
+			
+			// reopen
+			settingsXml.reopenLastDocument = settings.reopenLastDocument;
+			
+			// statistics
+			settingsXml.statisticsCharacters = settings.statisticsCharacters;
+			settingsXml.statisticsLines = settings.statisticsLines;
+			settingsXml.statisticsWords = settings.statisticsWords;
+			settingsXml.statisticsSentences = settings.statisticsSentences;
 			
 			settingsXml.saveDate = new Date().toString();
 		}

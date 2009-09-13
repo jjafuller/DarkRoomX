@@ -75,21 +75,31 @@ package dr
 		
 		public function init():void 
  		{	
+ 			// trap all our keys so we can make escape go to full scree
  			fscommand("trapallkeys", "true");
  			
+ 			// hack to get us undo until flex 4
  			undoTextFields = new UndoTextFields();
 			undoTextFields.target = this;
  			
+ 			// load settings and then apply them
  			initSettings();
- 			//applySettings();
+ 			applySettings();
  			
- 			toggleDisplayState();
+ 			// go to full screen if that's what the user wants
+ 			if(config.settings.launchFullScreen)
+ 			{
+ 				toggleDisplayState();
+ 			}
  			
+ 			// start listeners and build menu
  			initListeners();
  			initMenu();
  			
+ 			// figure out where our base directory is
  			defaultDirectory = File.documentsDirectory;
  			
+ 			// reopen the last document if instructed to
  			if(config.settings.reopenLastDocument && config.settings.lastFileNativePath)
  			{
  				currentFile = new File(config.settings.lastFileNativePath);
@@ -710,6 +720,7 @@ package dr
 		public function handleConfigDialogOk(event:Event):void
 		{
 			config = configDialog.processSettings();
+			config.save();
 			
 			applySettings();
 		}
