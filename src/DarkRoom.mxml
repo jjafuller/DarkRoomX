@@ -15,5 +15,5 @@
         backgroundColor="#101010" 
         color="#00FF00"
         fontSize="14" backgroundAlpha="0.9" verticalScrollBarStyleName="scrollbar" borderStyle="none" fontFamily="Courier New" paddingBottom="10" paddingLeft="10" paddingTop="10" paddingRight="10" focusThickness="0"/>
-    <mx:Label x="10" y="10" text="Label" id="lblInformation" color="#00FF66"/>
+    <mx:Label x="10" text="untitled" id="lblInformation" color="#00FF66" y="10" textAlign="center"/>
 </dr:WindowedApplication>

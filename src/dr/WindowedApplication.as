@@ -163,7 +163,7 @@ package dr
 		
 		private function applySettings():void
 		{
-			config.save();
+			//config.save();
 			
 			// page settings
 			
@@ -204,6 +204,7 @@ package dr
 			if(config.settings.fontColor)
 			{
 				content.setStyle('color', config.settings.fontColor);
+				lblInformation.setStyle('color', config.settings.fontColor);
 			}
 			
 			if(config.settings.fontSize)
@@ -429,6 +430,10 @@ package dr
 				content.setStyle('paddingLeft', value);
 				content.setStyle('paddingRight', value);
 			}
+			
+			// information bar
+			lblInformation.width = this.width - 20;
+			lblInformation.y = this.height - 20;
 		}
 		
 		
@@ -462,7 +467,7 @@ package dr
 			// is mac?
 			var isMac:Boolean = (Capabilities.os.substr(0, 3).toLowerCase() == "mac") ? true : false;
 			
-			// init submenus
+			// file menu options
 			var fileNew:NativeMenuItem = new NativeMenuItem("New", false);
  			var fileOpen:NativeMenuItem = new NativeMenuItem("Open...", false);
  			var fileSep1:NativeMenuItem = new NativeMenuItem("1", true);
@@ -473,6 +478,7 @@ package dr
  			var fileSep3:NativeMenuItem = new NativeMenuItem("3", true);
  			var fileExit:NativeMenuItem = new NativeMenuItem("Exit", false);
  			
+ 			// edit menu options
  			var editUndo:NativeMenuItem = new NativeMenuItem("Undo", false);
  			var editRedo:NativeMenuItem = new NativeMenuItem("Redo", false);
  			var editSep1:NativeMenuItem = new NativeMenuItem("1", true);
@@ -482,8 +488,13 @@ package dr
  			var editSep2:NativeMenuItem = new NativeMenuItem("2", true);
  			var editSettings:NativeMenuItem = new NativeMenuItem("Preferences...", false);
  			
+ 			// view menu options
+ 			var viewInformation:NativeMenuItem = new NativeMenuItem("Information Bar, Toggle");
+ 			var viewScrollbars:NativeMenuItem = new NativeMenuItem("Scrollbars, Toggle");
+ 			
  			// build menu
  			NativeApplication.nativeApplication.menu = rootMenu;
+ 			
  			var fileMenuItem:NativeMenuItem = rootMenu.addSubmenu(new NativeMenu(), "File");
 			fileMenuItem.submenu.addItem(fileNew);
 			fileMenuItem.submenu.addItem(fileOpen);
@@ -494,6 +505,7 @@ package dr
 			fileMenuItem.submenu.addItem(fileSaveAs);
 			fileMenuItem.submenu.addItem(fileSep3);
 			fileMenuItem.submenu.addItem(fileExit);
+			
 			var editMenuItem:NativeMenuItem = rootMenu.addSubmenu(new NativeMenu(), "Edit");
 			//editMenuItem.submenu.addItem(editUndo);
 			//editMenuItem.submenu.addItem(editRedo);
@@ -502,6 +514,11 @@ package dr
 			editMenuItem.submenu.addItem(editCopy);
 			editMenuItem.submenu.addItem(editPaste);
 			editMenuItem.submenu.addItem(editSettings);
+			
+			var viewMenuItem:NativeMenuItem = rootMenu.addSubmenu(new NativeMenu(), "View");
+			viewMenuItem.submenu.addItem(viewInformation);
+			viewMenuItem.submenu.addItem(viewScrollbars);
+			
 			
 			// bind events
 			fileNew.addEventListener(Event.SELECT, handleFileNew);
@@ -517,6 +534,9 @@ package dr
  			editCopy.addEventListener(Event.SELECT, handleEditCopy);
  			editPaste.addEventListener(Event.SELECT, handleEditPaste);
  			editSettings.addEventListener(Event.SELECT, handleEditSettings);
+ 			
+ 			viewInformation.addEventListener(Event.SELECT, handleViewInformation);
+ 			viewScrollbars.addEventListener(Event.SELECT, handleViewScrollbars);
  			
  			// keyboard equivalents
  			fileNew.keyEquivalent = "n";
@@ -544,6 +564,11 @@ package dr
  			editPaste.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
  			editSettings.keyEquivalent = ",";
  			editSettings.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
+ 			
+ 			viewInformation.keyEquivalent = "i";
+ 			viewInformation.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
+ 			viewScrollbars.keyEquivalent = "u";
+ 			viewScrollbars.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
  			
 		}
 		
@@ -657,6 +682,20 @@ package dr
 			configDialog.updateFields();
 			
 			PopUpManager.centerPopUp(configDialog);
+		}
+		
+		public function handleViewInformation(event:Event):void
+		{
+			lblInformation.visible = !lblInformation.visible;
+		}
+		
+		public function handleViewScrollbars(event:Event):void
+		{
+			config.settings.scrollVerticalDisable = !config.settings.scrollVerticalDisable;
+			config.settings.scrollHorizontalDisable = !config.settings.scrollHorizontalDisable;
+			config.save();
+			
+			applySettings();
 		}
 		
 		public function handleKeyDown(event:KeyboardEvent):void
@@ -808,6 +847,8 @@ package dr
 			str = str.replace(lineEndPattern, "\n");
 			content.text = str; 
 			stream.close();
+			
+			updateStatistics();
 		}
 		
 		/**
@@ -976,33 +1017,36 @@ package dr
 		
 		private function updateStatistics():void
 		{
-			lblInformation.text = (currentFile) ? currentFile.name : 'untitled';
-			
-			var stats:Array = new Array();
-			
-			if(config.settings.statisticsCharacters)
+			if(lblInformation.visible)
 			{
-				stats.push('characters: ' + content.text.length.toString());
-			}
+				lblInformation.text = (currentFile) ? currentFile.name : 'untitled';
 			
-			if(config.settings.statisticsWords)
-			{
-				stats.push('words: ' + content.text.match(PATTERN_WORDS).length.toString());
-			}
-			
-			if(config.settings.statisticsSentences)
-			{
+				var stats:Array = new Array();
 				
-				stats.push('sentences: ' + content.text.split(PATTERN_SENTENCES).length.toString());
-			}
-			
-			if(config.settings.statisticsLines)
-			{
+				if(config.settings.statisticsCharacters)
+				{
+					stats.push('characters: ' + content.text.length.toString());
+				}
 				
-				stats.push('lines: ' + content.text.split(PATTERN_LINES).length.toString());
+				if(config.settings.statisticsWords)
+				{
+					stats.push('words: ' + content.text.match(PATTERN_WORDS).length.toString());
+				}
+				
+				if(config.settings.statisticsSentences)
+				{
+					
+					stats.push('sentences: ' + content.text.split(PATTERN_SENTENCES).length.toString());
+				}
+				
+				if(config.settings.statisticsLines)
+				{
+					
+					stats.push('lines: ' + content.text.split(PATTERN_LINES).length.toString());
+				}
+				
+				lblInformation.text += (stats.length > 0) ? ' (' + stats.join(', ') + ')' : '';
 			}
-			
-			lblInformation.text += (stats.length > 0) ? ' (' + stats.join(', ') + ')' : '';
 		}
 	}
 }
