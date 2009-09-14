@@ -29,6 +29,7 @@ package dr
 	import gearsandcogs.text.UndoTextFields;
 	
 	import mx.controls.Alert;
+	import mx.controls.Label;
 	import mx.core.WindowedApplication;
 	import mx.events.*;
 	import mx.managers.*;
@@ -41,6 +42,7 @@ package dr
 		// constances
 		public static const UNSAVED_TITLE:String = "Unsaved Changes";
 		public static const UNSAVED_MESSAGE:String = "You have unsaved changes in your document. If you proceed your changes will be lost.";
+		public static const WORD_COUNT_PATTERN:RegExp  = /\w+/g;
 		
 		// variables
 		private var isFullScreen:Boolean = false;
@@ -60,6 +62,7 @@ package dr
 
 		// controls
 		public var content:dr.TextArea;
+		public var lblInformation:Label;
 		
 		//public var menuBar:MenuBar;
 		public var rootMenu:NativeMenu = new NativeMenu();
@@ -671,6 +674,9 @@ package dr
 			{
 				Alert.show('save');
 			}
+			
+			
+			updateStatistics();
 		}
 		
 		public function handleFullScreen(event:FullScreenEvent):void
@@ -963,6 +969,35 @@ package dr
 		private function cardinalValue(value:Object, alt:Object):Object
 		{
 			return (value) ? value : alt;
+		}
+		
+		private function updateStatistics():void
+		{
+			lblInformation.text = (currentFile) ? currentFile.name : 'untitled';
+			
+			var stats:Array = new Array();
+			
+			if(config.settings.statisticsCharacters)
+			{
+				stats.push('characters: ' + content.text.length.toString());
+			}
+			
+			if(config.settings.statisticsLines)
+			{
+				//stats.push('lines: ' + content.g .toString());
+			}
+			
+			if(config.settings.statisticsWords)
+			{
+				stats.push('words: ' + content.text.match(WORD_COUNT_PATTERN).length.toString());
+			}
+			
+			if(config.settings.statisticsSentences)
+			{
+				//stats.push('characters: ' + content.text.length.toString());
+			}
+			
+			lblInformation.text += (stats.length > 0) ? ' (' + stats.join(', ') + ')' : '';
 		}
 	}
 }
