@@ -3,44 +3,44 @@
 	<mx:TabNavigator x="10" y="11" width="462" height="471" id="navigator">
 		<mx:Canvas label="Environment" width="100%" height="100%">
 			<mx:Panel x="10" y="10" width="440" height="249" layout="absolute" title="Page">
-				<mx:TextInput x="133" y="34" id="txtPageWidth" width="50"/>
-				<mx:TextInput x="133" y="62" id="txtPageMarginVertical" width="50"/>
-				<mx:TextInput x="133" y="90" id="txtPageMarginHorizontal" width="50"/>
+				<mx:TextInput x="133" y="34" id="txtPageWidth" width="50" tabIndex="3"/>
+				<mx:TextInput x="133" y="62" id="txtPageMarginVertical" width="50" tabIndex="5"/>
+				<mx:TextInput x="133" y="90" id="txtPageMarginHorizontal" width="50" tabIndex="6"/>
 				<mx:Label x="19" y="92" text="Margin, Horizontal"/>
-				<mx:TextInput x="133" y="146" id="txtPagePaddingVerticalTop" width="50"/>
-				<mx:TextInput x="133" y="118" id="txtPagePaddingHorizontal" width="50"/>
+				<mx:TextInput x="133" y="146" id="txtPagePaddingVerticalTop" width="50" tabIndex="8"/>
+				<mx:TextInput x="133" y="118" id="txtPagePaddingHorizontal" width="50" tabIndex="7"/>
 				<mx:Label x="11" y="120" text="Padding, Horizontal"/>
 				<mx:Label x="46" y="148" text="Padding, Top"/>
-				<mx:TextInput x="133" y="174" id="txtPagePaddingVerticalBottom" width="50"/>
+				<mx:TextInput x="133" y="174" id="txtPagePaddingVerticalBottom" width="50" tabIndex="9"/>
 				<mx:Label x="27" y="176" text="Padding, Bottom"/>
 				<mx:Label x="35" y="64" text="Margin, Vertical"/>
 				<mx:Label x="201" y="92" text="Background Opacity"/>
 				<mx:Label x="88" y="36" text="Width"/>
 				<mx:Label x="84" y="10" text="Height"/>
-				<mx:TextInput x="133" y="8" width="50" id="txtPageHeight"/>
-				<mx:HSlider x="324" y="88" width="86" id="sldPageBackgroundOpacity" minimum="0.5" maximum="1.0"/>
-				<mx:CheckBox x="191" y="8" label="Auto" id="chkPageHeightAuto"/>
-				<mx:CheckBox x="191" y="34" label="Auto" id="chkPageWidthAuto"/>
+				<mx:TextInput x="133" y="8" width="50" id="txtPageHeight" tabIndex="1"/>
+				<mx:HSlider x="324" y="88" width="86" id="sldPageBackgroundOpacity" minimum="0.5" maximum="1.0" tabIndex="10"/>
+				<mx:CheckBox x="191" y="8" label="Auto" id="chkPageHeightAuto" tabIndex="2"/>
+				<mx:CheckBox x="191" y="34" label="Auto" id="chkPageWidthAuto" tabIndex="4"/>
 				<mx:Label x="213" y="120" text="Background Color"/>
-				<mx:ColorPicker x="324" y="116" id="clrPageBackgroundColor"/>
+				<mx:ColorPicker x="324" y="116" id="clrPageBackgroundColor" tabIndex="11"/>
 				<mx:Canvas x="354" y="117" width="20" height="20" id="cnvPageBackgroundColor"></mx:Canvas>
 			</mx:Panel>
 			<mx:Panel x="10" y="267" width="440" height="161" layout="absolute" title="General">
 				<mx:Label x="201" y="14" text="Background Opacity"/>
-				<mx:HSlider x="324" y="10" width="86" id="sldBackgroundOpacity" minimum="0.5" maximum="1.0"/>
+				<mx:HSlider x="324" y="10" width="86" id="sldBackgroundOpacity" minimum="0.5" maximum="1.0" tabIndex="14"/>
 				<mx:Label x="213" y="42" text="Background Color"/>
-				<mx:ColorPicker x="324" y="38" id="clrBackgroundColor"/>
+				<mx:ColorPicker x="324" y="38" id="clrBackgroundColor" tabIndex="15"/>
 				<mx:Label x="10" y="14" text="Launch in Full Screen"/>
 				<mx:Label x="55" y="42" text="Live Scrolling"/>
-				<mx:CheckBox x="140" y="13" id="chkLaunchFullScreen"/>
-				<mx:CheckBox x="140" y="42" id="chkLiveScrolling"/>
+				<mx:CheckBox x="140" y="13" id="chkLaunchFullScreen" tabIndex="12"/>
+				<mx:CheckBox x="140" y="42" id="chkLiveScrolling" tabIndex="13"/>
 				<mx:Canvas x="354" y="40" width="20" height="20" id="cnvBackgroundColor"></mx:Canvas>
 			</mx:Panel>
 		</mx:Canvas>
-		<mx:Canvas label="Writing" width="100%" height="100%">
+		<mx:Canvas label="Writing" width="100%" height="100%" tabIndex="0">
 			<mx:Panel x="10" y="10" width="440" height="201" layout="absolute" title="Formatting">
 				<mx:Label x="25" y="10" text="Font Family"/>
-				<mx:ComboBox x="102" y="8" width="308" id="cboFontFamily" labelField="fontName" fontSize="12">
+				<mx:ComboBox x="102" y="8" width="308" id="cboFontFamily" labelField="fontName" fontSize="12" tabIndex="1">
 					<mx:itemRenderer>
 			            <mx:Component>
 			                <mx:Label fontFamily="{data.fontName}" toolTip="{data.fontName}" />
@@ -48,55 +48,55 @@
 			        </mx:itemRenderer>
 				</mx:ComboBox>
 				<mx:Label x="60" y="42" text="Color"/>
-				<mx:ColorPicker x="102" y="38" id="clrFontColor"/>
+				<mx:ColorPicker x="102" y="38" id="clrFontColor" tabIndex="2"/>
 				<mx:Label x="66" y="68" text="Size"/>
-				<mx:TextInput x="102" y="66" width="50" id="txtFontSize"/>
-				<mx:TextInput x="102" y="94" width="50" id="txtFontLetterSpacing"/>
+				<mx:TextInput x="102" y="66" width="50" id="txtFontSize" tabIndex="3"/>
+				<mx:TextInput x="102" y="94" width="50" id="txtFontLetterSpacing" tabIndex="4"/>
 				<mx:Label x="10" y="96" text="Letter Spacing"/>
-				<mx:CheckBox x="259" y="42" label="Italic" fontStyle="italic" id="chkFontStyle"/>
-				<mx:CheckBox x="259" y="68" label="Bold" fontWeight="bold" id="chkFontWeight"/>
-				<mx:CheckBox x="259" y="94" label="Underline" textDecoration="underline" id="chkFontDecoration"/>
+				<mx:CheckBox x="259" y="42" label="Italic" fontStyle="italic" id="chkFontStyle" tabIndex="5"/>
+				<mx:CheckBox x="259" y="68" label="Bold" fontWeight="bold" id="chkFontWeight" tabIndex="6"/>
+				<mx:CheckBox x="259" y="94" label="Underline" textDecoration="underline" id="chkFontDecoration" tabIndex="7"/>
 				<mx:Canvas x="132" y="39" width="20" height="20" id="cnvFontColor"></mx:Canvas>
 			</mx:Panel>
 			<mx:Panel x="10" y="219" width="440" height="209" layout="absolute" title="Paragraph">
-				<mx:ComboBox x="102" y="64" width="120" id="cboFontAlign"></mx:ComboBox>
-				<mx:TextInput x="102" y="10" width="50" id="txtFontLeading"/>
+				<mx:ComboBox x="102" y="64" width="120" id="cboFontAlign" tabIndex="10"></mx:ComboBox>
+				<mx:TextInput x="102" y="10" width="50" id="txtFontLeading" tabIndex="8"/>
 				<mx:Label x="45" y="12" text="Leading"/>
-				<mx:TextInput x="102" y="38" width="50" id="txtFontIndent"/>
+				<mx:TextInput x="102" y="38" width="50" id="txtFontIndent" tabIndex="9"/>
 				<mx:Label x="52" y="40" text="Indent"/>
 				<mx:Label x="33" y="66" text="Alignment"/>
-				<mx:CheckBox x="259" y="10" label="Tabs to Spaces" id="chkTabsToSpaces"/>
-				<mx:TextInput x="377" y="10" width="33" id="txtTabsToSpacesCount"/>
-				<mx:CheckBox x="259" y="38" label="Auto Indent" id="chkAutoIndent"/>
-				<mx:CheckBox x="259" y="64" label="Wrap to Page" id="chkWrapToPage"/>
+				<mx:CheckBox x="259" y="10" label="Tabs to Spaces" id="chkTabsToSpaces" tabIndex="11"/>
+				<mx:TextInput x="377" y="10" width="33" id="txtTabsToSpacesCount" tabIndex="12"/>
+				<mx:CheckBox x="259" y="38" label="Auto Indent" id="chkAutoIndent" tabIndex="13"/>
+				<mx:CheckBox x="259" y="64" label="Wrap to Page" id="chkWrapToPage" tabIndex="14"/>
 			</mx:Panel>
 		</mx:Canvas>
 		<mx:Canvas label="Scrollbars" width="100%" height="100%">
 			<mx:Panel x="10" y="0" width="440" height="88" layout="absolute" title="Disable">
-				<mx:CheckBox x="10" y="10" label="Disable Vertical Scrollbar" id="chkDisableVerticalScroll"/>
-				<mx:CheckBox x="214" y="10" label="Disable Horizontal Scrollbar" id="chkDisableHorizontalScroll"/>
+				<mx:CheckBox x="10" y="10" label="Disable Vertical Scrollbar" id="chkDisableVerticalScroll" tabIndex="1"/>
+				<mx:CheckBox x="214" y="10" label="Disable Horizontal Scrollbar" id="chkDisableHorizontalScroll" tabIndex="2"/>
 			</mx:Panel>
 			<mx:Panel x="10" y="96" width="440" height="332" layout="absolute" title="Style">
 				<mx:Label x="50" y="10" text="Corner Radius"/>
-				<mx:HSlider x="142" y="10" minimum="0" maximum="16" id="sldScrollCornerRadius" width="100"/>
+				<mx:HSlider x="142" y="10" minimum="0" maximum="16" id="sldScrollCornerRadius" width="100" tabIndex="3"/>
 				<mx:Label x="10" y="36" text="Highlight Alpha (Top)"/>
 				<mx:Label x="73" y="62" text="Fill Alphas"/>
 				<mx:Label x="75" y="88" text="Fill Colors"/>
-				<mx:HSlider x="142" y="36" minimum="0" maximum="1" id="sldScrollHighlightAlpha1" width="100"/>
+				<mx:HSlider x="142" y="36" minimum="0" maximum="1" id="sldScrollHighlightAlpha1" width="100" tabIndex="4"/>
 				<mx:Label x="250" y="36" text="(Middle)"/>
-				<mx:HSlider x="309" y="36" minimum="0" maximum="1" id="sldScrollHighlightAlpha2" width="100"/>
-				<mx:HSlider x="142" y="62" minimum="0" maximum="1" id="sldScrollFillAlpha1" width="50"/>
-				<mx:HSlider x="200" y="62" minimum="0" maximum="1" id="sldScrollFillAlpha2" width="50"/>
-				<mx:HSlider x="258" y="62" minimum="0" maximum="1" id="sldScrollFillAlpha3" width="50"/>
-				<mx:HSlider x="316" y="62" minimum="0" maximum="1" id="sldScrollFillAlpha4" width="50"/>
-				<mx:ColorPicker x="142" y="88" id="clrScrollFillColor1"/>
-				<mx:ColorPicker x="199" y="88" id="clrScrollFillColor2"/>
+				<mx:HSlider x="309" y="36" minimum="0" maximum="1" id="sldScrollHighlightAlpha2" width="100" tabIndex="5"/>
+				<mx:HSlider x="142" y="62" minimum="0" maximum="1" id="sldScrollFillAlpha1" width="50" tabIndex="6"/>
+				<mx:HSlider x="200" y="62" minimum="0" maximum="1" id="sldScrollFillAlpha2" width="50" tabIndex="7"/>
+				<mx:HSlider x="258" y="62" minimum="0" maximum="1" id="sldScrollFillAlpha3" width="50" tabIndex="8"/>
+				<mx:HSlider x="316" y="62" minimum="0" maximum="1" id="sldScrollFillAlpha4" width="50" tabIndex="9"/>
+				<mx:ColorPicker x="142" y="88" id="clrScrollFillColor1" tabIndex="10"/>
+				<mx:ColorPicker x="199" y="88" id="clrScrollFillColor2" tabIndex="11"/>
 				<mx:Canvas x="223" y="88" width="22" height="22" id="cnvScrollFillColor2">
 				</mx:Canvas>
-				<mx:ColorPicker x="257" y="88" id="clrScrollFillColor3"/>
+				<mx:ColorPicker x="257" y="88" id="clrScrollFillColor3" tabIndex="12"/>
 				<mx:Canvas x="281" y="88" width="22" height="22" id="cnvScrollFillColor3">
 				</mx:Canvas>
-				<mx:ColorPicker x="316" y="88" id="clrScrollFillColor4"/>
+				<mx:ColorPicker x="316" y="88" id="clrScrollFillColor4" tabIndex="13"/>
 				<mx:Canvas x="340" y="88" width="22" height="22" id="cnvScrollFillColor4">
 				</mx:Canvas>
 				<mx:Canvas x="166" y="88" width="22" height="22" id="cnvScrollFillColor1">
@@ -105,18 +105,18 @@
 				<mx:Label x="316" y="112" text="Bottom:hover" fontSize="7" fontWeight="normal"/>
 				<mx:Label x="142" y="112" text="Top" fontSize="7" fontWeight="normal"/>
 				<mx:Label x="60" y="130" text="Track Colors"/>
-				<mx:ColorPicker x="142" y="130" id="clrScrollTrackColor1"/>
-				<mx:ColorPicker x="199" y="130" id="clrScrollTrackColor2"/>
+				<mx:ColorPicker x="142" y="130" id="clrScrollTrackColor1" tabIndex="14"/>
+				<mx:ColorPicker x="199" y="130" id="clrScrollTrackColor2" tabIndex="15"/>
 				<mx:Canvas x="223" y="130" width="22" height="22" id="cnvScrollTrackColor2">
 				</mx:Canvas>
 				<mx:Canvas x="166" y="130" width="22" height="22" id="cnvScrollTrackColor1">
 				</mx:Canvas>
 				<mx:Label x="57" y="172" text="Theme Color"/>
-				<mx:ColorPicker x="142" y="172" id="clrScrollThemeColor"/>
+				<mx:ColorPicker x="142" y="172" id="clrScrollThemeColor" tabIndex="17"/>
 				<mx:Canvas x="166" y="172" width="22" height="22" id="cnvScrollThemeColor">
 				</mx:Canvas>
 				<mx:Label x="60" y="205" text="Border Color"/>
-				<mx:ColorPicker x="142" y="205" id="clrScrollBorderColor"/>
+				<mx:ColorPicker x="142" y="205" id="clrScrollBorderColor" tabIndex="18"/>
 				<mx:Canvas x="166" y="205" width="22" height="22" id="cnvScrollBorderColor">
 				</mx:Canvas>
 				<mx:Label x="142" y="154" text="Left" fontSize="7" fontWeight="normal"/>
@@ -127,17 +127,17 @@
 		<mx:Canvas label="Application" width="100%" height="100%">
 			<mx:Panel x="10" y="10" width="440" height="91" layout="absolute" title="File">
 				<mx:Label x="10" y="10" text="Autosave"/>
-				<mx:ComboBox x="74" y="8" id="cboAutosave"></mx:ComboBox>
-				<mx:CheckBox x="255" y="8" label="Reopen Last Document" id="chkReopenLastDocument"/>
+				<mx:ComboBox x="74" y="8" id="cboAutosave" tabIndex="1"></mx:ComboBox>
+				<mx:CheckBox x="255" y="8" label="Reopen Last Document" id="chkReopenLastDocument" tabIndex="2"/>
 			</mx:Panel>
 			<mx:Panel x="10" y="109" width="440" height="79" layout="absolute" title="Statistics">
-				<mx:CheckBox x="10" y="10" label="Characters" id="chkStatisticsCharacters"/>
-				<mx:CheckBox x="193" y="10" label="Words" id="chkStatisticsWords"/>
-				<mx:CheckBox x="114" y="10" label="Lines" id="chkStatisticsLines"/>
-				<mx:CheckBox x="277" y="10" label="Sentences" id="chkStatisticsSentences"/>
+				<mx:CheckBox x="10" y="10" label="Characters" id="chkStatisticsCharacters" tabIndex="3"/>
+				<mx:CheckBox x="193" y="10" label="Words" id="chkStatisticsWords" tabIndex="5"/>
+				<mx:CheckBox x="114" y="10" label="Lines" id="chkStatisticsLines" tabIndex="4"/>
+				<mx:CheckBox x="277" y="10" label="Sentences" id="chkStatisticsSentences" tabIndex="6"/>
 			</mx:Panel>
 		</mx:Canvas>
 	</mx:TabNavigator>
-	<mx:Button x="400" y="488" label="Ok" width="70" id="btnOk"/>
-	<mx:Button x="322" y="488" label="Cancel" width="70" id="btnCancel"/>
+	<mx:Button x="400" y="488" label="Ok" width="70" id="btnOk" tabIndex="50"/>
+	<mx:Button x="322" y="488" label="Cancel" width="70" id="btnCancel" tabIndex="49"/>
 </dr:ConfigurationWindow>
