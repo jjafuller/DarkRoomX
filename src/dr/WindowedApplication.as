@@ -42,7 +42,10 @@ package dr
 		// constances
 		public static const UNSAVED_TITLE:String = "Unsaved Changes";
 		public static const UNSAVED_MESSAGE:String = "You have unsaved changes in your document. If you proceed your changes will be lost.";
-		public static const WORD_COUNT_PATTERN:RegExp  = /\w+/g;
+		public static const PATTERN_WORDS:RegExp = /\w+/g;
+		public static const PATTERN_LINES:RegExp = /[\cM\cJ\n\r]+/g;
+		public static const PATTERN_SENTENCES:RegExp = /[.!?]+/g;
+		
 		
 		// variables
 		private var isFullScreen:Boolean = false;
@@ -982,19 +985,21 @@ package dr
 				stats.push('characters: ' + content.text.length.toString());
 			}
 			
-			if(config.settings.statisticsLines)
-			{
-				//stats.push('lines: ' + content.g .toString());
-			}
-			
 			if(config.settings.statisticsWords)
 			{
-				stats.push('words: ' + content.text.match(WORD_COUNT_PATTERN).length.toString());
+				stats.push('words: ' + content.text.match(PATTERN_WORDS).length.toString());
 			}
 			
 			if(config.settings.statisticsSentences)
 			{
-				//stats.push('characters: ' + content.text.length.toString());
+				
+				stats.push('sentences: ' + content.text.split(PATTERN_SENTENCES).length.toString());
+			}
+			
+			if(config.settings.statisticsLines)
+			{
+				
+				stats.push('lines: ' + content.text.split(PATTERN_LINES).length.toString());
 			}
 			
 			lblInformation.text += (stats.length > 0) ? ' (' + stats.join(', ') + ')' : '';
