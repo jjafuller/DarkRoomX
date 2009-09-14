@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dr:WindowedApplication xmlns:dr="dr.*" xmlns:mx="http://www.adobe.com/2006/mxml" 
     layout="absolute"
-    applicationComplete="init()"  width="700" height="700" showStatusBar="false" borderThickness="0" backgroundColor="0x0" focusRect="false" backgroundAlpha="0.8" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#000000, #000000]" verticalScrollBarStyleName="myVScrollBar" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" tabEnabled="false" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+    applicationComplete="init()"  width="700" height="700" showStatusBar="false" borderThickness="0" backgroundColor="0x0" focusRect="false" backgroundAlpha="0.8" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#000000, #000000]" verticalScrollBarStyleName="myVScrollBar" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" tabEnabled="false" verticalScrollPolicy="off" horizontalScrollPolicy="off" title="Dark Room X">
     <mx:Script>
         <![CDATA[
             
         ]]>
     </mx:Script>
     <mx:Style source="styles.css"/>
+    
     <dr:TextArea 
         id="content" 
         height="100%" width="600" 
@@ -16,4 +17,5 @@
         color="#00FF00"
         fontSize="14" backgroundAlpha="0.9" verticalScrollBarStyleName="scrollbar" borderStyle="none" fontFamily="Courier New" paddingBottom="10" paddingLeft="10" paddingTop="10" paddingRight="10" focusThickness="0"/>
     <mx:Label x="10" text="untitled" id="lblInformation" color="#00FF66" y="10" textAlign="center"/>
+
 </dr:WindowedApplication>

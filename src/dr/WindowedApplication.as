@@ -21,6 +21,7 @@ package dr
 	import flash.display.*;
 	import flash.events.*;
 	import flash.filesystem.*;
+	import flash.geom.Rectangle;
 	import flash.system.Capabilities;
 	import flash.system.fscommand;
 	import flash.ui.Keyboard;
@@ -87,6 +88,9 @@ package dr
  			// hack to get us undo until flex 4
  			undoTextFields = new UndoTextFields();
 			undoTextFields.target = this;
+			
+			// center window
+			centerWindow();
  			
  			// load settings and then apply them
  			initSettings();
@@ -159,6 +163,15 @@ package dr
 			{
 				autosaveTimer = null;
 			}
+		}
+		
+		public function centerWindow():void
+		{
+			// center the window on the screen
+			var screenBounds:Rectangle = Screen.mainScreen.bounds;
+
+            nativeWindow.x = (screenBounds.width - nativeWindow.width) / 2;
+            nativeWindow.y = (screenBounds.height - nativeWindow.height) / 2;
 		}
 		
 		private function applySettings():void
@@ -334,6 +347,7 @@ package dr
 			// temp variables
 			var margin:int = 0;
 			var value:int = 0;
+			var offset:int = (Screen.mainScreen.bounds.height == this.height) ? 0 : 25;
 			
 			// page margin vertical
 			if (config.settings.pageMarginVertical)
@@ -377,7 +391,7 @@ package dr
 			margin = (config.settings.pageMarginVertical) ? config.settings.pageMarginVertical : 0;
 			if (config.settings.pageHeightAuto)
 			{
-				content.height = this.height - (margin * 2);
+				content.height = this.height - (margin * 2) - offset;
 			}
 			else if (config.settings.pageHeight)
 			{
@@ -385,16 +399,19 @@ package dr
 				value = config.settings.pageHeight;
 				
 				// adjust if necessary
-				if (value > (this.height-(margin*2))) { value = (this.height-(margin*2)) } // too tall
+				if (value > this.height-(margin*2))
+				{
+					value = this.height-(margin*2);
+				}
 				if (value < 100) { value = 100 } // too short
 				
 				content.height = value; // assign
 			}
 			
 			// center vertically
-			if (((this.height-content.height)/2) > margin)
+			if ((this.height-(content.height+offset)/2) > margin)
 			{
-				margin = (this.height-content.height)/2;
+				margin = (this.height-(content.height+offset))/2;
 			}
 			content.y = margin;
 			
@@ -433,7 +450,7 @@ package dr
 			
 			// information bar
 			lblInformation.width = this.width - 20;
-			lblInformation.y = this.height - 20;
+			lblInformation.y = this.height - 20 - offset;
 		}
 		
 		
@@ -486,6 +503,8 @@ package dr
  			var editCopy:NativeMenuItem = new NativeMenuItem("Copy", false);
  			var editPaste:NativeMenuItem = new NativeMenuItem("Paste", false);
  			var editSep2:NativeMenuItem = new NativeMenuItem("2", true);
+ 			var editSelectAll:NativeMenuItem = new NativeMenuItem("Select All", false);
+ 			var editSep3:NativeMenuItem = new NativeMenuItem("3", true);
  			var editSettings:NativeMenuItem = new NativeMenuItem("Preferences...", false);
  			
  			// view menu options
@@ -513,6 +532,9 @@ package dr
 			editMenuItem.submenu.addItem(editCut);
 			editMenuItem.submenu.addItem(editCopy);
 			editMenuItem.submenu.addItem(editPaste);
+			editMenuItem.submenu.addItem(editSep2);
+			editMenuItem.submenu.addItem(editSelectAll);
+			editMenuItem.submenu.addItem(editSep3);
 			editMenuItem.submenu.addItem(editSettings);
 			
 			var viewMenuItem:NativeMenuItem = rootMenu.addSubmenu(new NativeMenu(), "View");
@@ -533,6 +555,7 @@ package dr
  			editCut.addEventListener(Event.SELECT, handleEditCut);
  			editCopy.addEventListener(Event.SELECT, handleEditCopy);
  			editPaste.addEventListener(Event.SELECT, handleEditPaste);
+ 			editSelectAll.addEventListener(Event.SELECT, handleEditSelectAll);
  			editSettings.addEventListener(Event.SELECT, handleEditSettings);
  			
  			viewInformation.addEventListener(Event.SELECT, handleViewInformation);
@@ -562,6 +585,8 @@ package dr
  			editCopy.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
  			editPaste.keyEquivalent = "v";
  			editPaste.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
+ 			editSelectAll.keyEquivalent = "a";
+ 			editSelectAll.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
  			editSettings.keyEquivalent = ",";
  			editSettings.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
  			
@@ -663,6 +688,11 @@ package dr
 		public function handleEditPaste(event:Event):void
 		{
 			NativeApplication.nativeApplication.paste();
+		}
+		
+		public function handleEditSelectAll(event:Event):void
+		{
+			content.setSelection(0,content.length);
 		}
 		
 		public function handleAutosaveTimerInterval(event:TimerEvent):void
@@ -1046,6 +1076,7 @@ package dr
 				}
 				
 				lblInformation.text += (stats.length > 0) ? ' (' + stats.join(', ') + ')' : '';
+				this.title = "Dark Room X - " + lblInformation.text;
 			}
 		}
 	}
