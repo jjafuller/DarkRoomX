@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+
+Dark Room X
+
+NOTICE OF LICENSE
+
+All project source files are subject to the Open Software License (OSL 3.0)
+that is included with this applciation in the file LICENSE.txt.
+The license is also available online at the following URL:
+http://opensource.org/licenses/osl-3.0.php
+If you did not receive a copy of the license, please send
+an email to contact@getdarkroom.com so we can send a copy to you.
+
+@package    dr
+@copyright  Copyright (c) 2009 Jeffrey Fuller (http://getdarkroom.com)
+@license    Open Software License (OSL 3.0), http://opensource.org/licenses/osl-3.0.php  
+
+-->
 <dr:ConfigurationWindow creationComplete="init()" xmlns:dr="dr.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="500" height="560" title="Settings" showCloseButton="true" backgroundColor="#DDDDDD">
 	<mx:TabNavigator x="10" y="11" width="462" height="471" id="navigator">
 		<mx:Canvas label="Environment" width="100%" height="100%">

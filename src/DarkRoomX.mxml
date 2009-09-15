@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+
+Dark Room X
+
+NOTICE OF LICENSE
+
+All project source files are subject to the Open Software License (OSL 3.0)
+that is included with this applciation in the file LICENSE.txt.
+The license is also available online at the following URL:
+http://opensource.org/licenses/osl-3.0.php
+If you did not receive a copy of the license, please send
+an email to contact@getdarkroom.com so we can send a copy to you.
+
+@package    dr
+@copyright  Copyright (c) 2009 Jeffrey Fuller (http://getdarkroom.com)
+@license    Open Software License (OSL 3.0), http://opensource.org/licenses/osl-3.0.php  
+
+-->
 <dr:WindowedApplication xmlns:dr="dr.*" xmlns:mx="http://www.adobe.com/2006/mxml" 
     layout="absolute"
     applicationComplete="init()"  width="700" height="700" showStatusBar="false" borderThickness="0" backgroundColor="0x0" focusRect="false" backgroundAlpha="0.8" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#000000, #000000]" verticalScrollBarStyleName="myVScrollBar" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" tabEnabled="false" verticalScrollPolicy="off" horizontalScrollPolicy="off" title="Dark Room X">
