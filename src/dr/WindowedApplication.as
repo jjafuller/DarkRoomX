@@ -398,9 +398,9 @@ package dr
 				value = config.settings.pageHeight;
 				
 				// adjust if necessary
-				if (value > this.height-(margin*2))
+				if (value > this.height-(margin*2) - offset)
 				{
-					value = this.height-(margin*2);
+					value = this.height-(margin*2) - offset;
 				}
 				if (value < 100) { value = 100 } // too short
 				
