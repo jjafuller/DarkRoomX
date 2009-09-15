@@ -873,7 +873,7 @@ package dr
 		{
 			var str:String = stream.readUTFBytes(stream.bytesAvailable);
 			stream.close();
-			var lineEndPattern:RegExp = new RegExp(File.lineEnding, "g");
+			var lineEndPattern:RegExp = /(\cM\cJ)|\r]/g; // new RegExp(File.lineEnding, "g");
 			str = str.replace(lineEndPattern, "\n");
 			content.text = str; 
 			stream.close();
