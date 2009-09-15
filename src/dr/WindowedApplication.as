@@ -23,7 +23,6 @@ package dr
 	import flash.filesystem.*;
 	import flash.geom.Rectangle;
 	import flash.system.Capabilities;
-	import flash.system.fscommand;
 	import flash.ui.Keyboard;
 	import flash.utils.Timer;
 	
@@ -83,7 +82,7 @@ package dr
 		public function init():void 
  		{	
  			// trap all our keys so we can make escape go to full scree
- 			fscommand("trapallkeys", "true");
+ 			//fscommand("trapallkeys", "true");
  			
  			// hack to get us undo until flex 4
  			undoTextFields = new UndoTextFields();
@@ -99,7 +98,7 @@ package dr
  			// go to full screen if that's what the user wants
  			if(config.settings.launchFullScreen)
  			{
- 				toggleDisplayState();
+ 				launchFullScreen();
  			}
  			
  			// start listeners and build menu
@@ -599,12 +598,25 @@ package dr
 		
 		/* Handle Flipping Between View States */
 		
-		public function toggleDisplayState():void
+		public function launchFullScreen():void
 		{
-			if(!isFullScreen)
+			stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			
+			applyLayoutSettings();
+			
+			focusManager.setFocus(content);
+		}
+		
+		public function toggleDisplayState(event:KeyboardEvent):void
+		{
+			if(stage.displayState == StageDisplayState.NORMAL)
 			{
+				event.preventDefault();
 				stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
-				//menuBar.visible = false;
+			}
+			else
+			{
+				stage.displayState = StageDisplayState.NORMAL;
 			}
 			
 			applyLayoutSettings();
@@ -730,23 +742,10 @@ package dr
 		
 		public function handleKeyDown(event:KeyboardEvent):void
 		{
-			/* 	we use the isDirty toggle to prevent automatically flipping back to fullscreen
-				since the escape out of full screen is handled by the flash player, not us */
-			if (event.charCode == 27 && !isFullScreen && !isDirty)
+			if(event.keyCode == Keyboard.ESCAPE)
 			{
-				toggleDisplayState();
+				toggleDisplayState(event);
 			}
-			// track escapes for a workaround to allow escape to maximize
-			else if (event.charCode == 27 && !isFullScreen && isDirty)
-			{
-				isDirty = false;
-			}
-			// handle save
-			else if ((event.commandKey || event.ctrlKey) && event.keyCode == 83)
-			{
-				Alert.show('save');
-			}
-			
 			
 			updateStatistics();
 		}

@@ -17,14 +17,14 @@ an email to contact@getdarkroom.com so we can send a copy to you.
 @license    Open Software License (OSL 3.0), http://opensource.org/licenses/osl-3.0.php  
 
 -->
-<application xmlns="http://ns.adobe.com/air/application/1.5">
+<application xmlns="http://ns.adobe.com/air/application/1.5.2">
 
 <!-- Adobe AIR Application Descriptor File Template.
 
 	Specifies parameters for identifying, installing, and launching AIR applications.
 	See http://www.adobe.com/go/air_1.0_application_descriptor for complete documentation.
 
-	xmlns - The Adobe AIR namespace: http://ns.adobe.com/air/application/1.5
+	xmlns - The Adobe AIR namespace: http://ns.adobe.com/air/application/1.5.2
 			The last segment of the namespace specifies the version 
 			of the AIR runtime required for this application to run.
 			
@@ -42,7 +42,7 @@ an email to contact@getdarkroom.com so we can send a copy to you.
 	<name>DarkRoom</name>
 
 	<!-- An application version designator (such as "v1", "2.5", or "Alpha 1"). Required. -->
-	<version>0.2.1b</version>
+	<version>0.2.4b</version>
 
 	<!-- Description, displayed in the AIR application installer. Optional. -->
 	<!-- <description></description> -->
