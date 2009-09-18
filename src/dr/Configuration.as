@@ -46,8 +46,82 @@ package dr
 			}
 			else
 			{
+				loadDefaults();
 			    save();
 			}
+		}
+		
+		public function loadDefaults():void
+		{			
+			// page
+			settings.pageWidth = 600;
+			settings.pageWidthAuto = false;
+			settings.pageHeight = 600;
+			settings.pageHeightAuto = true;
+			settings.pageMarginVertical = 0;
+			settings.pageMarginHorizontal = 0;
+			settings.pagePaddingVerticalTop = 10;
+			settings.pagePaddingVerticalBottom = 10;
+			settings.pagePaddingHorizontal = 10;
+			settings.pageBackgroundOpacity = 0.9;
+			settings.pageBackgroundColor = 1052688;
+			
+			// general
+			settings.launchFullScreen = true;
+			settings.liveScrolling = false;
+			settings.backgroundColor = 0;
+			settings.backgroundOpacity = 0.8;
+			
+			// formatting
+			settings.fontFamily = 'Courier New';
+			settings.fontColor = 65280;
+			settings.fontSize = 14;
+			settings.fontLetterSpacing = 0;
+			settings.fontStyle = 'normal';
+			settings.fontWeight = 'normal';
+			settings.fontDecoration = 'normal';
+			
+			// paragraph
+			settings.fontLeading = 6;
+			settings.fontIndent = 0;
+			settings.fontAlign = 'left';
+			settings.tabsToSpaces = false;
+			settings.tabsToSpacesCount = 2;
+			settings.autoIndent = false;
+			settings.wordWrap = true;
+			
+			// disable scrolls
+			settings.scrollVerticalDisable = false;
+			settings.scrollHorizontalDisable = false;
+			
+			// scroll styles
+			settings.scrollCornerRadius = 0;
+			settings.scrollHighlightAlpha1 = 0;
+			settings.scrollHighlightAlpha2 = 0;
+			settings.scrollFillAlpha1 = 1;
+			settings.scrollFillAlpha2 = 1;
+			settings.scrollFillAlpha3 = 1;
+			settings.scrollFillAlpha4 = 1;
+			settings.scrollFillColor1 = 13056;
+			settings.scrollFillColor2 = 13056;
+			settings.scrollFillColor3 = 39168;
+			settings.scrollFillColor4 = 39168;
+			settings.scrollTrackColor1 = 0;
+			settings.scrollTrackColor2 = 0;
+			settings.scrollThemeColor = 39168;
+			settings.scrollBorderColor = 13056;
+			
+			// auto save
+			settings.autosaveInterval = -1;
+			
+			// reopen
+			settings.reopenLastDocument = false;
+			
+			// statistics
+			settings.statisticsCharacters = false;
+			settings.statisticsLines = false;
+			settings.statisticsWords = false;
+			settings.statisticsSentences = false;
 		}
 		
 		public function processXml():void

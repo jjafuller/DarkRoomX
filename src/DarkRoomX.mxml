@@ -25,7 +25,7 @@ an email to contact@getdarkroom.com so we can send a copy to you.
             
         ]]>
     </mx:Script>
-    <mx:Style source="styles.css"/>
+    <mx:Style source="assets/styles.css"/>
     
     <dr:TextArea 
         id="content" 

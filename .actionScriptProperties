@@ -21,5 +21,7 @@
 <application path="DarkRoomX.mxml"/>
 </applications>
 <modules/>
-<buildCSSFiles/>
+<buildCSSFiles>
+<buildCSSFileEntry destPath="bin-debug" sourcePath="src/assets/styles.css"/>
+</buildCSSFiles>
 </actionScriptProperties>
