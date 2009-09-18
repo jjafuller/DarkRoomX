@@ -30,6 +30,8 @@ package dr
 	
 	import mx.controls.Alert;
 	import mx.controls.Label;
+	import mx.controls.MenuBar;
+	import mx.controls.menuClasses.MenuBarItem;
 	import mx.core.WindowedApplication;
 	import mx.events.*;
 	import mx.managers.*;
@@ -66,6 +68,7 @@ package dr
 		// controls
 		public var content:dr.TextArea;
 		public var lblInformation:Label;
+		public var mnuPsuedo:MenuBar;
 		
 		//public var menuBar:MenuBar;
 		public var rootMenu:NativeMenu = new NativeMenu();
@@ -511,8 +514,20 @@ package dr
  			var viewScrollbars:NativeMenuItem = new NativeMenuItem("Scrollbars, Toggle");
  			
  			// build menu
- 			NativeApplication.nativeApplication.menu = rootMenu;
  			
+ 			
+ 			// Mac OS X
+		   	if (NativeApplication.supportsMenu)
+		   	{
+		   		NativeApplication.nativeApplication.menu = rootMenu;
+		   	}
+		    
+		   	// Windows
+		   	if (NativeWindow.supportsMenu)
+		   	{
+		   		stage.nativeWindow.menu = rootMenu;		   		
+		  	}
+		  
  			var fileMenuItem:NativeMenuItem = rootMenu.addSubmenu(new NativeMenu(), "File");
 			fileMenuItem.submenu.addItem(fileNew);
 			fileMenuItem.submenu.addItem(fileOpen);
