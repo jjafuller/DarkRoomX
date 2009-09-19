@@ -28,8 +28,8 @@ package dr
 	
 	import gearsandcogs.text.UndoTextFields;
 	
+	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
-	import mx.controls.FlexNativeMenu;
 	import mx.controls.Label;
 	import mx.core.WindowedApplication;
 	import mx.events.*;
@@ -481,6 +481,11 @@ package dr
 		
 		public function initMenu():void
 		{
+			var menu:dr.Menu = new Menu();
+			
+			//var menuItems:ArrayCollection = new ArrayCollection([{label:'File', children: new ArrayCollection([{label:"New",shortcut:'n'}])}]);
+			
+			
 			// is mac?
 			var isMac:Boolean = (Capabilities.os.substr(0, 3).toLowerCase() == "mac") ? true : false;
 			
@@ -523,7 +528,7 @@ package dr
 		   	// Windows
 		   	if (NativeWindow.supportsMenu)
 		   	{
-		   		stage.nativeWindow.menu = rootMenu;		   		
+		   		//stage.nativeWindow.menu = rootMenu;		   		
 		  	}
 		  	
  			var fileMenuItem:NativeMenuItem = rootMenu.addSubmenu(new NativeMenu(), "File");
