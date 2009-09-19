@@ -350,7 +350,8 @@ package dr
 			// temp variables
 			var margin:int = 0;
 			var value:int = 0;
-			var offset:int = (Screen.mainScreen.bounds.height == this.height) ? 0 : 25;
+			var offsetMenu:int = (virtualMenu.visible) ? virtualMenu.height : 0;
+			var offset:int = (Screen.mainScreen.bounds.height == this.height) ? 0 : 25 + offsetMenu;
 			
 			// page margin vertical
 			if (config.settings.pageMarginVertical)
@@ -416,7 +417,7 @@ package dr
 			{
 				margin = (this.height-(content.height+offset))/2;
 			}
-			content.y = margin;
+			content.y = margin + offsetMenu;
 			
 			// page padding veritical
 			if(config.settings.pagePaddingVerticalTop)
@@ -453,7 +454,7 @@ package dr
 			
 			// information bar
 			lblInformation.width = this.width - 20;
-			lblInformation.y = this.height - 20 - offset;
+			lblInformation.y = this.height - 20;
 		}
 		
 		
@@ -523,6 +524,8 @@ package dr
 		
 		public function launchFullScreen():void
 		{
+			virtualMenu.visible = false;
+			lblInformation.visible = true;
 			stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			
 			applyLayoutSettings();
@@ -535,11 +538,15 @@ package dr
 			if(stage.displayState == StageDisplayState.NORMAL)
 			{
 				event.preventDefault();
+				virtualMenu.visible = false;
+				lblInformation.visible = true;
 				stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			}
 			else
 			{
 				stage.displayState = StageDisplayState.NORMAL;
+				virtualMenu.visible = true;
+				lblInformation.visible = false;
 			}
 			
 			applyLayoutSettings();
