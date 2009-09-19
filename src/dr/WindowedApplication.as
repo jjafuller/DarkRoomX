@@ -30,6 +30,7 @@ package dr
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.controls.Label;
+	import mx.controls.MenuBar;
 	import mx.core.WindowedApplication;
 	import mx.events.*;
 	import mx.managers.*;
@@ -63,10 +64,12 @@ package dr
 		public var settingsXml:XML; 							// The XML data
 		public var settingsStream:FileStream; 					// The FileStream object used to read and write settings file data.
 		public var menuKeyBindings:ArrayCollection;
+		public var menuSkeleton:ArrayCollection;
 
 		// controls
 		public var content:dr.TextArea;
 		public var lblInformation:Label;
+		public var virtualMenu:MenuBar;
 		
 		//public var menuBar:MenuBar;
 		public var rootMenu:NativeMenu = new NativeMenu();
@@ -485,9 +488,7 @@ package dr
 			
 			var ctrlKey:int = (NativeWindow.supportsMenu) ? Keyboard.CONTROL : Keyboard.COMMAND;
 		
-			trace(String.fromCharCode(Keyboard.COMMA));
-	
-			var menu:ArrayCollection = new ArrayCollection([
+			menuSkeleton = new ArrayCollection([
 											{label:'File', children: new ArrayCollection([
 												{label:"New", keyEquivalent:Keyboard.N, keyEquivalentModifiers:[ctrlKey], action:handleFileNew},
 												{label:"Open..", keyEquivalent:Keyboard.O, keyEquivalentModifiers:[ctrlKey], action:handleFileOpen},
@@ -514,7 +515,7 @@ package dr
 											])}
 										]);
 										
-			Menu.build(menu, this);			
+			Menu.build(menuSkeleton, this);			
 			
 		}
 		
@@ -662,6 +663,21 @@ package dr
 			applySettings();
 		}
 		
+		public function handleMenuItemClick(event:MenuEvent):void
+		{
+			// hack to emulate native menu item action
+			for each (var item:Object in menuSkeleton)
+			{
+				for each (var child:Object in item.children)
+				{
+					if(event.item.label == child.label)
+					{
+						child.action(new Event(Event.SELECT));
+					}
+				}
+			}
+		}
+		
 		public function handleKeyDown(event:KeyboardEvent):void
 		{
 			if(event.keyCode == Keyboard.ESCAPE)
@@ -669,16 +685,36 @@ package dr
 				toggleDisplayState(event);
 			}
 			
-			for each (var item:Object in menuKeyBindings)
-			{
-				if(event.keyCode == item.keyEquivalent && event.ctrlKey)
-			    {
-			    	item.action();
-			    }
-			}
-
 			
+			// hack to emulate menu bar shortcut keys
+			for each (var item:Object in menuSkeleton)
+			{
+				for each (var child:Object in item.children)
+				{
+					if((event.keyCode == child.keyEquivalent) && processKeyEquivalentModifiers(event,child.keyEquivalentModifiers))
+					{
+						child.action(new Event(Event.SELECT));
+					}
+				}
+			}
+						
 			updateStatistics();
+		}
+		
+		public function processKeyEquivalentModifiers(event:KeyboardEvent, modifiers:Array):Boolean
+		{
+			for each(var i:int in modifiers)
+			{
+				if	(
+						((i == Keyboard.COMMAND || i == Keyboard.CONTROL) && !event.ctrlKey) ||
+						((i == Keyboard.SHIFT) && !event.shiftKey)
+					)
+				{
+					return false;
+				}
+			}
+			
+			return true;
 		}
 		
 		public function handleFullScreen(event:FullScreenEvent):void
@@ -701,28 +737,6 @@ package dr
 		public function handleResize(event:Event):void
 		{
 			applyLayoutSettings();
-		}
-		
-		private function handleMenuItemClick(event:MenuEvent):void
-		{
-			switch(event.label)
-			{
-				case 'New':
-					preprocessNewFile();
-					break;
-					
-				case 'Open':
-					preprocessOpenFile();
-					break;
-					
-				case 'Save':
-					saveFile();
-					break;
-						
-				case 'Save As...':
-					saveAs();
-					break;
-			}
 		}
 		
 		public function handleConfigDialogOk(event:Event):void
