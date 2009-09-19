@@ -71,7 +71,8 @@ package dr
 						leaf.addEventListener(Event.SELECT, child.action);
 						
 						// add shortcuts
-						leaf.keyEquivalent = String.fromCharCode(child.keyEquivalent).toLowerCase();
+						var keyEq:String = (child.keyEquivalent == Keyboard.COMMA) ? ',' : String.fromCharCode(child.keyEquivalent).toLowerCase();
+						leaf.keyEquivalent = keyEq;
 						leaf.keyEquivalentModifiers = child.keyEquivalentModifiers;
 					}	
 				}

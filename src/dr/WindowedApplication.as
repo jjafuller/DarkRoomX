@@ -485,6 +485,8 @@ package dr
 			
 			var ctrlKey:int = (NativeWindow.supportsMenu) ? Keyboard.CONTROL : Keyboard.COMMAND;
 		
+			trace(String.fromCharCode(Keyboard.COMMA));
+	
 			var menu:ArrayCollection = new ArrayCollection([
 											{label:'File', children: new ArrayCollection([
 												{label:"New", keyEquivalent:Keyboard.N, keyEquivalentModifiers:[ctrlKey], action:handleFileNew},
@@ -496,6 +498,19 @@ package dr
 												{label:"Save As..",keyEquivalent:Keyboard.S, keyEquivalentModifiers:[ctrlKey,Keyboard.SHIFT], action:handleFileSaveAs},
 												{label:"3",separator:true},
 												{label:"Exit",keyEquivalent:((NativeWindow.supportsMenu) ? Keyboard.X : Keyboard.Q), keyEquivalentModifiers:[ctrlKey], action:handleFileExit},
+											])},
+											{label:'Edit', children: new ArrayCollection([
+												{label:"Cut", keyEquivalent:Keyboard.X, keyEquivalentModifiers:[ctrlKey], action:handleEditCut},
+												{label:"Copy", keyEquivalent:Keyboard.C, keyEquivalentModifiers:[ctrlKey], action:handleEditCopy},
+												{label:"Paste", keyEquivalent:Keyboard.V, keyEquivalentModifiers:[ctrlKey], action:handleEditPaste},
+												{label:"1",separator:true},
+												{label:"Select All",keyEquivalent:Keyboard.A, keyEquivalentModifiers:[ctrlKey], action:handleEditSelectAll},
+												{label:"2",separator:true},
+												{label:"Preferences..",keyEquivalent:Keyboard.COMMA, keyEquivalentModifiers:[ctrlKey], action:handleEditSettings},
+											])},
+											{label:'View', children: new ArrayCollection([
+												{label:"Information Bar, Toggle",keyEquivalent:Keyboard.I, keyEquivalentModifiers:[ctrlKey], action:handleViewInformation},
+												{label:"Scrollbars, Toggle",keyEquivalent:Keyboard.U, keyEquivalentModifiers:[ctrlKey], action:handleViewScrollbars},
 											])}
 										]);
 										
