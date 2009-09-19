@@ -29,9 +29,8 @@ package dr
 	import gearsandcogs.text.UndoTextFields;
 	
 	import mx.controls.Alert;
+	import mx.controls.FlexNativeMenu;
 	import mx.controls.Label;
-	import mx.controls.MenuBar;
-	import mx.controls.menuClasses.MenuBarItem;
 	import mx.core.WindowedApplication;
 	import mx.events.*;
 	import mx.managers.*;
@@ -68,7 +67,6 @@ package dr
 		// controls
 		public var content:dr.TextArea;
 		public var lblInformation:Label;
-		public var mnuPsuedo:MenuBar;
 		
 		//public var menuBar:MenuBar;
 		public var rootMenu:NativeMenu = new NativeMenu();
@@ -527,7 +525,7 @@ package dr
 		   	{
 		   		stage.nativeWindow.menu = rootMenu;		   		
 		  	}
-		  
+		  	
  			var fileMenuItem:NativeMenuItem = rootMenu.addSubmenu(new NativeMenu(), "File");
 			fileMenuItem.submenu.addItem(fileNew);
 			fileMenuItem.submenu.addItem(fileOpen);
@@ -608,7 +606,6 @@ package dr
  			viewInformation.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
  			viewScrollbars.keyEquivalent = "u";
  			viewScrollbars.keyEquivalentModifiers = (isMac) ? [Keyboard.COMMAND] : [Keyboard.CONTROL];
- 			
 		}
 		
 		/* Handle Flipping Between View States */
