@@ -65,6 +65,7 @@ package dr
 		public var settingsStream:FileStream; 					// The FileStream object used to read and write settings file data.
 		public var menuKeyBindings:ArrayCollection;
 		public var menuSkeleton:ArrayCollection;
+		public var stats:Array;
 
 		// controls
 		public var content:dr.TextArea;
@@ -85,6 +86,8 @@ package dr
 		
 		public function init():void 
  		{	
+ 			virtualMenu.visible = false;
+ 			
  			// trap all our keys so we can make escape go to full scree
  			//fscommand("trapallkeys", "true");
  			
@@ -113,7 +116,10 @@ package dr
  			defaultDirectory = File.documentsDirectory;
  			
  			// reopen the last document if instructed to
- 			if(config.settings.reopenLastDocument && config.settings.lastFileNativePath)
+ 			trace(config.settings.reopenLastDocument);
+ 			trace(config.settings.lastFileNativePath);
+ 			
+ 			if(config.settings.reopenLastDocument && config.settings.lastFileNativePath.length > 0)
  			{
  				currentFile = new File(config.settings.lastFileNativePath);
  				if(currentFile.exists)
@@ -127,9 +133,7 @@ package dr
  				
  			}
  			
-			content.text = "Donec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n";
-			//content.selectionBeginIndex = content.text.length;
-			//content.selectionEndIndex = content.text.length;
+			//content.text = "Donec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n\nDonec placerat. Nullam nibh dolor, blandit sed, fermentum id, imperdiet sit amet, neque. Nam mollis ultrices justo. Sed tempor. Sed vitae tellus. Etiam sem arcu, eleifend sit amet, gravida eget, porta at, wisi. Nam non lacus vitae ipsum viverra pretium. Phasellus massa. Fusce magna sem, gravida in, feugiat ac, molestie eget, wisi. Fusce consectetuer luctus ipsum. Vestibulum nunc. Suspendisse dignissim adipiscing libero. Integer leo. Sed pharetra ligula a dui. Quisque ipsum nibh, ullamcorper eget, pulvinar sed, posuere vitae, nulla. Sed varius nibh ut lacus. Curabitur fringilla. Nunc est ipsum, pretium quis, dapibus sed, varius non, lectus. Proin a quam. Praesent lacinia, eros quis aliquam porttitor, urna lacus volutpat urna, ut fermentum neque mi egestas dolor.\n";
 		}
 		
 		public function initSettings():void
@@ -516,7 +520,12 @@ package dr
 											])}
 										]);
 										
-			Menu.build(menuSkeleton, this);			
+			Menu.build(menuSkeleton, this);
+			
+			if (stage.displayState == StageDisplayState.NORMAL && NativeWindow.supportsMenu)
+			{
+				virtualMenu.visible = true;
+			}	
 			
 		}
 		
@@ -545,7 +554,7 @@ package dr
 			else
 			{
 				stage.displayState = StageDisplayState.NORMAL;
-				virtualMenu.visible = true;
+				virtualMenu.visible = NativeWindow.supportsMenu;
 				lblInformation.visible = false;
 			}
 			
@@ -563,10 +572,12 @@ package dr
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN, handleFullScreen);
 			stage.addEventListener(ResizeEvent.RESIZE, handleResize);
 			
+			// text area
+			content.addEventListener(Event.CHANGE, handleChange);
+			
 			// menu
 			
-			// content area
-			
+			// application
 			this.addEventListener(Event.CLOSING, handleClosing);
 		}
 		
@@ -685,27 +696,36 @@ package dr
 			}
 		}
 		
+		public function handleChange(event:Event):void
+		{
+			updateStatistics();
+		}
+		
 		public function handleKeyDown(event:KeyboardEvent):void
 		{
+			
 			if(event.keyCode == Keyboard.ESCAPE)
 			{
 				toggleDisplayState(event);
 			}
 			
-			
-			// hack to emulate menu bar shortcut keys
-			for each (var item:Object in menuSkeleton)
+			// hack to emulate menu bar shortcut keys, but only look if user is at least hold down ctrl key
+			if (event.ctrlKey)
 			{
-				for each (var child:Object in item.children)
+				for each (var item:Object in menuSkeleton)
 				{
-					if((event.keyCode == child.keyEquivalent) && processKeyEquivalentModifiers(event,child.keyEquivalentModifiers))
+					for each (var child:Object in item.children)
 					{
-						child.action(new Event(Event.SELECT));
+						if((event.keyCode == child.keyEquivalent) && processKeyEquivalentModifiers(event,child.keyEquivalentModifiers))
+						{
+							event.preventDefault();
+							child.action(new Event(Event.SELECT));
+						}
 					}
 				}
 			}
-						
-			updateStatistics();
+	
+			
 		}
 		
 		public function processKeyEquivalentModifiers(event:KeyboardEvent, modifiers:Array):Boolean
@@ -811,7 +831,7 @@ package dr
 			stream.addEventListener(Event.COMPLETE, fileReadHandler);
 			stream.addEventListener(IOErrorEvent.IO_ERROR, readIOErrorHandler);
 			content.isDirty = false;
-			title = "Dark Room X - " + currentFile.name;
+			
 			currentFile.removeEventListener(Event.SELECT, fileOpenSelected);
 		}
 		
@@ -853,6 +873,7 @@ package dr
 				stream.writeUTFBytes(str);
 				stream.close();
 				content.isDirty = false;
+				updateInformation();
 			} 
 			else
 			{
@@ -889,6 +910,7 @@ package dr
 			title = "Dark Room X - " + currentFile.name;
 			saveFile();
 			content.isDirty = false;
+			
 			currentFile.removeEventListener(Event.SELECT, saveAsFileSelected);
 		}
 		
@@ -921,6 +943,7 @@ package dr
 			currentFile = undefined;
 			content.isDirty = false;
 			content.text = "";
+			updateStatistics();
 		}
 		
 		/**
@@ -944,6 +967,7 @@ package dr
 			if(currentFile)
 			{
 				config.settings.lastFileNativePath = currentFile.nativePath;
+				config.save();
 			}
 			
 			if(content.isDirty)
@@ -996,13 +1020,24 @@ package dr
 			return (value) ? value : alt;
 		}
 		
+		private function updateInformation():void
+		{
+			if(lblInformation.visible || stage.displayState == StageDisplayState.NORMAL)
+			{
+				lblInformation.text  = (content.isDirty) ? '*' : '';
+				
+				lblInformation.text += (currentFile) ? currentFile.name : 'untitled';
+				
+				lblInformation.text += (stats.length > 0) ? ' (' + stats.join(', ') + ')' : '';
+			}
+		}
+		
 		private function updateStatistics():void
 		{
-			if(lblInformation.visible)
+			if(lblInformation.visible || stage.displayState == StageDisplayState.NORMAL)
 			{
-				lblInformation.text = (currentFile) ? currentFile.name : 'untitled';
-			
-				var stats:Array = new Array();
+				stats = null;
+				stats = new Array();
 				
 				if(config.settings.statisticsCharacters)
 				{
@@ -1026,7 +1061,8 @@ package dr
 					stats.push('lines: ' + content.text.split(PATTERN_LINES).length.toString());
 				}
 				
-				lblInformation.text += (stats.length > 0) ? ' (' + stats.join(', ') + ')' : '';
+				updateInformation();
+				
 				this.title = "Dark Room X - " + lblInformation.text;
 			}
 		}

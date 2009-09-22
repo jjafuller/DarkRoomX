@@ -43,12 +43,12 @@ package dr
 		   		buildNativeApplicationMenu(menu, target);
 		   	}
 		   	
-		   	buildPsuedoMenu(menu, target);
+		   	
 		    
 		   	// Windows / Linux
 		   	if (NativeWindow.supportsMenu)
 		   	{
-		   		//stage.nativeWindow.menu = rootMenu;		   		
+		   		buildPsuedoMenu(menu, target);	
 		  	}
 		}
 		

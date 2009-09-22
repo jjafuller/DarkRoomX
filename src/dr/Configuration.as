@@ -192,6 +192,7 @@ package dr
 			
 			// reopen
 			settings.reopenLastDocument = (settingsXml.reopenLastDocument=='true') ? true : false;
+			settings.lastFileNativePath = String(settingsXml.lastFileNativePath);
 			
 			// statistics
 			settings.statisticsCharacters = (settingsXml.statisticsCharacters=='true') ? true : false;
@@ -274,6 +275,7 @@ package dr
 			
 			// reopen
 			settingsXml.reopenLastDocument = settings.reopenLastDocument;
+			settingsXml.lastFileNativePath = settings.lastFileNativePath;
 			
 			// statistics
 			settingsXml.statisticsCharacters = settings.statisticsCharacters;
