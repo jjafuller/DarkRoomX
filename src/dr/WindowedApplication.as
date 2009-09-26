@@ -66,6 +66,7 @@ package dr
 		public var menuKeyBindings:ArrayCollection;
 		public var menuSkeleton:ArrayCollection;
 		public var stats:Array;
+		public var information:String;
 
 		// controls
 		public var content:dr.TextArea;
@@ -560,7 +561,15 @@ package dr
 			
 			applyLayoutSettings();
 			
-			focusManager.setFocus(content);
+			if(configDialog)
+			{
+				PopUpManager.centerPopUp(configDialog);
+				focusManager.setFocus(configDialog.navigator);
+			}
+			else
+			{
+				focusManager.setFocus(content);	
+			}
 		}
 				
 		/* Handle Events and Other Unholy Things */
@@ -579,6 +588,8 @@ package dr
 			
 			// application
 			this.addEventListener(Event.CLOSING, handleClosing);
+			
+			this.nativeApplication.addEventListener(InvokeEvent.INVOKE, handleInvoke);
 		}
 		
 		public function handleSettingUpdate(event:Event):void
@@ -990,6 +1001,19 @@ package dr
 			}
 		}
 		
+		private function handleInvoke(event:InvokeEvent):void
+		{
+			// open the file if we were opened for one
+			if(event.reason == InvokeEventReason.STANDARD && event.arguments.length > 0 && String(event.arguments[0]).length > 0)
+			{
+				currentFile = new File(event.arguments[0]);
+				if(currentFile.exists)
+				{
+					openCurrentFile();
+				}
+			}
+		}
+		
 		
 		private function handleClosing(event:Event):void
 		{
@@ -1024,11 +1048,14 @@ package dr
 		{
 			if(lblInformation.visible || stage.displayState == StageDisplayState.NORMAL)
 			{
-				lblInformation.text  = (content.isDirty) ? '*' : '';
+				information  = (content.isDirty) ? '*' : '';
 				
-				lblInformation.text += (currentFile) ? currentFile.name : 'untitled';
+				information += (currentFile) ? currentFile.name : 'untitled';
 				
-				lblInformation.text += (stats.length > 0) ? ' (' + stats.join(', ') + ')' : '';
+				information += (stats.length > 0) ? ' (' + stats.join(', ') + ')' : '';
+				
+				lblInformation.text = information
+				this.title = "Dark Room X - " + information;
 			}
 		}
 		
@@ -1062,8 +1089,6 @@ package dr
 				}
 				
 				updateInformation();
-				
-				this.title = "Dark Room X - " + lblInformation.text;
 			}
 		}
 	}
