@@ -31,6 +31,8 @@ package dr
 	
 	public class ConfigurationWindow extends mx.containers.TitleWindow
 	{
+		private var colors:Object;
+		
 		public var btnCancel:Button;
 		public var btnOk:Button;
 		
@@ -120,8 +122,11 @@ package dr
 		{
 			tabUpdated = new Array();
 			
+			colors = new Object();
+			
 			// global events
 			this.addEventListener(CloseEvent.CLOSE, handleClose);
+			
 		}
 		
 		public function init():void
@@ -160,12 +165,12 @@ package dr
 				config.settings.pagePaddingVerticalBottom = txtPagePaddingVerticalBottom.text;
 				config.settings.pagePaddingHorizontal = txtPagePaddingHorizontal.text;
 				config.settings.pageBackgroundOpacity = sldPageBackgroundOpacity.value;
-				config.settings.pageBackgroundColor = (clrPageBackgroundColor.value) ? clrPageBackgroundColor.value : config.settings.pageBackgroundColor;
+				config.settings.pageBackgroundColor = (colors.pageBackgroundColor) ? clrPageBackgroundColor.value : config.settings.pageBackgroundColor;
 				
 				// general
 				config.settings.launchFullScreen = chkLaunchFullScreen.selected;
 				config.settings.liveScrolling = chkLiveScrolling.selected;
-				config.settings.backgroundColor = (clrBackgroundColor.value) ? clrBackgroundColor.value : config.settings.backgroundColor;
+				config.settings.backgroundColor = (colors.backgroundColor) ? clrBackgroundColor.value : config.settings.backgroundColor;
 				config.settings.backgroundOpacity = sldBackgroundOpacity.value;
 			}
 			
@@ -174,7 +179,7 @@ package dr
 			{
 				// formatting
 				config.settings.fontFamily = cboFontFamily.selectedItem.fontName;
-				config.settings.fontColor = (clrFontColor.value) ? clrFontColor.value : config.settings.fontColor;
+				config.settings.fontColor = (colors.fontColor) ? clrFontColor.value : config.settings.fontColor;
 				config.settings.fontSize = txtFontSize.text;
 				config.settings.fontLetterSpacing = txtFontLetterSpacing.text;
 				config.settings.fontStyle = (chkFontStyle.selected) ? 'italic' : 'normal';
@@ -206,14 +211,14 @@ package dr
 				config.settings.scrollFillAlpha2 = sldScrollFillAlpha2.value;
 				config.settings.scrollFillAlpha3 = sldScrollFillAlpha3.value;
 				config.settings.scrollFillAlpha4 = sldScrollFillAlpha4.value;
-				config.settings.scrollFillColor1 = (clrScrollFillColor1.value) ? clrScrollFillColor1.value : config.settings.scrollFillColor1;
-				config.settings.scrollFillColor2 = (clrScrollFillColor2.value) ? clrScrollFillColor2.value : config.settings.scrollFillColor2;
-				config.settings.scrollFillColor3 = (clrScrollFillColor3.value) ? clrScrollFillColor3.value : config.settings.scrollFillColor3;
-				config.settings.scrollFillColor4 = (clrScrollFillColor4.value) ? clrScrollFillColor4.value : config.settings.scrollFillColor4;
-				config.settings.scrollTrackColor1 = (clrScrollTrackColor1.value) ? clrScrollTrackColor1.value : config.settings.scrollTrackColor1;
-				config.settings.scrollTrackColor2 = (clrScrollTrackColor2.value) ? clrScrollTrackColor2.value : config.settings.scrollTrackColor2;
-				config.settings.scrollThemeColor = (clrScrollThemeColor.value) ? clrScrollThemeColor.value : config.settings.scrollThemeColor;
-				config.settings.scrollBorderColor = (clrScrollBorderColor.value) ? clrScrollBorderColor.value : config.settings.scrollBorderColor;
+				config.settings.scrollFillColor1 = (colors.scrollFillColor1) ? clrScrollFillColor1.value : config.settings.scrollFillColor1;
+				config.settings.scrollFillColor2 = (colors.scrollFillColor2) ? clrScrollFillColor2.value : config.settings.scrollFillColor2;
+				config.settings.scrollFillColor3 = (colors.scrollFillColor3) ? clrScrollFillColor3.value : config.settings.scrollFillColor3;
+				config.settings.scrollFillColor4 = (colors.scrollFillColor4) ? clrScrollFillColor4.value : config.settings.scrollFillColor4;
+				config.settings.scrollTrackColor1 = (colors.scrollTrackColor1) ? clrScrollTrackColor1.value : config.settings.scrollTrackColor1;
+				config.settings.scrollTrackColor2 = (colors.scrollTrackColor2) ? clrScrollTrackColor2.value : config.settings.scrollTrackColor2;
+				config.settings.scrollThemeColor = (colors.scrollThemeColor) ? clrScrollThemeColor.value : config.settings.scrollThemeColor;
+				config.settings.scrollBorderColor = (colors.scrollBorderColor) ? clrScrollBorderColor.value : config.settings.scrollBorderColor;
 				
 			}
 			
@@ -254,6 +259,14 @@ package dr
 					chkLiveScrolling.selected = config.settings.liveScrolling;
 					cnvBackgroundColor.setStyle('backgroundColor', config.settings.backgroundColor);
 					sldBackgroundOpacity.value = config.settings.backgroundOpacity
+					
+					// color picker events
+					if(!clrPageBackgroundColor.hasEventListener(Event.CHANGE))
+					{
+						clrPageBackgroundColor.addEventListener(Event.CHANGE, handleColorChange);
+						clrBackgroundColor.addEventListener(Event.CHANGE, handleColorChange);
+					}
+					
 					break;
 					
 				case 1:
@@ -276,6 +289,13 @@ package dr
 					txtTabsToSpacesCount.text = config.settings.tabsToSpacesCount;
 					chkAutoIndent.selected = config.settings.autoIndent;
 					chkWrapToPage.selected = config.settings.wordWrap;
+					
+					// color picker events
+					if(!clrFontColor.hasEventListener(Event.CHANGE))
+					{
+						clrFontColor.addEventListener(Event.CHANGE, handleColorChange);
+					}
+					
 					break;
 					
 				case 2:
@@ -299,6 +319,20 @@ package dr
 					cnvScrollTrackColor2.setStyle('backgroundColor', config.settings.scrollTrackColor2);
 					cnvScrollThemeColor.setStyle('backgroundColor', config.settings.scrollThemeColor);
 					cnvScrollBorderColor.setStyle('backgroundColor', config.settings.scrollBorderColor);
+					
+					// color picker events
+					if(!clrScrollFillColor1.hasEventListener(Event.CHANGE))
+					{
+						clrScrollFillColor1.addEventListener(Event.CHANGE, handleColorChange);
+						clrScrollFillColor2.addEventListener(Event.CHANGE, handleColorChange);
+						clrScrollFillColor3.addEventListener(Event.CHANGE, handleColorChange);
+						clrScrollFillColor4.addEventListener(Event.CHANGE, handleColorChange);
+						clrScrollTrackColor1.addEventListener(Event.CHANGE, handleColorChange);
+						clrScrollTrackColor2.addEventListener(Event.CHANGE, handleColorChange);
+						clrScrollThemeColor.addEventListener(Event.CHANGE, handleColorChange);
+						clrScrollBorderColor.addEventListener(Event.CHANGE, handleColorChange);
+					}
+					
 					break;
 					
 				case 3:
@@ -389,7 +423,68 @@ package dr
         	return index;
 		}
 		
-		
+		private function handleColorChange(event:Event):void
+		{
+			var id:String = event.target.toString().split('.').pop().toString();
+			
+			switch (id)
+			{
+				case 'clrPageBackgroundColor':
+					colors.pageBackgroundColor = true;
+					cnvPageBackgroundColor.setStyle('backgroundColor', clrPageBackgroundColor.value);
+					break;
+					
+				case 'clrBackgroundColor':
+					colors.backgroundColor = true;
+					cnvBackgroundColor.setStyle('backgroundColor', clrBackgroundColor.value);
+					break;
+					
+				case 'clrFontColor':
+					colors.fontColor = true;
+					cnvFontColor.setStyle('backgroundColor', clrFontColor.value);
+					break;
+					
+				case 'clrScrollFillColor1':
+					colors.scrollFillColor1 = true;
+					cnvScrollFillColor1.setStyle('backgroundColor', clrScrollFillColor1.value);
+					break;
+					
+				case 'clrScrollFillColor2':
+					colors.scrollFillColor2 = true;
+					cnvScrollFillColor2.setStyle('backgroundColor', clrScrollFillColor2.value);
+					break;
+					
+				case 'clrScrollFillColor3':
+					colors.scrollFillColor3 = true;
+					cnvScrollFillColor3.setStyle('backgroundColor', clrScrollFillColor3.value);
+					break;
+
+				case 'clrScrollFillColor4':
+					colors.scrollFillColor4 = true;
+					cnvScrollFillColor4.setStyle('backgroundColor', clrScrollFillColor4.value);
+					break;
+					
+				case 'clrScrollTrackColor1':
+					colors.scrollTrackColor1 = true;
+					cnvScrollTrackColor1.setStyle('backgroundColor', clrScrollTrackColor1.value);
+					break;
+					
+				case 'clrScrollTrackColor2':
+					colors.scrollTrackColor2 = true;
+					cnvScrollTrackColor2.setStyle('backgroundColor', clrScrollTrackColor2.value);
+					break;
+					
+				case 'clrScrollThemeColor':
+					colors.scrollThemeColor = true;
+					cnvScrollThemeColor.setStyle('backgroundColor', clrScrollThemeColor.value);
+					break;
+					
+				case 'clrScrollBorderColor':
+					colors.scrollBorderColor = true;
+					cnvScrollBorderColor.setStyle('backgroundColor', clrScrollBorderColor.value);
+					break;
+			}		
+		}
 		
 	}
 }	

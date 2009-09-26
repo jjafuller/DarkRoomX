@@ -197,7 +197,7 @@ package dr
 				content.setStyle('backgroundAlpha', config.settings.pageBackgroundOpacity);
 			}
 			
-			if(config.settings.pageBackgroundColor)
+			if(!isNaN(config.settings.pageBackgroundColor))
 			{
 				content.setStyle('backgroundColor', config.settings.pageBackgroundColor);
 			}
@@ -205,7 +205,7 @@ package dr
 			// live scrolling
 			content.liveScrolling = config.settings.liveScrolling;
 			
-			if(config.settings.backgroundColor)
+			if(!isNaN(config.settings.backgroundColor))
 			{
 				this.setStyle('backgroundColor', config.settings.backgroundColor);
 			}
@@ -222,7 +222,7 @@ package dr
 				content.setStyle('fontFamily', config.settings.fontFamily);
 			}
 			
-			if(config.settings.fontColor)
+			if(!isNaN(config.settings.fontColor))
 			{
 				content.setStyle('color', config.settings.fontColor);
 				lblInformation.setStyle('color', config.settings.fontColor);
