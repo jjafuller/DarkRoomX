@@ -79,6 +79,7 @@ package dr
 		
 		// dialogs
 		public var configDialog:ConfigurationDialog;
+		public var findDialog:FindAndReplaceDialog;
 		
 		// constructor
 		public function WindowedApplication()
@@ -516,6 +517,8 @@ package dr
 												{label:"1",separator:true},
 												{label:"Select All",keyEquivalent:Keyboard.A, keyEquivalentModifiers:[ctrlKey], action:handleEditSelectAll},
 												{label:"2",separator:true},
+												{label:"Find...",keyEquivalent:Keyboard.F, keyEquivalentModifiers:[ctrlKey], action:handleEditFind},
+												{label:"3",separator:true},
 												{label:"Preferences..",keyEquivalent:Keyboard.COMMA, keyEquivalentModifiers:[ctrlKey], action:handleEditSettings},
 											])},
 											{label:'View', children: new ArrayCollection([
@@ -660,7 +663,20 @@ package dr
 		
 		public function handleEditSelectAll(event:Event):void
 		{
-			content.setSelection(0,content.length);
+			// only set focus if the content area is selected
+			if (focusManager.getFocus() == content)
+			{
+				content.setSelection(0,content.length);	
+			}
+		}
+		
+		public function handleEditFind(event:Event):void
+		{
+			findDialog = PopUpManager.createPopUp(this, FindAndReplaceDialog, false) as FindAndReplaceDialog;
+			
+			findDialog.content = content;
+			
+			PopUpManager.centerPopUp(findDialog);
 		}
 		
 		public function handleAutosaveTimerInterval(event:TimerEvent):void

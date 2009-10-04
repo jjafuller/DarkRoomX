@@ -43,6 +43,8 @@ package dr
 		{
 			isDirty = false;
 			
+			this.textField.alwaysShowSelection = true;
+			
 			initListeners();
 		}
 
@@ -50,6 +52,11 @@ package dr
 		{
 			this.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 			this.addEventListener(Event.CHANGE, handleChange);
+		}
+		
+		public function getCaretPosition():int
+		{
+			return this.textField.caretIndex;
 		}
 		
 		private function handleChange(event:Event):void

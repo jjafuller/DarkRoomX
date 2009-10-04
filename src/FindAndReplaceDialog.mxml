@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dr:FindAndReplaceWindow creationComplete="init()" xmlns:dr="dr.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="445" height="202" title="Find / Replace" showCloseButton="true">
+	<mx:TextInput x="66" y="8" id="txtFind" width="340"/>
+	<mx:TextInput x="66" y="38" id="txtReplace" width="340"/>
+	<mx:Label x="31" y="10" text="Find:"/>
+	<mx:Label x="10" y="40" text="Replace:"/>
+	<mx:CheckBox x="66" y="68" label="Ignore Case" id="chkIgnoreCase" selected="true"/>
+	<mx:CheckBox x="168" y="68" label="Wrap" id="chkWrap" selected="true"/>
+	<mx:Button x="62" y="124" label="Find" id="btnFind"/>
+	<mx:Button x="120" y="124" label="Replace" id="btnReplace"/>
+	<mx:Button x="199" y="124" label="Replace &amp; Find" id="btnFindReplace"/>
+	<mx:Button x="317" y="124" label="Replace All" id="btnReplaceAll"/>
+	<mx:Label x="66" y="98" width="340" id="lblStatus" fontWeight="bold"/>
+	<mx:CheckBox x="230" y="68" label="Regular Expression" id="chkRegularExpression"/>
+	
+</dr:FindAndReplaceWindow>
