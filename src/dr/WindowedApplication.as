@@ -696,6 +696,7 @@ package dr
 			configDialog.updateFields();
 			
 			PopUpManager.centerPopUp(configDialog);
+			focusManager.setFocus(configDialog.navigator);
 		}
 		
 		public function handleViewInformation(event:Event):void
@@ -734,10 +735,27 @@ package dr
 		
 		public function handleKeyDown(event:KeyboardEvent):void
 		{
-			
 			if(event.keyCode == Keyboard.ESCAPE)
 			{
-				toggleDisplayState(event);
+				if (focusManager.getFocus() == content)
+				{
+					toggleDisplayState(event);	
+				}
+				else
+				{
+					if(configDialog)
+					{
+						PopUpManager.removePopUp(configDialog);
+					}
+					else if(findDialog)
+					{
+						PopUpManager.removePopUp(findDialog);
+					}
+					else
+					{
+						focusManager.setFocus(content);	
+					}
+				}
 			}
 			
 			// hack to emulate menu bar shortcut keys, but only look if user is at least hold down ctrl key
