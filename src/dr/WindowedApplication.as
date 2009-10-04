@@ -41,6 +41,7 @@ package dr
 	public class WindowedApplication extends mx.core.WindowedApplication
 	{
 		// constances
+		public static const FRAME_RATE:int = 12;
 		public static const UNSAVED_TITLE:String = "Unsaved Changes";
 		public static const UNSAVED_MESSAGE:String = "You have unsaved changes in your document. If you proceed your changes will be lost.";
 		public static const PATTERN_WORDS:RegExp = /\w+/g;
@@ -88,6 +89,8 @@ package dr
 		public function init():void 
  		{	
  			virtualMenu.visible = false;
+ 			
+ 			stage.frameRate = FRAME_RATE;
  			
  			// trap all our keys so we can make escape go to full scree
  			//fscommand("trapallkeys", "true");
@@ -588,7 +591,8 @@ package dr
 			
 			// application
 			this.addEventListener(Event.CLOSING, handleClosing);
-			
+			this.addEventListener(AIREvent.APPLICATION_DEACTIVATE, handleApplicationDeactivate);
+			this.addEventListener(AIREvent.APPLICATION_ACTIVATE, handleApplicationActivate);
 			this.nativeApplication.addEventListener(InvokeEvent.INVOKE, handleInvoke);
 		}
 		
@@ -1012,6 +1016,17 @@ package dr
 					openCurrentFile();
 				}
 			}
+		}
+		
+		
+		private function handleApplicationDeactivate(event:Event):void {
+		    //this.removeEventListener(Event.ENTER_FRAME, enterFrame);
+		    stage.frameRate = 0.1;
+		}
+		
+		private function handleApplicationActivate(event:Event):void {
+		    //this.removeEventListener(Event.ENTER_FRAME, enterFrame);
+		    stage.frameRate = FRAME_RATE;
 		}
 		
 		

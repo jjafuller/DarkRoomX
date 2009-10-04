@@ -19,7 +19,7 @@ an email to contact@getdarkroom.com so we can send a copy to you.
 -->
 <dr:WindowedApplication xmlns:dr="dr.*" xmlns:mx="http://www.adobe.com/2006/mxml" 
     layout="absolute"
-    applicationComplete="init()"  width="700" height="700" showStatusBar="false" borderThickness="0" backgroundColor="0x0" focusRect="false" backgroundAlpha="0.8" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#000000, #000000]" verticalScrollBarStyleName="myVScrollBar" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" tabEnabled="false" verticalScrollPolicy="off" horizontalScrollPolicy="off" title="Dark Room X">
+    applicationComplete="init()"  width="700" height="700" showStatusBar="false" borderThickness="0" backgroundColor="0x0" focusRect="false" backgroundAlpha="0.8" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#000000, #000000]" verticalScrollBarStyleName="myVScrollBar" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" tabEnabled="false" verticalScrollPolicy="off" horizontalScrollPolicy="off" title="Dark Room X" frameRate="12">
     <mx:Script>
         <![CDATA[
             
