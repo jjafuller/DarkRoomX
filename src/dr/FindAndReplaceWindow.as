@@ -107,7 +107,7 @@ package dr
 		
 		private function find():void
 		{
-			lblStatus.text = '';
+			lblStatus.text = (searchWrapped) ? lblStatus.text : '';
 			
 			if(txtFind.text.length > 0)
 			{
@@ -138,8 +138,19 @@ package dr
 				}
 				else
 				{
-					lblStatus.text = "No Matches Found";
+					if(chkWrap.selected && !searchWrapped)
+					{
+						searchWrapped = true;
+						lblStatus.text = "Restarting Search at Top";
+						find();
+					}
+					else
+					{
+						lblStatus.text = "No Matches Found";	
+					}
 				}
+				
+				searchWrapped = false;
 			}
 		}
 		
