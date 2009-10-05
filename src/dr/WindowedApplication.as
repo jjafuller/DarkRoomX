@@ -574,7 +574,7 @@ package dr
 			}
 			else
 			{
-				focusManager.setFocus(content);	
+				content.setFocus();
 			}
 		}
 				
