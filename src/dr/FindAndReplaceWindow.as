@@ -178,6 +178,7 @@ package dr
 				if (count > 0)
 				{
 					content.text = content.text.replace(pattern, txtReplace.text);
+					content.isDirty = true;
 					
 					lblStatus.text = count + " Occurances Replaced";
 				}

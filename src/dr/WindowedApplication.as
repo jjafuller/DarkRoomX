@@ -844,8 +844,7 @@ package dr
 		}
 		
 		/**
-		 * Called when the user clicks the Open button. Opens a file chooser dialog box, in which the 
-		 * user selects a currentFile. 
+		 * Trigger a file chooser, and open selected file.
 		 */
 		private function openFile():void 
 		{	
@@ -863,9 +862,7 @@ package dr
 		}
 		
 		/**
-		 * Called when the user selects the currentFile in the FileOpenPanel control. The method passes 
-	  	 * File object pointing to the selected currentFile, and opens a FileStream object in read mode (with a FileMode
-		 * setting of READ), and modify's the title of the application window based on the filename.
+		 * Set the selected file to the current file, then open current file
 		 */
 		private function fileOpenSelected(event:Event):void 
 		{
@@ -885,9 +882,7 @@ package dr
 		}
 		
 		/**
-		 * Called when the stream object has finished reading the data from the currentFile (in the openFile()
-		 * method). This method reads the data as UTF data, converts the system-specific line ending characters
-		 * in the data to the "\n" character, and displays the data in the mainTextField Text component.
+		 * Read in the file, and update statistics
 		 */
 		private function fileReadHandler(event:Event):void 
 		{
@@ -902,9 +897,7 @@ package dr
 		}
 		
 		/**
-		 * Called when the user clicks the "Save" button. The method sets up the stream object to point to
-		 * the currentFile specified by the currentFile object, with save access. This method converts the "\r" and "\n" characters 
-		 * in the mainTextField.text data to the system-specific line ending character, and writes the data to the currentFile.
+		 * Save file, and replace line breaks with system line breaks
 		 */
 		private function saveFile():void 
 		{
@@ -931,8 +924,7 @@ package dr
 		}
 		
 		/**
-		 * Called when the user clicks the "Save As" button. Opens a Save As dialog box, in which the 
-		 * user selects a currentFile path. See the FileSavePanel.mxml currentFile.
+		 * Trigger a save as file dialog
 		 */
 		private function saveAs():void 
 		{
@@ -950,8 +942,7 @@ package dr
 		}
 	
 		/**
-		 * Called when the user selects the file path in the Save As dialog box. The method passes the selected 
-		 * currentFile to the File object and calls the saveFile() method, which saves the currentFile.
+		 * Update information, and save file
 		 */
 		private function saveAsFileSelected(event:Event):void 
 		{
@@ -984,8 +975,7 @@ package dr
 		}
 		
 		/**
-		 * Called when the user clicks the "New" button. Initializes the state, with an undefined File object and a
-		 * blank text entry field.
+		 * Zero out the document, and start a fresh one
 		 */
 		private function newFile():void
 		{
