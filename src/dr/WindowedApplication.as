@@ -589,6 +589,7 @@ package dr
 			
 			// text area
 			content.addEventListener(Event.CHANGE, handleChange);
+			content.addEventListener(FocusEvent.FOCUS_IN, handleFocus);
 			
 			// menu
 			
@@ -731,6 +732,11 @@ package dr
 		public function handleChange(event:Event):void
 		{
 			updateStatistics();
+		}
+		
+		public function handleFocus(event:Event):void
+		{
+			updateInformation();	
 		}
 		
 		public function handleKeyDown(event:KeyboardEvent):void
