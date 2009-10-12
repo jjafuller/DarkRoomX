@@ -17,6 +17,9 @@
 
 package dr
 {
+	import air.update.ApplicationUpdaterUI;
+	import air.update.events.UpdateEvent;
+	
 	import flash.desktop.*;
 	import flash.display.*;
 	import flash.events.*;
@@ -81,6 +84,10 @@ package dr
 		public var configDialog:ConfigurationDialog;
 		public var findDialog:FindAndReplaceDialog;
 		
+		// updater
+		private var appUpdater:ApplicationUpdaterUI;
+		
+		
 		// constructor
 		public function WindowedApplication()
 		{
@@ -92,9 +99,6 @@ package dr
  			virtualMenu.visible = false;
  			
  			stage.frameRate = FRAME_RATE;
- 			
- 			// trap all our keys so we can make escape go to full scree
- 			//fscommand("trapallkeys", "true");
  			
  			// hack to get us undo until flex 4
  			undoTextFields = new UndoTextFields();
@@ -112,6 +116,9 @@ package dr
  			{
  				launchFullScreen();
  			}
+ 			
+ 			// init updater
+ 			initUpdater();
  			
  			// start listeners and build menu
  			initListeners();
@@ -1135,6 +1142,33 @@ package dr
 				
 				updateInformation();
 			}
+		}
+		
+		/* handle updates */
+		
+		private function initUpdater():void {
+			appUpdater = new ApplicationUpdaterUI();
+			
+			appUpdater.updateURL = "http://getdarkroom.com/darkroomx-updater.xml";
+			
+			appUpdater.addEventListener(UpdateEvent.INITIALIZED, handleUpdate);
+			appUpdater.addEventListener(ErrorEvent.ERROR, handleUpdateError);
+			
+			appUpdater.isCheckForUpdateVisible = false;
+			appUpdater.isFileUpdateVisible = false;
+			appUpdater.isInstallUpdateVisible = false;
+			
+			appUpdater.initialize();
+		}
+		
+		private function handleUpdate(event:UpdateEvent):void {
+			//start the process of checking for a new update and to install
+			appUpdater.checkNow();
+		}
+		
+		private function handleUpdateError(event:ErrorEvent):void {
+			Alert.show('An error occurred while checking for an update.');
+			trace(event.toString());
 		}
 	}
 }
