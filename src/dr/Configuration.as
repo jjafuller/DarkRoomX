@@ -179,6 +179,17 @@ package dr
 			settings.autoIndent = (settingsXml.autoIndent=='true') ? true : false;
 			settings.wordWrap = (settingsXml.wordWrap=='true') ? true : false;
 			
+			// info bar
+			settings.infoFontFamily = settingsXml.infoFontFamily;
+			settings.infoFontColor = settingsXml.infoFontColor;
+			settings.infoFontSize = settingsXml.infoFontSize;
+			settings.infoFontLetterSpacing = settingsXml.infoFontLetterSpacing;
+			settings.infoFontStyle = settingsXml.infoFontStyle;
+			settings.infoFontWeight = settingsXml.infoFontWeight;
+			settings.infoFontDecoration = settingsXml.infoFontDecoration;
+			settings.infoBackgroundOpacity = settingsXml.infoBackgroundOpacity;
+			settings.infoBackgroundColor = uint(settingsXml.infoBackgroundColor);
+			
 			// disable scrolls
 			settings.scrollVerticalDisable = (settingsXml.scrollVerticalDisable=='true') ? true : false;
 			settings.scrollHorizontalDisable = (settingsXml.scrollHorizontalDisable=='true') ? true : false;
@@ -261,6 +272,18 @@ package dr
 			settingsXml.tabsToSpacesCount = settings.tabsToSpacesCount;
 			settingsXml.autoIndent = settings.autoIndent;
 			settingsXml.wordWrap = settings.wordWrap;
+			
+			// info bar
+			settingsXml.infoFontFamily = settings.infoFontFamily;
+			settingsXml.infoFontColor = settings.infoFontColor;
+			settingsXml.infoFontSize = settings.infoFontSize;
+			settingsXml.infoFontLetterSpacing = settings.infoFontLetterSpacing;
+			settingsXml.infoPadding = settings.infoPadding;
+			settingsXml.infoFontStyle = settings.infoFontStyle;
+			settingsXml.infoFontWeight = settings.infoFontWeight;
+			settingsXml.infoFontDecoration = settings.infoFontDecoration;
+			settingsXml.infoBackgroundOpacity = settings.infoBackgroundOpacity;
+			settingsXml.infoBackgroundColor = settings.infoBackgroundColor;
 			
 			// disable scrolls
 			settingsXml.scrollVerticalDisable = settings.scrollVerticalDisable;

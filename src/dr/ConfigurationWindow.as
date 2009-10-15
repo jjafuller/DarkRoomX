@@ -215,7 +215,7 @@ package dr
 			if(cboInfoFontFamily)
 			{
 				// formatting
-				config.settings.infoFontFamily = cboInfoFontFamily.selectedItem.infoFontName;
+				config.settings.infoFontFamily = cboInfoFontFamily.selectedItem.fontName;
 				config.settings.infoFontColor = (colors.infoFontColor) ? clrInfoFontColor.value : config.settings.infoFontColor;
 				config.settings.infoFontSize = txtInfoFontSize.text;
 				config.settings.infoFontLetterSpacing = txtInfoFontLetterSpacing.text;
@@ -503,12 +503,12 @@ package dr
 					break;
 					
 				case 'clrInfoFontColor':
-					colors.fontColor = true;
+					colors.infoFontColor = true;
 					cnvInfoFontColor.setStyle('backgroundColor', clrInfoFontColor.value);
 					break;
 					
 				case 'clrInfoBackgroundColor':
-					colors.backgroundColor = true;
+					colors.infoBackgroundColor = true;
 					cnvInfoBackgroundColor.setStyle('backgroundColor', clrInfoBackgroundColor.value);
 					break;
 					

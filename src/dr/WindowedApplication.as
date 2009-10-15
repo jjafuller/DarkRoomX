@@ -199,10 +199,6 @@ package dr
 			
 			// page settings
 			
-			
-			// handle layout first
-			applyLayoutSettings();
-			
 			if(config.settings.pageBackgroundOpacity)
 			{
 				content.setStyle('backgroundAlpha', config.settings.pageBackgroundOpacity);
@@ -295,17 +291,17 @@ package dr
 			
 			if(config.settings.infoFontStyle)
 			{
-				lblInformation.setStyle('infoFontStyle', config.settings.infoFontStyle);
+				lblInformation.setStyle('fontStyle', config.settings.infoFontStyle);
 			}
 			
 			if(config.settings.infoFontWeight)
 			{
-				lblInformation.setStyle('infoFontWeight', config.settings.infoFontWeight);
+				lblInformation.setStyle('fontWeight', config.settings.infoFontWeight);
 			}
 			
 			if(config.settings.infoFontDecoration)
 			{
-				lblInformation.setStyle('textDecoration', config.settings.fontDecoration);
+				lblInformation.setStyle('textDecoration', config.settings.infoFontDecoration);
 			}
 			
 			if(config.settings.infoBackgroundOpacity)
@@ -335,6 +331,9 @@ package dr
 			scrollbarStyles.setStyle('borderColor', config.settings.scrollBorderColor);
 			
 			StyleManager.setStyleDeclaration(".scrollbar", scrollbarStyles, true);
+			
+			// handle layout
+			applyLayoutSettings();
 			
 			// auto save settings
 			initAutosaveTimer();
@@ -529,6 +528,8 @@ package dr
 				content.setStyle('paddingLeft', value);
 				content.setStyle('paddingRight', value);
 			}
+			
+			content.setFocus();
 		}
 		
 		
@@ -631,16 +632,6 @@ package dr
 			}
 			
 			applyLayoutSettings();
-			
-			if(configDialog)
-			{
-				PopUpManager.centerPopUp(configDialog);
-				focusManager.setFocus(configDialog.navigator);
-			}
-			else
-			{
-				content.setFocus();
-			}
 		}
 				
 		/* Handle Events and Other Unholy Things */
