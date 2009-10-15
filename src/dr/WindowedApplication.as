@@ -758,8 +758,11 @@ package dr
 		
 		public function handleViewInformation(event:Event):void
 		{
-			cnvInfoBar.visible = !cnvInfoBar.visible;
-			applyLayoutSettings();
+			if (stage.displayState != StageDisplayState.NORMAL)
+			{
+				cnvInfoBar.visible = !cnvInfoBar.visible;
+				applyLayoutSettings();
+			}
 		}
 		
 		public function handleViewScrollbars(event:Event):void
