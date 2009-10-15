@@ -83,6 +83,24 @@ package dr
 		public var chkAutoIndent:CheckBox;
 		public var chkWrapToPage:CheckBox;
 		
+		public var cboInfoFontFamily:ComboBox;
+		public var txtInfoFontSize:TextInput;
+		public var clrInfoFontColor:ColorPicker;
+		public var cnvInfoFontColor:Canvas;
+		public var txtInfoFontLetterSpacing:TextInput;
+		public var txtInfoPadding:TextInput;
+		public var chkInfoFontStyle:CheckBox;
+		public var chkInfoFontWeight:CheckBox;
+		public var chkInfoFontDecoration:CheckBox;
+		public var clrInfoBackgroundColor:ColorPicker;
+		public var cnvInfoBackgroundColor:Canvas;
+		public var sldInfoBackgroundOpacity:Slider;
+		
+		public var chkStatisticsCharacters:CheckBox;
+		public var chkStatisticsLines:CheckBox;
+		public var chkStatisticsWords:CheckBox;
+		public var chkStatisticsSentences:CheckBox;
+		
 		public var chkDisableVerticalScroll:CheckBox;
 		public var chkDisableHorizontalScroll:CheckBox;
 		
@@ -112,10 +130,7 @@ package dr
 		
 		public var cboAutosave:ComboBox;
 		public var chkReopenLastDocument:CheckBox;
-		public var chkStatisticsCharacters:CheckBox;
-		public var chkStatisticsLines:CheckBox;
-		public var chkStatisticsWords:CheckBox;
-		public var chkStatisticsSentences:CheckBox;
+		
 		
 		
 		public function ConfigurationWindow()
@@ -197,6 +212,28 @@ package dr
 			}
 			
 			// third tab
+			if(cboInfoFontFamily)
+			{
+				// formatting
+				config.settings.infoFontFamily = cboInfoFontFamily.selectedItem.infoFontName;
+				config.settings.infoFontColor = (colors.infoFontColor) ? clrInfoFontColor.value : config.settings.infoFontColor;
+				config.settings.infoFontSize = txtInfoFontSize.text;
+				config.settings.infoFontLetterSpacing = txtInfoFontLetterSpacing.text;
+				config.settings.infoPadding = txtInfoPadding.text;
+				config.settings.infoFontStyle = (chkInfoFontStyle.selected) ? 'italic' : 'normal';
+				config.settings.infoFontWeight = (chkInfoFontWeight.selected) ? 'bold' : 'normal';
+				config.settings.infoFontDecoration = (chkInfoFontDecoration.selected) ? 'underline' : 'normal';
+				config.settings.infoBackgroundOpacity = sldInfoBackgroundOpacity.value;
+				config.settings.infoBackgroundColor = (colors.infoBackgroundColor) ? clrInfoBackgroundColor.value : config.settings.infoBackgroundColor;
+				
+				// statistics
+				config.settings.statisticsCharacters = chkStatisticsCharacters.selected;
+				config.settings.statisticsLines = chkStatisticsLines.selected;
+				config.settings.statisticsWords = chkStatisticsWords.selected;
+				config.settings.statisticsSentences = chkStatisticsSentences.selected;
+			}
+			
+			// fourth tab
 			if(chkDisableVerticalScroll!=null)
 			{
 				// disable scroll
@@ -222,15 +259,11 @@ package dr
 				
 			}
 			
-			// fourth tab
+			// fifth tab
 			if(cboAutosave!=null)
 			{
 				config.settings.autosaveInterval = cboAutosave.selectedItem.data;
 				config.settings.reopenLastDocument = chkReopenLastDocument.selected;
-				config.settings.statisticsCharacters = chkStatisticsCharacters.selected;
-				config.settings.statisticsLines = chkStatisticsLines.selected;
-				config.settings.statisticsWords = chkStatisticsWords.selected;
-				config.settings.statisticsSentences = chkStatisticsSentences.selected;
 			}
 			
 			return config;
@@ -299,6 +332,35 @@ package dr
 					break;
 					
 				case 2:
+					// formatting
+					cboInfoFontFamily.dataProvider = fonts;
+					cboInfoFontFamily.selectedIndex = getFontIndex(config.settings.infoFontFamily);
+					cnvInfoFontColor.setStyle('backgroundColor', config.settings.infoFontColor);
+					txtInfoFontSize.text = config.settings.infoFontSize;
+					txtInfoFontLetterSpacing.text = config.settings.infoFontLetterSpacing;
+					txtInfoPadding.text = config.settings.infoPadding;
+					chkInfoFontStyle.selected = (config.settings.infoFontStyle=='italic') ? true : false;
+					chkInfoFontWeight.selected = (config.settings.infoFontWeight=='bold') ? true : false;
+					chkInfoFontDecoration.selected = (config.settings.infoFontDecoration=='underline') ? true : false;
+					sldInfoBackgroundOpacity.value = config.settings.infoBackgroundOpacity;
+					cnvInfoBackgroundColor.setStyle('backgroundColor', config.settings.infoBackgroundColor);
+					
+					//stats
+					chkStatisticsCharacters.selected = config.settings.statisticsCharacters;
+					chkStatisticsLines.selected = config.settings.statisticsLines;
+					chkStatisticsWords.selected = config.settings.statisticsWords;
+					chkStatisticsSentences.selected = config.settings.statisticsSentences;
+					
+					// color picker events
+					if(!clrInfoBackgroundColor.hasEventListener(Event.CHANGE))
+					{
+						clrInfoFontColor.addEventListener(Event.CHANGE, handleColorChange);
+						clrInfoBackgroundColor.addEventListener(Event.CHANGE, handleColorChange);
+					}
+					
+					break;
+					
+				case 3:
 					// disable scrolls
 					chkDisableVerticalScroll.selected = config.settings.scrollVerticalDisable;
 					chkDisableHorizontalScroll.selected = config.settings.scrollHorizontalDisable;
@@ -335,16 +397,12 @@ package dr
 					
 					break;
 					
-				case 3:
+				case 4:
 					// setup
 					cboAutosave.dataProvider = autosaveInterval;
-					
 					cboAutosave.selectedIndex = getAutosaveIndex(config.settings.autosaveInterval);
 					chkReopenLastDocument.selected = config.settings.reopenLastDocument;
-					chkStatisticsCharacters.selected = config.settings.statisticsCharacters;
-					chkStatisticsLines.selected = config.settings.statisticsLines;
-					chkStatisticsWords.selected = config.settings.statisticsWords;
-					chkStatisticsSentences.selected = config.settings.statisticsSentences;
+					
 					
 			}
 		}
@@ -442,6 +500,16 @@ package dr
 				case 'clrFontColor':
 					colors.fontColor = true;
 					cnvFontColor.setStyle('backgroundColor', clrFontColor.value);
+					break;
+					
+				case 'clrInfoFontColor':
+					colors.fontColor = true;
+					cnvInfoFontColor.setStyle('backgroundColor', clrInfoFontColor.value);
+					break;
+					
+				case 'clrInfoBackgroundColor':
+					colors.backgroundColor = true;
+					cnvInfoBackgroundColor.setStyle('backgroundColor', clrInfoBackgroundColor.value);
 					break;
 					
 				case 'clrScrollFillColor1':

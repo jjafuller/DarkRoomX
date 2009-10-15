@@ -34,7 +34,11 @@ an email to contact@getdarkroom.com so we can send a copy to you.
         backgroundColor="#101010" 
         color="#00FF00"
         fontSize="14" backgroundAlpha="0.9" verticalScrollBarStyleName="scrollbar" borderStyle="none" fontFamily="Courier New" paddingBottom="10" paddingLeft="10" paddingTop="10" paddingRight="10" focusThickness="0"/>
-    <mx:Label x="10" text="untitled" id="lblInformation" color="#00FF66" y="10" textAlign="center"/>
+    
     <mx:MenuBar x="0" y="0" id="virtualMenu" width="100%"></mx:MenuBar>
+
+	<mx:Canvas id="cnvInfoBar" backgroundColor="#575757" x="0" y="30">
+		<mx:Label x="0" text="untitled" id="lblInformation" color="#00FF66" y="0" textAlign="center" fontFamily="Courier New" paddingBottom="3" paddingLeft="3" paddingRight="3" paddingTop="3"/>
+	</mx:Canvas>
 
 </dr:WindowedApplication>

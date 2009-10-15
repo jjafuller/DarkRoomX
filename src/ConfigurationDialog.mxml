@@ -89,6 +89,41 @@ an email to contact@getdarkroom.com so we can send a copy to you.
 				<mx:CheckBox x="259" y="64" label="Wrap to Page" id="chkWrapToPage" tabIndex="14"/>
 			</mx:Panel>
 		</mx:Canvas>
+		<mx:Canvas label="Info Bar" width="100%" height="100%">
+			<mx:Panel x="10" y="10" width="440" height="230" layout="absolute" title="Formatting">
+				<mx:Label x="23" y="15" text="Font Family"/>
+				<mx:ComboBox x="100" y="8" width="310" id="cboInfoFontFamily" labelField="fontName" fontSize="12" tabIndex="1">
+					<mx:itemRenderer>
+					          <mx:Component>
+					              <mx:Label fontFamily="{data.fontName}" toolTip="{data.fontName}" />
+					          </mx:Component>
+					      </mx:itemRenderer>
+				</mx:ComboBox>
+				<mx:Label x="60" y="44" text="Color"/>
+				<mx:ColorPicker x="100" y="40" id="clrInfoFontColor" tabIndex="2"/>
+				<mx:Label x="66" y="70" text="Size"/>
+				<mx:TextInput x="100" y="68" width="50" id="txtInfoFontSize" tabIndex="3"/>
+				<mx:TextInput x="100" y="96" width="50" id="txtInfoFontLetterSpacing" tabIndex="4"/>
+				<mx:TextInput x="100" y="124" width="50" id="txtInfoPadding" tabIndex="4"/>
+				<mx:Label x="42" y="126" text="Padding"/>
+				<mx:Label x="10" y="98" text="Letter Spacing"/>
+				<mx:CheckBox x="310" y="42" label="Italic" fontStyle="italic" id="chkInfoFontStyle" tabIndex="5"/>
+				<mx:CheckBox x="310" y="68" label="Bold" fontWeight="bold" id="chkInfoFontWeight" tabIndex="6"/>
+				<mx:CheckBox x="310" y="94" label="Underline" textDecoration="underline" id="chkInfoFontDecoration" tabIndex="7"/>
+				<mx:Canvas x="130" y="41" width="20" height="20" id="cnvInfoFontColor"></mx:Canvas>
+				<mx:Label x="199" y="154" text="Background Color"/>
+				<mx:ColorPicker x="310" y="150" id="clrInfoBackgroundColor" tabIndex="2"/>
+				<mx:Canvas x="340" y="151" width="20" height="20" id="cnvInfoBackgroundColor"></mx:Canvas>
+				<mx:Label x="187" y="128" text="Background Opacity"/>
+				<mx:HSlider x="310" y="124" width="86" id="sldInfoBackgroundOpacity" minimum="0.5" maximum="1.0" tabIndex="10"/>
+			</mx:Panel>
+			<mx:Panel x="10" y="248" width="440" height="85" layout="absolute" title="Statistics">
+				<mx:CheckBox x="10" y="10" label="Characters" id="chkStatisticsCharacters" tabIndex="3"/>
+				<mx:CheckBox x="193" y="10" label="Words" id="chkStatisticsWords" tabIndex="5"/>
+				<mx:CheckBox x="114" y="10" label="Lines" id="chkStatisticsLines" tabIndex="4"/>
+				<mx:CheckBox x="277" y="10" label="Sentences" id="chkStatisticsSentences" tabIndex="6"/>
+			</mx:Panel>
+		</mx:Canvas>
 		<mx:Canvas label="Scrollbars" width="100%" height="100%">
 			<mx:Panel x="10" y="0" width="440" height="88" layout="absolute" title="Disable">
 				<mx:CheckBox x="10" y="10" label="Disable Vertical Scrollbar" id="chkDisableVerticalScroll" tabIndex="1"/>
@@ -147,12 +182,6 @@ an email to contact@getdarkroom.com so we can send a copy to you.
 				<mx:Label x="10" y="10" text="Autosave"/>
 				<mx:ComboBox x="74" y="8" id="cboAutosave" tabIndex="1"></mx:ComboBox>
 				<mx:CheckBox x="255" y="8" label="Reopen Last Document" id="chkReopenLastDocument" tabIndex="2"/>
-			</mx:Panel>
-			<mx:Panel x="10" y="109" width="440" height="79" layout="absolute" title="Statistics">
-				<mx:CheckBox x="10" y="10" label="Characters" id="chkStatisticsCharacters" tabIndex="3"/>
-				<mx:CheckBox x="193" y="10" label="Words" id="chkStatisticsWords" tabIndex="5"/>
-				<mx:CheckBox x="114" y="10" label="Lines" id="chkStatisticsLines" tabIndex="4"/>
-				<mx:CheckBox x="277" y="10" label="Sentences" id="chkStatisticsSentences" tabIndex="6"/>
 			</mx:Panel>
 		</mx:Canvas>
 	</mx:TabNavigator>

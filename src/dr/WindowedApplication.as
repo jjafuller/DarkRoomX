@@ -31,6 +31,7 @@ package dr
 	import gearsandcogs.text.UndoTextFields;
 	
 	import mx.collections.ArrayCollection;
+	import mx.containers.Canvas;
 	import mx.controls.Alert;
 	import mx.controls.Label;
 	import mx.controls.MenuBar;
@@ -74,6 +75,7 @@ package dr
 
 		// controls
 		public var content:dr.TextArea;
+		public var cnvInfoBar:Canvas;
 		public var lblInformation:Label;
 		public var virtualMenu:MenuBar;
 		
@@ -97,6 +99,7 @@ package dr
 		public function init():void 
  		{	
  			virtualMenu.visible = false;
+ 			cnvInfoBar.visible = false;
  			
  			stage.frameRate = FRAME_RATE;
  			
@@ -128,9 +131,6 @@ package dr
  			defaultDirectory = File.documentsDirectory;
  			
  			// reopen the last document if instructed to
- 			trace(config.settings.reopenLastDocument);
- 			trace(config.settings.lastFileNativePath);
- 			
  			if(config.settings.reopenLastDocument && config.settings.lastFileNativePath.length > 0)
  			{
  				currentFile = new File(config.settings.lastFileNativePath);
@@ -236,7 +236,6 @@ package dr
 			if(!isNaN(config.settings.fontColor))
 			{
 				content.setStyle('color', config.settings.fontColor);
-				lblInformation.setStyle('color', config.settings.fontColor);
 			}
 			
 			if(config.settings.fontSize)
@@ -272,6 +271,52 @@ package dr
 			content.tabsToSpacesCount = int(config.settings.tabsToSpacesCount);
 			content.autoIndent = Boolean(config.settings.autoIndent);
 			content.wordWrap = Boolean(config.settings.wordWrap);
+			
+			// info bar
+			if(config.settings.infoFontFamily)
+			{
+				lblInformation.setStyle('fontFamily', config.settings.infoFontFamily);
+			}
+			
+			if(!isNaN(config.settings.infoFontColor))
+			{
+				lblInformation.setStyle('color', config.settings.infoFontColor);
+			}
+			
+			if(config.settings.infoFontSize)
+			{
+				lblInformation.setStyle('fontSize', config.settings.infoFontSize);
+			}
+			
+			if(config.settings.infoFontLetterSpacing)
+			{
+				lblInformation.setStyle('letterSpacing', config.settings.infoFontLetterSpacing);
+			}
+			
+			if(config.settings.infoFontStyle)
+			{
+				lblInformation.setStyle('infoFontStyle', config.settings.infoFontStyle);
+			}
+			
+			if(config.settings.infoFontWeight)
+			{
+				lblInformation.setStyle('infoFontWeight', config.settings.infoFontWeight);
+			}
+			
+			if(config.settings.infoFontDecoration)
+			{
+				lblInformation.setStyle('textDecoration', config.settings.fontDecoration);
+			}
+			
+			if(config.settings.infoBackgroundOpacity)
+			{
+				cnvInfoBar.setStyle('backgroundAlpha', config.settings.infoBackgroundOpacity);
+			}
+			
+			if(!isNaN(config.settings.infoBackgroundColor))
+			{
+				cnvInfoBar.setStyle('backgroundColor', config.settings.infoBackgroundColor);
+			}
 			
 			// disable scrolls
 			content.verticalScrollPolicy = (config.settings.scrollVerticalDisable) ? 'off' : 'auto';
@@ -334,6 +379,18 @@ package dr
 			config.settings.autoIndent = cardinalValue(config.settings.autoIndent, false);
 			config.settings.wordWrap = content.wordWrap; //cardinalValue(config.settings.wordWrap, true);
 			
+			// info bar
+			config.settings.infoFontFamily = lblInformation.getStyle('fontFamily');
+			config.settings.infoFontColor = lblInformation.getStyle('color');
+			config.settings.infoFontSize = lblInformation.getStyle('fontSize');
+			config.settings.infoFontLetterSpacing = lblInformation.getStyle('letterSpacing');
+			config.settings.infoFontStyle = lblInformation.getStyle('fontStyle');
+			config.settings.infoFontWeight = lblInformation.getStyle('fontWeight');
+			config.settings.infoFontDecoration = lblInformation.getStyle('textDecoration');
+			config.settings.infoBackgroundColor = cnvInfoBar.getStyle('backgroundColor');
+			config.settings.infoBackgroundOpacity = cnvInfoBar.getStyle('backgroundAlpha');
+			trace(config.settings.infoFontWeight);
+			
 			// disable scrolls
 			config.settings.scrollVerticalDisable = (content.verticalScrollPolicy=='off') ? true : false;
 			config.settings.scrollHorizontalDisable = (content.horizontalScrollPolicy=='off') ? true : false;
@@ -363,9 +420,15 @@ package dr
 		
 		private function applyLayoutSettings():void
 		{
+			// information bar
+			cnvInfoBar.width = this.width;
+			lblInformation.width = cnvInfoBar.width;
+			cnvInfoBar.y = this.height - lblInformation.height;
+			
 			// temp variables
 			var margin:int = 0;
 			var value:int = 0;
+			var offsetInfoBar:int = (cnvInfoBar.visible) ? cnvInfoBar.height : 0;
 			var offsetMenu:int = (virtualMenu.visible) ? virtualMenu.height : 0;
 			var offset:int = (Screen.mainScreen.bounds.height == this.height) ? 0 : 25 + offsetMenu;
 			
@@ -411,7 +474,7 @@ package dr
 			margin = (config.settings.pageMarginVertical) ? config.settings.pageMarginVertical : 0;
 			if (config.settings.pageHeightAuto)
 			{
-				content.height = this.height - (margin * 2) - offset;
+				content.height = this.height - (margin * 2) - offset - offsetInfoBar;
 			}
 			else if (config.settings.pageHeight)
 			{
@@ -419,9 +482,9 @@ package dr
 				value = config.settings.pageHeight;
 				
 				// adjust if necessary
-				if (value > this.height-(margin*2) - offset)
+				if (value > this.height-(margin*2) - offset - offsetInfoBar)
 				{
-					value = this.height-(margin*2) - offset;
+					value = this.height-(margin*2) - offset - offsetInfoBar;
 				}
 				if (value < 100) { value = 100 } // too short
 				
@@ -433,7 +496,7 @@ package dr
 			{
 				margin = (this.height-(content.height+offset))/2;
 			}
-			content.y = margin + offsetMenu;
+			content.y = margin + offsetMenu - (offsetInfoBar/2);
 			
 			// page padding veritical
 			if(config.settings.pagePaddingVerticalTop)
@@ -467,10 +530,6 @@ package dr
 				content.setStyle('paddingLeft', value);
 				content.setStyle('paddingRight', value);
 			}
-			
-			// information bar
-			lblInformation.width = this.width - 20;
-			lblInformation.y = this.height - 20;
 		}
 		
 		
@@ -548,7 +607,7 @@ package dr
 		public function launchFullScreen():void
 		{
 			virtualMenu.visible = false;
-			lblInformation.visible = true;
+			cnvInfoBar.visible = true;
 			stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			
 			applyLayoutSettings();
@@ -562,14 +621,14 @@ package dr
 			{
 				event.preventDefault();
 				virtualMenu.visible = false;
-				lblInformation.visible = true;
+				cnvInfoBar.visible = true;
 				stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			}
 			else
 			{
 				stage.displayState = StageDisplayState.NORMAL;
 				virtualMenu.visible = NativeWindow.supportsMenu;
-				lblInformation.visible = false;
+				cnvInfoBar.visible = false;
 			}
 			
 			applyLayoutSettings();
@@ -709,7 +768,8 @@ package dr
 		
 		public function handleViewInformation(event:Event):void
 		{
-			lblInformation.visible = !lblInformation.visible;
+			cnvInfoBar.visible = !cnvInfoBar.visible;
+			applyLayoutSettings();
 		}
 		
 		public function handleViewScrollbars(event:Event):void
@@ -1098,7 +1158,7 @@ package dr
 		
 		private function updateInformation():void
 		{
-			if(lblInformation.visible || stage.displayState == StageDisplayState.NORMAL)
+			if(cnvInfoBar.visible || stage.displayState == StageDisplayState.NORMAL)
 			{
 				information  = (content.isDirty) ? '*' : '';
 				
@@ -1113,7 +1173,7 @@ package dr
 		
 		private function updateStatistics():void
 		{
-			if(lblInformation.visible || stage.displayState == StageDisplayState.NORMAL)
+			if(cnvInfoBar.visible || stage.displayState == StageDisplayState.NORMAL)
 			{
 				stats = null;
 				stats = new Array();

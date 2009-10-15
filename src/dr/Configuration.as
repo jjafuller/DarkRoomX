@@ -41,6 +41,7 @@ package dr
 		{
 			stream = new FileStream();
 			if (settingsFile.exists) {
+				loadDefaults();
     			stream.open(settingsFile, FileMode.READ);
 			    processXml();
 			}
@@ -64,13 +65,13 @@ package dr
 			settings.pagePaddingVerticalBottom = 10;
 			settings.pagePaddingHorizontal = 10;
 			settings.pageBackgroundOpacity = 0.9;
-			settings.pageBackgroundColor = 1052688;
+			settings.pageBackgroundColor = 0;
 			
 			// general
 			settings.launchFullScreen = true;
 			settings.liveScrolling = false;
 			settings.backgroundColor = 0;
-			settings.backgroundOpacity = 0.8;
+			settings.backgroundOpacity = 1;
 			
 			// formatting
 			settings.fontFamily = 'Courier New';
@@ -89,6 +90,18 @@ package dr
 			settings.tabsToSpacesCount = 2;
 			settings.autoIndent = false;
 			settings.wordWrap = true;
+			
+			// info bar
+			settings.infoFontFamily = 'Courier New';
+			settings.infoFontColor = 65280;
+			settings.infoFontSize = 11;
+			settings.infoFontLetterSpacing = 0;
+			settings.infoPadding = 3;
+			settings.infoFontStyle = 'normal';
+			settings.infoFontWeight = 'normal';
+			settings.infoFontDecoration = 'normal';
+			settings.infoBackgroundOpacity = 0.9;
+			settings.infoBackgroundColor = 0;
 			
 			// disable scrolls
 			settings.scrollVerticalDisable = false;
