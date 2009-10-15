@@ -389,7 +389,6 @@ package dr
 			config.settings.infoFontDecoration = lblInformation.getStyle('textDecoration');
 			config.settings.infoBackgroundColor = cnvInfoBar.getStyle('backgroundColor');
 			config.settings.infoBackgroundOpacity = cnvInfoBar.getStyle('backgroundAlpha');
-			trace(config.settings.infoFontWeight);
 			
 			// disable scrolls
 			config.settings.scrollVerticalDisable = (content.verticalScrollPolicy=='off') ? true : false;
