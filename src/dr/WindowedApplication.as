@@ -585,6 +585,8 @@ package dr
 												{label:"2",separator:true},
 												{label:"Find...",keyEquivalent:Keyboard.F, keyEquivalentModifiers:[ctrlKey], action:handleEditFind},
 												{label:"3",separator:true},
+												{label:"Check Spelling",keyEquivalent:Keyboard.L, keyEquivalentModifiers:[ctrlKey], action:handleEditCheckSpelling},
+												{label:"4",separator:true},
 												{label:"Preferences..",keyEquivalent:Keyboard.COMMA, keyEquivalentModifiers:[ctrlKey], action:handleEditSettings},
 											])},
 											{label:'View', children: new ArrayCollection([
@@ -725,6 +727,11 @@ package dr
 			{
 				content.setSelection(0,content.length);	
 			}
+		}
+		
+		public function handleEditCheckSpelling(event:Event):void
+		{
+			content.checkSpelling();
 		}
 		
 		public function handleEditFind(event:Event):void

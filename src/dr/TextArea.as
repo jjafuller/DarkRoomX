@@ -17,6 +17,8 @@
  
 package dr
 {
+	import com.adobe.linguistics.spelling.SpellUI;
+	
 	import flash.events.*;
 	
 	import mx.controls.TextArea;
@@ -30,6 +32,10 @@ package dr
 		public var tabsToSpacesCount:int;
 		public var autoIndent:Boolean;
 		public var isDirty:Boolean;
+		
+		public function checkSpelling():void {
+			SpellUI.enableSpelling(this, "assets/usa.zwl");
+		}
 		
 		
 		public function TextArea()
@@ -52,6 +58,10 @@ package dr
 		{
 			this.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 			this.addEventListener(Event.CHANGE, handleChange);
+			
+			//_newdict.addEventListener(Event.COMPLETE, handleLoadComplete);
+			//var myUrl:URLRequest = new URLRequest("assets/usa.zwl");
+			//_newdict.load(myUrl);
 		}
 		
 		public function getCaretPosition():int
