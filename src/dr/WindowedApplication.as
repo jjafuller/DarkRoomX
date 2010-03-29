@@ -1164,7 +1164,10 @@ package dr
 				
 				information += (currentFile) ? currentFile.name : 'untitled';
 				
-				information += (stats.length > 0) ? ' (' + stats.join(', ') + ')' : '';
+				if (stats)
+				{
+					information += (stats.length > 0) ? ' (' + stats.join(', ') + ')' : '';
+				}
 				
 				lblInformation.text = information
 				this.title = "Dark Room X - " + information;

@@ -34,7 +34,7 @@ package dr
 		public var isDirty:Boolean;
 		
 		public function checkSpelling():void {
-			SpellUI.enableSpelling(this, "assets/usa.zwl");
+			
 		}
 		
 		
@@ -59,9 +59,7 @@ package dr
 			this.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 			this.addEventListener(Event.CHANGE, handleChange);
 			
-			//_newdict.addEventListener(Event.COMPLETE, handleLoadComplete);
-			//var myUrl:URLRequest = new URLRequest("assets/usa.zwl");
-			//_newdict.load(myUrl);
+			SpellUI.enableSpelling(this, "assets/usa.zwl");
 		}
 		
 		public function getCaretPosition():int
